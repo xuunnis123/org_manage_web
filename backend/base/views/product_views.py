@@ -6,21 +6,21 @@ from rest_framework.response import Response
 
 from django.contrib.auth.models import User
 
-from base.models import Product
-from base.serializers import ProductSerializer
+
+#rom base.serializers import ProductSerializer
 
 from rest_framework import status
 
 @api_view(['GET'])
 def getProducts(request):
-    product = Product.objects.all()
-    serializer = ProductSerializer(product, many=True)
-    return Response( serializer.data )
+    #product = Product.objects.all()
+    #serializer = ProductSerializer(product, many=True)
+    return Response(  )
 
 
 
 @api_view(['GET'])
 def getProduct(request,pk):
-    product = Product.objects.get(_id=pk)
-    serializer = ProductSerializer(product, many=False)
-    return Response(serializer.data)
+    #product = Product.objects.get(_id=pk)
+    #serializer = ProductSerializer(product, many=False)
+    return Response()

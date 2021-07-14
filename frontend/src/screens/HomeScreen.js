@@ -24,8 +24,8 @@ function HomeScreen() {
 
     return (
         <div>
-            <h1>最新行程</h1>
-            <h2>限時折扣中</h2>
+            <h1>最新訊息</h1>
+            
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
                 : 

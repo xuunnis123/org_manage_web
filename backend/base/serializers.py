@@ -96,22 +96,22 @@ class UserSerializerWithToken(UserSerializer):
     def get_token(self,obj):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
-class ProductSerializer(serializers.ModelSerializer):
+class SchoolSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = School
         fields = '__all__'
 
-class ShippingAddressSerializer(serializers.ModelSerializer):
+class CaseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ShippingAddress
+        model = Case
         fields = '__all__'
 
-class OrderItemSerializer(serializers.ModelSerializer):
+class FinanceSerializer(serializers.ModelSerializer):
     class Meta:
-        model = OrderItem
+        model = Finance
         fields = '__all__'
-
-class OrderSerializer(serializers.ModelSerializer):
+'''
+class MemeberSerializer(serializers.ModelSerializer):
     ordersItems = serializers.SerializerMethodField(read_only = True)
     shippingAddress = serializers.SerializerMethodField(read_only = True)
     user = serializers.SerializerMethodField(read_only = True)
@@ -135,3 +135,4 @@ class OrderSerializer(serializers.ModelSerializer):
         user = obj.user
         serializer=UserSerializer(user, many = False)
         return serializer.data
+'''

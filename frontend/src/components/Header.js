@@ -49,17 +49,36 @@ function Header() {
 
                     <LinkContainer to='/'>
 
-                        <Navbar.Brand>Ezra's Web</Navbar.Brand>
+                        <Navbar.Brand>Organization Web</Navbar.Brand>
 
                     </LinkContainer>
                     
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
-                            <LinkContainer to='/cart'>
-                                <Nav.Link><i className="fas fa-shopping-cart"></i>購物車</Nav.Link>
+                            <LinkContainer to='/case'>
+                                <Nav.Link><i className="fas fa-briefcase"></i> 關懷戶</Nav.Link>
+                                
                             </LinkContainer>
-
+                            <LinkContainer to='/scholorship'>
+                                <Nav.Link><i className="fas fa-envelope-open-text"></i> 獎學金</Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/finance'>
+                                <Nav.Link><i className="fas fa-dollar-sign"></i> 財務</Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/org_data'>
+                                <Nav.Link><i className="fas fa-database"></i> 會務資料</Nav.Link>
+                            </LinkContainer>
+                            
+                            <LinkContainer to='/member'>
+                                <Nav.Link><i className="fas fa-user-friends"></i> 會員及監事名冊</Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/school'>
+                                <Nav.Link><i className="fas fa-school"></i> 學校資料</Nav.Link>
+                            </LinkContainer>
+                            <LinkContainer to='/memo'>
+                                <Nav.Link><i className="far fa-clipboard"></i> 關懷戶記事</Nav.Link>
+                            </LinkContainer>
                             {userGoogleInfo ? (
                                 <NavDropdown title={userGoogleInfo} id ='username' >
                                     <LinkContainer to='/profile'>
