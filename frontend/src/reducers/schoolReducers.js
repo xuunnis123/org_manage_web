@@ -42,7 +42,7 @@ export const schoolSelectReducers = ( state = {  }, action) =>{
             return { loading : true }
         
         case SCHOOL_REQUEST_SUCCESS:
-            return { loading : false, userInfo: action.payload }
+            return { loading : false, school: action.payload }
 
         case SCHOOL_REQUEST_FAIL:
             return { loading : false, error: action.payload }
@@ -61,7 +61,7 @@ export const schoolAddReducers = ( state = {  }, action) =>{
             return { loading : true }
         
         case SCHOOL_ADD_SUCCESS:
-            return { loading : false, userInfo: action.payload }
+            return { loading : false, school: action.payload }
 
         case SCHOOL_ADD_FAIL:
             return { loading : false, error: action.payload }

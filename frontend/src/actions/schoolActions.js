@@ -24,7 +24,7 @@ export const listSchool = () => async(dispatch) =>{
         })
 
         const {data} = await axios.get('/api/school/schools/') 
-        console.log(data)
+        
         dispatch({
             type:SCHOOLS_LIST_SUCCESS,
             payload:data
