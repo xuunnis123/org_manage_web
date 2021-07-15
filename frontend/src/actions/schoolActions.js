@@ -16,6 +16,10 @@ import {
     SCHOOL_UPDATE_SUCCESS,
     SCHOOL_UPDATE_FAIL,
 
+    SCHOOL_DETAIL_REQUEST,
+    SCHOOL_DETAIL_SUCCESS,
+    SCHOOL_DETAIL_FAIL,
+
 } from '../constants/schoolConstants'
 export const listSchool = () => async(dispatch) =>{
     try {
@@ -81,3 +85,49 @@ export const addSchool = (name,represent_person_name,represent_person_phone,memo
         })
     }
 }
+
+
+
+export const updateSchool = (school) => async(dispatch,getState) =>{
+    try{
+        dispatch({
+
+                type: SCHOOL_UPDATE_REQUEST
+            })
+            const {
+                userLogin: { userInfo },
+            } = getState()
+    
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.access}`
+                }
+            }
+        const {data} = await axios.put(
+             `/api/school/update/${school._id}`,
+             school,
+             config
+             ) 
+         
+         dispatch({
+             type:SCHOOL_UPDATE_SUCCESS,
+             payload:data
+         })
+
+         dispatch({
+            type:SCHOOL_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: SCHOOL_UPDATE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+

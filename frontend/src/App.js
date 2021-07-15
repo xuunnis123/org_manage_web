@@ -8,7 +8,7 @@ import HomeScreen from './screens/HomeScreen'
 import CaseScreen from './screens/CaseScreen'
 import SchoolScreen from './screens/SchoolScreen'
 import SchoolCreateScreen from './screens/SchoolCreateScreen'
-
+import SchoolEditScreen from './screens/SchoolEditScreen'
 function App() {
   return (
     <Router>
@@ -22,7 +22,7 @@ function App() {
 
           <Route path='/school' component={SchoolScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />
-        
+          <Route path='/admin/school/:id/edit' component={SchoolEditScreen} />
         </Container>
       </main>
       
