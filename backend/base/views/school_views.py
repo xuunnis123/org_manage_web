@@ -71,7 +71,7 @@ def updateSchool(request, pk):
                     school.represent_person_phone = data['represent_person_phone']
                 if data.get('memo'):
                     school.memo = data['memo']
-
+    
         school.save()
         
         serializer = SchoolSerializer(school, many=False)
