@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen'
 
 
 import CaseScreen from './screens/CaseScreen'
+import SchoolScreen from './screens/SchoolScreen'
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
 
           <Route path='/case' component={CaseScreen} />
 
-          
+          <Route path='/school' component={SchoolScreen} />
   
           
         </Container>

@@ -16,6 +16,7 @@ from rest_framework import status
 def getSchools(request):
     schools = School.objects.all()
     serializer = SchoolSerializer(schools, many=True)
+    
     return Response(serializer.data)
 
 
