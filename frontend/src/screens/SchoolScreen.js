@@ -26,10 +26,18 @@ function SchoolScreen({ match, location, history}) {
 
     },[dispatch])
     //dispatch(listSchool())
+    const addToCartHandler =() =>{
+        history.push('/school/create')
+    }
     return (
         <div>
             <h1>學校列表</h1>
-            
+            <Button 
+                onClick = {addToCartHandler}
+                className='btn-block' 
+                type='button'> 
+                新增學校
+             </Button>
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
                 : 
