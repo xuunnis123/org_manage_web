@@ -16,8 +16,7 @@ import {
     SCHOOL_UPDATE_FAIL,
 
  } from '../constants/schoolConstants'
-
- export const schoolListReducers = ( state = {  }, action) =>{
+ export const schoolListReducers = ( state = { schools:[] }, action) =>{
     switch(action.type){
         case SCHOOLS_LIST_REQUEST:
             return { loading : true, schools:[] }

@@ -11,9 +11,10 @@ import { listSchool, addSchool } from '../actions/schoolActions'
 
 function SchoolScreen({ match, location, history}) {
     
-    const [name, setName] = useState('')
-    const [represent_person_name, setRepresent_person_name] = useState('')
-    const [represent_person_phone, setRepresent_person_phone] = useState('')
+    //const [name, setName] = useState('')
+    //const [represent_person_name, setRepresent_person_name] = useState('')
+    //const [represent_person_phone, setRepresent_person_phone] = useState('')
+    
 
     const dispatch = useDispatch()
     const schoolList = useSelector(state => state.schoolList)
@@ -38,6 +39,8 @@ function SchoolScreen({ match, location, history}) {
                             <School school={school} />
                         </Col>
                 ))}
+
+
             </Row>
         }
 

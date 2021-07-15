@@ -17,7 +17,6 @@ import {
     SCHOOL_UPDATE_FAIL,
 
 } from '../constants/schoolConstants'
-
 export const listSchool = () => async(dispatch) =>{
     try {
         dispatch({
@@ -25,7 +24,7 @@ export const listSchool = () => async(dispatch) =>{
         })
 
         const {data} = await axios.get('/api/school/schools/') 
-        
+        console.log(data)
         dispatch({
             type:SCHOOLS_LIST_SUCCESS,
             payload:data
