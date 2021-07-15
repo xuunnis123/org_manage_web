@@ -27,29 +27,28 @@ def getSchool(request,pk):
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([IsAuthenticated])
 def addSchool(request):
-    user = request.name
+    
     data = request.data
-    print(data)
-    schoolItems = data['schoolItems']
-
-    if schoolItems and len(schoolItems) == 0:
+    
+    if data and len(data) == 0:
         return Response({'detail': 'No School Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
 
         # (1) Create order
-
+        
         school = School.objects.create(
-            name=user,
-            represent_person_name=data['represent_person_name'],
-            represent_person_phone=data['represent_person_phone'],
-            memo=data['memo']
+            name = data.get('name'),
+            represent_person_name = data['represent_person_name'],
+            represent_person_phone = data['represent_person_phone'],
+            memo = data['memo']
            
         )
 
         serializer = SchoolSerializer(school, many=False)
         print("serializer:",serializer)
         return Response(serializer.data)
+    
     
 
