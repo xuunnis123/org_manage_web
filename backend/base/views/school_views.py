@@ -49,6 +49,43 @@ def addSchool(request):
         serializer = SchoolSerializer(school, many=False)
         print("serializer:",serializer)
         return Response(serializer.data)
+
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateSchool(request, pk):
+    school = School.objects.get(_id=pk)
+    print(school)
+    if school:
+        data = request.data
+        print(data)
+        
+        if data and len(data) != 0:
+                if data.get('name'):
+                    school.name = data['name']
+                if data.get('represent_person_name'):
+                    school.represent_person_name = data['represent_person_name']
+                if data.get('represent_person_phone'):
+                    school.represent_person_phone = data['represent_person_phone']
+                if data.get('memo'):
+                    school.memo = data['memo']
+
+        school.save()
+        
+        serializer = SchoolSerializer(school, many=False)
+
+        return Response(serializer.data)
     
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteSchool(request, pk):
+    schoolForDeletion = School.objects.get(id=pk)
+    schoolForDeletion.delete()
+    return Response('學校已刪除')
+
+
     
 
