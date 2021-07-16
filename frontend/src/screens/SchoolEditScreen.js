@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
-import School from '../components/School'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { SCHOOL_UPDATE_SUCCESS, SCHOOL_UPDATE_RESET } from '../constants/schoolConstants'
-import { listSchool, addSchool, updateSchool } from '../actions/schoolActions'
+import {  SCHOOL_UPDATE_RESET } from '../constants/schoolConstants'
+import { listSchool, updateSchool } from '../actions/schoolActions'
 
-function SchoolEditScreen({ match, location, history}) {
+function SchoolEditScreen({ match, history}) {
     
     const schoolId = match.params.id
 
@@ -20,41 +19,41 @@ function SchoolEditScreen({ match, location, history}) {
 
     const dispatch = useDispatch()
   
+    const schoolDetail = useSelector(state => state.schoolDetail)
+    const { error, loading, school } = schoolDetail
+
     const schoolUpdate = useSelector(state => state.schoolUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = schoolUpdate
-
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/school'
 
 
     useEffect(()=>{
-        
         if(successUpdate){
             dispatch({ type: SCHOOL_UPDATE_RESET })
             history.push(redirect)
         }else{
-            if (!school.name || school._id !== Number(schoolId)) {
-                dispatch(/*TODO*/)
-            } else {
+            if (!school.name || school._id != Number(schoolId)){
+                dispatch(listSchool())
+            }else{
                 setName(school.name)
                 setRepresent_person_name(school.represent_person_name)
                 setRepresent_person_phone(school.represent_person_phone)
                 setMemo(school.memo)
-                
             }
-
+            
         }
-    },[dispatch, history, school, schoolId, successUpdate])
+    },[dispatch, history, school,schoolId, successUpdate])
 
     //dispatch(listSchool())
     const submitHandler =(e) =>{
         e.preventDefault()
-        
         dispatch(updateSchool({
             _id: schoolId,
             name,
             represent_person_name,
-            represent_person_phone
+            represent_person_phone,
+            memo
         }))
         
         history.push(redirect)
@@ -121,7 +120,7 @@ function SchoolEditScreen({ match, location, history}) {
             </Form.Group>
 
                 <Button type='submit' variant='primary'>
-                    建立
+                    存檔
                 </Button>
             </Form>
         

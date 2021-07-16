@@ -46,6 +46,7 @@ function SchoolScreen({ match, location, history}) {
                         <Col key={school._id} sm={12} md={6} lg={4} xl={3}>
                             <School school={school} />
                         </Col>
+                        
                 ))}
 
 

@@ -20,6 +20,10 @@ import {
     SCHOOL_DETAIL_SUCCESS,
     SCHOOL_DETAIL_FAIL,
 
+    SCHOOL_DELETE_REQUEST,
+    SCHOOL_DELETE_SUCCESS,
+    SCHOOL_DELETE_FAIL,
+
 } from '../constants/schoolConstants'
 export const listSchool = () => async(dispatch) =>{
     try {
@@ -50,7 +54,7 @@ export const schoolDetail = (id) => async(dispatch) =>{
         dispatch({
             type: SCHOOL_DETAIL_REQUEST
         })
-
+        console.log(id)
         const {data} = await axios.get(`/api/school/${id}`) 
         
         dispatch({
@@ -153,5 +157,44 @@ export const updateSchool = (school) => async(dispatch,getState) =>{
             
         })
     }
+}
+
+
+export const removeFromSchool = (id) => async(dispatch, getState) => {
+    try{
+        console.log("into delete")
+    dispatch({
+        type: SCHOOL_DELETE_REQUEST,
+    })
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.access}`
+            }
+        }
+        const {data} = await axios.delete(
+         `/api/school/delete/${id}`,
+         config
+         ) 
+        
+        dispatch({
+            type:SCHOOL_DELETE_SUCCESS,
+            payload:data
+        })
+    
+    }catch(error){
+        dispatch({ 
+            type: SCHOOL_DELETE_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+    
 }
 

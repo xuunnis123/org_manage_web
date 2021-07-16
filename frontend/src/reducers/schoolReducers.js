@@ -18,6 +18,10 @@ import {
     SCHOOL_DETAIL_FAIL,
     SCHOOL_UPDATE_RESET,
 
+    SCHOOL_DELETE_REQUEST,
+    SCHOOL_DELETE_SUCCESS,
+    SCHOOL_DELETE_FAIL,
+
  } from '../constants/schoolConstants'
  export const schoolListReducers = ( state = { schools:[] }, action) =>{
     switch(action.type){
@@ -50,7 +54,10 @@ export const schoolDetailsReducer = ( state = { school:{} }, action) =>{
         case SCHOOL_DETAIL_FAIL:
             return { loading : false, error: action.payload }
 
-        
+        case SCHOOL_DELETE_REQUEST:
+            return {
+                loading : false, error: action.payload 
+            }
 
         default:
             return state    
@@ -76,13 +83,13 @@ export const schoolAddReducers = ( state = {  }, action) =>{
     }
 
 }
-export const schoolUpdateReducers = ( state = {  }, action) =>{
+export const schoolUpdateReducers = ( state = { school:{} }, action) =>{
     switch(action.type){
         case SCHOOL_UPDATE_REQUEST:
             return { loading : true }
         
         case SCHOOL_UPDATE_SUCCESS:
-            return { loading : false, userInfo: action.payload }
+            return { loading : false, success:true, school: action.payload }
 
         case SCHOOL_UPDATE_FAIL:
             return { loading : false, error: action.payload }
@@ -95,3 +102,4 @@ export const schoolUpdateReducers = ( state = {  }, action) =>{
     }
 
 }
+
