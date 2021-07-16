@@ -6,7 +6,7 @@ import { cartReducer } from './reducers/cartReducers'
 import { userLoginReducers, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userLoginGoogleReducers} from './reducers/userReducers'
 import { orderCreateReducer } from './reducers/orderReducers'
 
-import {  schoolListReducers, schoolSelectReducers, schoolAddReducers, schoolUpdateReducers} from './reducers/schoolReducers'
+import {  schoolListReducers, schoolDetailsReducer, schoolAddReducers, schoolUpdateReducers} from './reducers/schoolReducers'
 
 const reducer = combineReducers({
     productList: productListReducers,
@@ -21,7 +21,7 @@ const reducer = combineReducers({
 
     schoolAdd :schoolAddReducers,
     schoolUpdate:schoolUpdateReducers,
-    schoolOne:schoolSelectReducers,
+    schoolDetail:schoolDetailsReducer,
     schoolList:schoolListReducers,
 
 })

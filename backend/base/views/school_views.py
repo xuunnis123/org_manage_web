@@ -83,7 +83,7 @@ def updateSchool(request, pk):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteSchool(request, pk):
-    schoolForDeletion = School.objects.get(id=pk)
+    schoolForDeletion = School.objects.get(_id=pk)
     schoolForDeletion.delete()
     return Response('學校已刪除')
 

@@ -3,9 +3,7 @@ import {
     SCHOOLS_LIST_SUCCESS,
     SCHOOLS_LIST_FAIL,
 
-    SCHOOL_REQUEST,
-    SCHOOL_REQUEST_SUCCESS,
-    SCHOOL_REQUEST_FAIL,
+    
 
     SCHOOL_ADD_REQUEST,
     SCHOOL_ADD_SUCCESS,
@@ -41,15 +39,15 @@ import {
 }
 
 
-export const schoolSelectReducers = ( state = {  }, action) =>{
+export const schoolDetailsReducer = ( state = { school:{} }, action) =>{
     switch(action.type){
-        case SCHOOL_REQUEST:
-            return { loading : true }
+        case SCHOOL_DETAIL_REQUEST:
+            return { loading : true, ...state }
         
-        case SCHOOL_REQUEST_SUCCESS:
+        case SCHOOL_DETAIL_SUCCESS:
             return { loading : false, school: action.payload }
 
-        case SCHOOL_REQUEST_FAIL:
+        case SCHOOL_DETAIL_FAIL:
             return { loading : false, error: action.payload }
 
         

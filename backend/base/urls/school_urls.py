@@ -8,4 +8,5 @@ urlpatterns =[
     path('<str:pk>', views.getSchool, name="get_school"),
     path('create/', views.addSchool, name="add_school"),
     path('update/<str:pk>', views.updateSchool, name="update_school"),
+    path('delete/<str:pk>', views.deleteSchool, name="delete_school"),
 ]

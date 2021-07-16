@@ -45,6 +45,30 @@ export const listSchool = () => async(dispatch) =>{
     }
 }
 
+export const schoolDetail = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: SCHOOL_DETAIL_REQUEST
+        })
+
+        const {data} = await axios.get(`/api/school/${id}`) 
+        
+        dispatch({
+            type:SCHOOL_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: SCHOOL_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+
 
 export const addSchool = (name,represent_person_name,represent_person_phone,memo) => async(dispatch,getState) =>{
     try{

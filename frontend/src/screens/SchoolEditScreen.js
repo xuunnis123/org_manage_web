@@ -25,8 +25,7 @@ function SchoolEditScreen({ match, location, history}) {
 
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/school'
-    const schoolAdd = useSelector(state => state.schoolAdd)
-    const {error, loading, school} = schoolAdd
+
 
     useEffect(()=>{
         
@@ -66,7 +65,7 @@ function SchoolEditScreen({ match, location, history}) {
             <h1>修改學校</h1>
             
             {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
-            {loading && <Loader />}
+            {loadingUpdate && <Loader />}
             
             <Form onSubmit={submitHandler}>
 

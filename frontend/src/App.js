@@ -22,7 +22,7 @@ function App() {
 
           <Route path='/school' component={SchoolScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />
-          <Route path='/admin/school/:id/edit' component={SchoolEditScreen} />
+          <Route path='/school/:id/edit' component={SchoolEditScreen} />
         </Container>
       </main>
       
