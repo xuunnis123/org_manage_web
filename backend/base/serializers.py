@@ -130,3 +130,14 @@ class ScholorshipSerializer(serializers.ModelSerializer):
         model = Scholorship
         fields = '__all__'
     
+class StudentSerializer(serializers.ModelSerializer):
+    school = serializers.SerializerMethodField(read_only = True)
+    
+    class Meta:
+        model = Student
+        fields = '__all__'
+
+    def get_school(self, obj):
+        
+        serializer = SchoolSerializer(obj, many=False)
+        return serializer.data

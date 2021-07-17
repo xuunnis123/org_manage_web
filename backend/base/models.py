@@ -25,7 +25,7 @@ class School(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True)
-    phone = models.CharField
+    phone = models.CharField(max_length=200, null=True, blank=True)
     address = models.CharField(max_length=200, null=True, blank=True)
     tags = models.CharField(max_length=200, null=True, blank=True) #分區
     is_end = models.BooleanField(default=False)
