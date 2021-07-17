@@ -132,12 +132,17 @@ class ScholorshipSerializer(serializers.ModelSerializer):
     
 class StudentSerializer(serializers.ModelSerializer):
     school = serializers.SerializerMethodField(read_only = True)
+    print("school=",school)
     
     class Meta:
         model = Student
         fields = '__all__'
 
     def get_school(self, obj):
+        school_one = obj.school
+        print("school_one=",school_one)
         
-        serializer = SchoolSerializer(obj, many=False)
-        return serializer.data
+        serializer = SchoolSerializer(school_one, many=False)
+        print("serializer=",serializer)
+        print("serializer.data=",serializer.data['name'])
+        return serializer.data['name']

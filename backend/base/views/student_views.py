@@ -15,9 +15,12 @@ from rest_framework import status
 @api_view(['GET'])
 def getStudentsList(request):
     students = Student.objects.all()
-    print(students)
-    serializer = StudentSerializer(students, many=False)
+    print("students==",students)
+    serializer = StudentSerializer(students, many=True)
+    print("--++-")
     print(serializer)
+    print("----")
+    print(serializer.data)
     return Response(serializer.data)
 
 
