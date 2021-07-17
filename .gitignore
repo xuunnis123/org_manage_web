@@ -7,3 +7,4 @@ backend/db.sqlite3
 *.sqlite3
 *.pyc
 backend/.DS_Store
+*.pyc

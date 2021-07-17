@@ -102,37 +102,31 @@ class SchoolSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CaseSerializer(serializers.ModelSerializer):
+    scholorship = serializers.SerializerMethodField(read_only = True)
+    school = serializers.SerializerMethodField(read_only = True)
+    student = serializers.SerializerMethodField(read_only = True)
+    finance = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Case
         fields = '__all__'
 
+    def get_scholorship(self, obj):
+        scholorship = obj.scholorship_set.all()
+        serializer = ScholorshipSerializer(scholorship, many=True)
+        return serializer.data
 class FinanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Finance
         fields = '__all__'
-'''
+
 class MemeberSerializer(serializers.ModelSerializer):
-    ordersItems = serializers.SerializerMethodField(read_only = True)
-    shippingAddress = serializers.SerializerMethodField(read_only = True)
-    user = serializers.SerializerMethodField(read_only = True)
     class Meta:
-        model = Order
+        model = Member
         fields = '__all__'
 
-    def get_ordersItems(self, obj):
-        items = obj.orderitem_set.all()
-        serializer=OrderItemSerializer(items, many = True)
-        return serializer.data
+class ScholorshipSerializer(serializers.ModelSerializer):
 
-    def get_shippingAddress(self, obj):
-        try:
-            address=ShippingAddressSerializer(obj.shippingaddress, many=False).data
-        except :
-            address= False
-        return address
-
-    def get_user(self, obj):
-        user = obj.user
-        serializer=UserSerializer(user, many = False)
-        return serializer.data
-'''
+    class Meta:
+        model = Scholorship
+        fields = '__all__'
+    

@@ -103,3 +103,11 @@ class OrgData(models.Model):
 
     def __str__(self):
         return self.name
+
+class Scholorship(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
+    name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
+    applied_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    price = models.IntegerField( max_length=200, null = True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
