@@ -146,3 +146,5 @@ class StudentSerializer(serializers.ModelSerializer):
         print("serializer=",serializer)
         print("serializer.data=",serializer.data['name'])
         return serializer.data['name']
+
+   

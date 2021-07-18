@@ -15,20 +15,17 @@ from rest_framework import status
 @api_view(['GET'])
 def getStudentsList(request):
     students = Student.objects.all()
-    print("students==",students)
     serializer = StudentSerializer(students, many=True)
-    print("--++-")
-    print(serializer)
-    print("----")
-    print(serializer.data)
     return Response(serializer.data)
 
 
 
 @api_view(['GET'])
 def getStudent(request,pk):
-    student = Student.objects.get(_id=pk)
+    student = Student.objects.get(id=pk)
+    print(student)
     serializer = StudentSerializer(student, many=False)
+    print(serializer)
     return Response(serializer.data)
 
 @api_view(['POST'])
@@ -66,7 +63,7 @@ def addStudent(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateStudent(request, pk):
-    student = Student.objects.get(_id=pk)
+    student = Student.objects.get(id=pk)
     print(student)
     if student:
         data = request.data
@@ -100,6 +97,6 @@ def updateStudent(request, pk):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteStudent(request, pk):
-    studentForDeletion = Student.objects.get(_id=pk)
+    studentForDeletion = Student.objects.get(id=pk)
     studentForDeletion.delete()
     return Response('學校已刪除')
