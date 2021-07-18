@@ -8,6 +8,8 @@ import { orderCreateReducer } from './reducers/orderReducers'
 
 import {  schoolListReducers, schoolDetailsReducer, schoolAddReducers, schoolUpdateReducers} from './reducers/schoolReducers'
 
+import { studentListReducers,studentAddReducers,studentDetailsReducer,studentUpdateReducers } from './reducers/studentReducers'
+
 const reducer = combineReducers({
     productList: productListReducers,
     productDetails: productDetailsReducer,
@@ -24,9 +26,12 @@ const reducer = combineReducers({
     schoolDetail:schoolDetailsReducer,
     schoolList:schoolListReducers,
 
+    studentList:studentListReducers,
+    studentAdd:studentAddReducers,
+    studentUpdate:studentUpdateReducers,
+    studentDetail:studentDetailsReducer,
 })
-const cartItemsFromStorage = localStorage.getItem('cartItems') ?
-    JSON.parse(localStorage.getItem('cartItems')):[]
+
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?
     JSON.parse(localStorage.getItem('userInfo')): null
@@ -34,14 +39,10 @@ const userInfoFromStorage = localStorage.getItem('userInfo') ?
 const userInfoFromGoogle =localStorage.getItem('givenName') ?
     JSON.parse(localStorage.getItem('givenName')): null
 
-const shippingAddressFromStorage = localStorage.getItem('shippingAddress') ?
-    JSON.parse(localStorage.getItem('shippingAddress')) : {}    
+ 
 
 const initialState = {
-    cart:{ 
-        cartItems:cartItemsFromStorage,
-        shippingAddress:shippingAddressFromStorage,
-     },
+    
     userLogin:{ userInfo : userInfoFromStorage },
     userLoginGoogle:{userGoogleInfo : userInfoFromGoogle}
 }

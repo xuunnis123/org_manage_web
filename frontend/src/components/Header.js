@@ -73,6 +73,9 @@ function Header() {
                             <LinkContainer to='/member'>
                                 <Nav.Link><i className="fas fa-user-friends"></i> 會員及監事名冊</Nav.Link>
                             </LinkContainer>
+                            <LinkContainer to='/student'>
+                                <Nav.Link><i className="fas fa-student"></i> 學生資料</Nav.Link>
+                            </LinkContainer>
                             <LinkContainer to='/school'>
                                 <Nav.Link><i className="fas fa-school"></i> 學校資料</Nav.Link>
                             </LinkContainer>
