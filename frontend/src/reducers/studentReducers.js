@@ -49,6 +49,7 @@ export const studentDetailsReducer = ( state = { student:{} }, action) =>{
             return { loading : true, ...state }
         
         case STUDENT_DETAIL_SUCCESS:
+            console.log(action.payload)
             return { loading : false, student: action.payload }
 
         case STUDENT_DETAIL_FAIL:

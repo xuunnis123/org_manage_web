@@ -7,7 +7,7 @@ import School from '../components/School'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
-import { listStudent } from '../actions/studentActions'
+import { listStudent,removeFromStudent } from '../actions/studentActions'
 
 function StudentScreen({ match, location, history}) {
     
@@ -19,7 +19,10 @@ function StudentScreen({ match, location, history}) {
     const dispatch = useDispatch()
     const studentList = useSelector(state => state.studentList)
     const { error, loading, students } = studentList
+    const studentDetail = useSelector(state => state.studentDetail)
+    const { detailerror, detailloading, student } = studentDetail
 
+    const redirect = '/student'
     useEffect(() =>{
         dispatch(listStudent())
       
@@ -28,6 +31,10 @@ function StudentScreen({ match, location, history}) {
     
     const addToStudentHandler =() =>{
         history.push('/student/create')
+    }
+    const removeFromStudentHandler = (id) => {
+        dispatch(removeFromStudent(id))
+        history.push(redirect)
     }
     return (
         <div>
@@ -47,6 +54,7 @@ function StudentScreen({ match, location, history}) {
                         <Table striped bordered hover responsive className='table-sm'>
                         <thead>
                             <tr>
+                                <th>動作</th>
                                 <th>ID</th>
                                 <th>學生名字</th>
                                 <th>學校</th>
@@ -63,6 +71,12 @@ function StudentScreen({ match, location, history}) {
                         <tbody>
                             {students.map(student => (
                                 <tr key={student.id}>
+                                    <td><Link to={`/student/${student.id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                                    onClick={()=>removeFromStudentHandler(student.id)}><i className='fas fa-trash'> </i>
+                                    </Button></td>
                                     <td>{student.id}</td>
                                     <td>{student.name}</td>
                                     <td>{student.school}</td>

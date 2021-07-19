@@ -13,6 +13,8 @@ import SchoolEditScreen from './screens/SchoolEditScreen'
 import SchoolDetailScreen  from './screens/SchoolDetailScreen'
 
 import StudentScreen  from './screens/StudentScreen'
+import StudentCreateScreen from './screens/StudentCreateScreen'
+import StudentEditScreen from './screens/StudentEditScreen'
 
 function App() {
   return (
@@ -31,7 +33,8 @@ function App() {
           <Route path='/school/:id/edit' component={SchoolEditScreen} />
           
           <Route path='/student' component={StudentScreen} exact/>
-          
+          <Route path='/student/create' component={StudentCreateScreen} />
+          <Route path='/student/:id/edit' component={StudentEditScreen} />
         </Container>
       </main>
       

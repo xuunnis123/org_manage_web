@@ -25,7 +25,7 @@ function SchoolEditScreen({ match, history}) {
     const schoolUpdate = useSelector(state => state.schoolUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = schoolUpdate
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
-    const redirect = '/school'
+    const redirect = '/student'
 
 
     useEffect(()=>{
@@ -99,7 +99,7 @@ function SchoolEditScreen({ match, history}) {
                     <Form.Control
                         required
                         type='phone'
-                        placeholder='輸入密碼'
+                        placeholder='輸入電話'
                         value={represent_person_phone}
                         onChange={(e) => setRepresent_person_phone(e.target.value)}
                     >
