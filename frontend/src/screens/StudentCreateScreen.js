@@ -12,6 +12,7 @@ import { listSchool } from '../actions/schoolActions'
 
 function StudentCreateScreen({ match, location, history}) {
     
+    const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
     const [name, setName] = useState('')
     const [school, setSchool] = useState('')
     const [phone, setPhone] = useState('')
@@ -26,7 +27,7 @@ function StudentCreateScreen({ match, location, history}) {
     const redirect = '/student'
     const studentAdd = useSelector(state => state.studentAdd)
     const {error, loading, student} = studentAdd
-
+    
     const schoolList = useSelector(state => state.schoolList)
     const { schoolListerror, schoolListloading, schools } = schoolList
 
@@ -38,11 +39,15 @@ function StudentCreateScreen({ match, location, history}) {
         }
     },[history, student, redirect])
 
-    const applySelect = (e) => {setSchool(e.target.value)};
+   
    
     const handleSelect=(e)=>{
-        console.log(e);
-        setSchool(e)
+        
+        var splitSchool = e.split(',');
+        
+        setSchool(splitSchool[0])
+
+        setSchoolTitle(splitSchool[1]);  
       }
     const submitHandler =(e) =>{
         e.preventDefault()
@@ -74,41 +79,24 @@ function StudentCreateScreen({ match, location, history}) {
                     </Form.Control>
             </Form.Group>
 
-            <DropdownButton
-                alignRight
-                title="Dropdown right"
-                id="dropdown-menu-align-right"
+            <Form.Group controlId='test'>
+                <Form.Label>學校</Form.Label>
+                <DropdownButton
+                alignDown
+                title= {schoolTitle}
+                id="dropdown-menu-align-down"
                 onSelect={handleSelect}
                     >
-                        <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
-                        <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
-                        <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
-            </DropdownButton>
-            
-            <Form.Group controlId="formControlsSelect">
-            <Form.Label>學校</Form.Label>
-            
-            
-            <Form.Control
-             as="select"
-             custom
-             onChange={(e) => setSchool(e.target.value)}
-             size="lg"
-            > 
-            
-        
+
             {schools.map((school) =>{
             
-            return <option key={school._id} value={school._id}>{school.name}</option>
-            
+            return <Dropdown.Item eventKey={[school._id,school.name]} >{school.name}</Dropdown.Item>
             })}
-
+                       
+            </DropdownButton>
             
-            </Form.Control>
             </Form.Group>
-            <h4>You selected {school}</h4>
+            
             
             <Form.Group controlId='phone'>
                     <Form.Label>聯絡電話</Form.Label>
