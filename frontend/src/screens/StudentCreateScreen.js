@@ -1,12 +1,14 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card, FormControl,FormLabel } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card, FormControl,FormLabel,Dropdown,DropdownButton } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
 import { listStudent, addStudent } from '../actions/studentActions'
+
+import { listSchool } from '../actions/schoolActions'
 
 function StudentCreateScreen({ match, location, history}) {
     
@@ -29,6 +31,7 @@ function StudentCreateScreen({ match, location, history}) {
     const { schoolListerror, schoolListloading, schools } = schoolList
 
     useEffect(()=>{
+        dispatch(listSchool())
         
         if(student){
             history.push(redirect)
@@ -37,7 +40,10 @@ function StudentCreateScreen({ match, location, history}) {
 
     const applySelect = (e) => {setSchool(e.target.value)};
    
-
+    const handleSelect=(e)=>{
+        console.log(e);
+        setSchool(e)
+      }
     const submitHandler =(e) =>{
         e.preventDefault()
         
@@ -68,24 +74,41 @@ function StudentCreateScreen({ match, location, history}) {
                     </Form.Control>
             </Form.Group>
 
+            <DropdownButton
+                alignRight
+                title="Dropdown right"
+                id="dropdown-menu-align-right"
+                onSelect={handleSelect}
+                    >
+                        <Dropdown.Item eventKey="option-1">option-1</Dropdown.Item>
+                        <Dropdown.Item eventKey="option-2">option-2</Dropdown.Item>
+                        <Dropdown.Item eventKey="option-3">option 3</Dropdown.Item>
+                        <Dropdown.Divider />
+                        <Dropdown.Item eventKey="some link">some link</Dropdown.Item>
+            </DropdownButton>
             
             <Form.Group controlId="formControlsSelect">
             <Form.Label>學校</Form.Label>
+            
+            
             <Form.Control
              as="select"
              custom
              onChange={(e) => setSchool(e.target.value)}
              size="lg"
             > 
-            <option value="red">Red</option>
-            {schools}.map(function(age){ 
-            //TODO return(
-            <option value={school.id} >{school.name}</option> 
-            ) 
-            })} 
+            
+        
+            {schools.map((school) =>{
+            
+            return <option key={school._id} value={school._id}>{school.name}</option>
+            
+            })}
+
+            
             </Form.Control>
             </Form.Group>
-
+            <h4>You selected {school}</h4>
             
             <Form.Group controlId='phone'>
                     <Form.Label>聯絡電話</Form.Label>
