@@ -25,7 +25,7 @@ function SchoolEditScreen({ match, history}) {
     const schoolUpdate = useSelector(state => state.schoolUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = schoolUpdate
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
-    const redirect = '/student'
+    const redirect = '/school'
 
 
     useEffect(()=>{

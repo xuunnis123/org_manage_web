@@ -28,7 +28,7 @@ function School({ school }) {
                     {school.memo}
                 </Card.Text>
                 <Card.Text as="h5">
-                    <Link to ={`/school/${school._id}`}>詳細資訊</Link>
+                    <Link to ={`/school/detail/${school._id}`}>詳細資訊</Link>
                 </Card.Text>
             </Card.Body>
        </Card>

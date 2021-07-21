@@ -28,8 +28,8 @@ function App() {
           <Route path='/case' component={CaseScreen} />
 
           <Route path='/school' component={SchoolScreen} exact/>
-          <Route path='/school/:id' component={SchoolDetailScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />
+          <Route path='/school/detail/:id' component={SchoolDetailScreen} />
           <Route path='/school/:id/edit' component={SchoolEditScreen} />
           
           <Route path='/student' component={StudentScreen} exact/>

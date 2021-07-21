@@ -16,6 +16,7 @@ function SchoolDetailScreen({ match,history }){
     const id = match.params.id
     const redirect = '/school'
     useEffect(() => {
+        
         dispatch({type:SCHOOL_DETAIL_REQUEST})
         console.log(id)
         dispatch(schoolDetail(id))

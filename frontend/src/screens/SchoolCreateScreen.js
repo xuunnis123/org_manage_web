@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
-import School from '../components/School'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
-import { listSchool, addSchool } from '../actions/schoolActions'
+import {  addSchool } from '../actions/schoolActions'
 
 function SchoolCreateScreen({ match, location, history}) {
     
@@ -26,8 +25,10 @@ function SchoolCreateScreen({ match, location, history}) {
     useEffect(()=>{
         
         if(school){
+            
             history.push(redirect)
         }
+        
     },[history, school, redirect])
 
     //dispatch(listSchool())

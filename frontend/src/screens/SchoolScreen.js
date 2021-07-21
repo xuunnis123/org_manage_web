@@ -27,6 +27,7 @@ function SchoolScreen({ match, location, history}) {
     },[dispatch])
     //dispatch(listSchool())
     const addToSchoolHandler =() =>{
+        
         history.push('/school/create')
     }
     return (
