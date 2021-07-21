@@ -18,7 +18,7 @@ function StudentCreateScreen({ match, location, history}) {
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState('')
+    const [is_end, setIs_end] = useState('False')
     const [memo, setMemo] = useState('')
     const [file, setFile] = useState('')
     const dispatch = useDispatch()
@@ -82,7 +82,7 @@ function StudentCreateScreen({ match, location, history}) {
             <Form.Group controlId='test'>
                 <Form.Label>學校</Form.Label>
                 <DropdownButton
-                alignDown
+                aligndown="true"
                 title= {schoolTitle}
                 id="dropdown-menu-align-down"
                 onSelect={handleSelect}

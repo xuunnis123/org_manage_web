@@ -49,7 +49,7 @@ function StudentScreen({ match, location, history}) {
             : error ? <Message variant='danger'>{error}</Message>
                 : 
                 <Row>
-                    {students.map(student => (
+                    
 
                         <Table striped bordered hover responsive className='table-sm'>
                         <thead>
@@ -96,7 +96,7 @@ function StudentScreen({ match, location, history}) {
                       
                         
                         
-                ))}
+                
 
 
             </Row>
