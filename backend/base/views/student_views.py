@@ -40,6 +40,7 @@ def addStudent(request):
 
         # (1) Create student
         school = School.objects.get(_id=data['school'])
+        is_endTrans = data['is_end'] == 'true'
         print("school:",school)
         student = Student.objects.create(
             name = data['name'],
@@ -47,7 +48,7 @@ def addStudent(request):
             phone = data['phone'],
             address = data['address'],
             tags = data['tags'],
-            is_end = data['is_end'],
+            is_end = is_endTrans,
             memo = data['memo'],
             file = data['file'],
 
@@ -63,14 +64,17 @@ def addStudent(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateStudent(request, pk):
-    data = request.data
-    school = School.objects.get(_id=data['school'])
+    
+    
+    
     student = Student.objects.get(id=pk)
     print(student)
     if student:
         data = request.data
-        print(data)
         
+        school = School.objects.get(_id=data['school'])
+        print("school=",school)
+
         if data and len(data) != 0:
                 if data.get('name'):
                     student.name = data['name']
@@ -83,7 +87,9 @@ def updateStudent(request, pk):
                 if data.get('tags'):
                     student.tags = data['tags']
                 if data.get('is_end'):
-                    student.is_end = data['is_end']
+                    print("is_end",data.get('is_end'))
+                    is_endTrans = data['is_end'] == 'true'
+                    student.is_end = is_endTrans
                 if data.get('memo'):
                     student.memo = data['memo']
                 if data.get('file'):

@@ -34,7 +34,7 @@ function StudentScreen({ match, location, history}) {
     }
     const removeFromStudentHandler = (id) => {
         dispatch(removeFromStudent(id))
-        history.push(redirect)
+        window.location.reload()
     }
     return (
         <div>
@@ -69,23 +69,23 @@ function StudentScreen({ match, location, history}) {
                         </thead>
 
                         <tbody>
-                            {students.map(student => (
-                                <tr key={student.id}>
-                                    <td><Link to={`/student/${student.id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                            {students.map(oneStud => (
+                                <tr key={oneStud.id}>
+                                    <td><Link to={`/student/${oneStud.id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>removeFromStudentHandler(student.id)}><i className='fas fa-trash'> </i>
+                                    onClick={()=>removeFromStudentHandler(oneStud.id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
-                                    <td>{student.id}</td>
-                                    <td>{student.name}</td>
-                                    <td>{student.school}</td>
-                                    <td>{student.phone}</td>
-                                    <td>{student.address}</td>
-                                    <td>{student.tags}</td>
-                                    <td>{student.is_end}</td>
-                                    <td>{student.memo}</td>
-                                    <td>{student.file}</td>
+                                    <td>{oneStud.id}</td>
+                                    <td>{oneStud.name}</td>
+                                    <td>{oneStud.school}</td>
+                                    <td>{oneStud.phone}</td>
+                                    <td>{oneStud.address}</td>
+                                    <td>{oneStud.tags}</td>
+                                    <td>{oneStud.is_end}</td>
+                                    <td>{oneStud.memo}</td>
+                                    <td>{oneStud.file}</td>
                                 </tr>
                             ))}
                         </tbody>

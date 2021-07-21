@@ -96,7 +96,13 @@ function StudentCreateScreen({ match, location, history}) {
             </DropdownButton>
             
             </Form.Group>
-            
+            <Row className='py-3'>
+                <Col>
+                     <Link to='/school/create'>
+                     新增學校
+                        </Link>
+                </Col>
+            </Row>
             
             <Form.Group controlId='phone'>
                     <Form.Label>聯絡電話</Form.Label>
@@ -173,7 +179,7 @@ function StudentCreateScreen({ match, location, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/school'>
+                     <Link to='/student'>
                      取消
                         </Link>
                 </Col>

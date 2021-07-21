@@ -6,6 +6,8 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import {  STUDENT_UPDATE_RESET,STUDENT_DETAIL_REQUEST } from '../constants/studentConstants'
+import {  SCHOOLS_LIST_REQUEST } from '../constants/schoolConstants'
+
 import { listStudent, updateStudent, studentDetail } from '../actions/studentActions'
 import { listSchool } from '../actions/schoolActions'
 function StudentEditScreen({ match, history}) {
@@ -33,25 +35,28 @@ function StudentEditScreen({ match, history}) {
     const { schoolListerror, schoolListloading, schools } = schoolList
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/student'
+    
+    useEffect(()=>{
+        dispatch({type:SCHOOLS_LIST_REQUEST})
+        dispatch(listSchool())
 
+    },[dispatch,history,schools])
 
     useEffect(()=>{
         
        
         dispatch({type:STUDENT_DETAIL_REQUEST})
         dispatch(studentDetail(studentId))
-        dispatch(listSchool())
+        
         if(successUpdate){
             dispatch({ type: STUDENT_UPDATE_RESET })
             history.push(redirect)
         }else{
             if (!student.name || student.id != Number(studentId)){
-                console.log("if")
-                console.log("student.name=",student.name)
-                console.log("student.id=",student.id)
+            
                 dispatch(listStudent())
             }else{
-                console.log("else")
+               
                 setName(student.name)
                 setSchool(student.school)
                 setSchoolTitle(student.school)
@@ -64,7 +69,7 @@ function StudentEditScreen({ match, history}) {
             }
             
         }
-    },[dispatch, history,studentId,successUpdate])
+    },[dispatch, history,studentId,student,successUpdate])
 
     const handleSelect=(e)=>{
         
@@ -115,7 +120,7 @@ function StudentEditScreen({ match, history}) {
                     </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='test'>
+            <Form.Group controlId='school'>
                 <Form.Label>學校</Form.Label>
                 <DropdownButton
                 aligndown="true"
@@ -124,9 +129,9 @@ function StudentEditScreen({ match, history}) {
                 onSelect={handleSelect}
                     >
 
-            {schools.map((school) =>{
+            {schools.map((school,index) =>{
             
-            return <Dropdown.Item eventKey={[school._id,school.name]} >{school.name}</Dropdown.Item>
+            return <Dropdown.Item eventKey={[school._id,school.name] } key={index} >{school.name}</Dropdown.Item>
             })}
                        
             </DropdownButton>
@@ -205,7 +210,7 @@ function StudentEditScreen({ match, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/school'>
+                     <Link to='/student'>
                      取消
                         </Link>
                 </Col>
