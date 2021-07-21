@@ -63,6 +63,8 @@ def addStudent(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateStudent(request, pk):
+    data = request.data
+    school = School.objects.get(_id=data['school'])
     student = Student.objects.get(id=pk)
     print(student)
     if student:
@@ -72,8 +74,8 @@ def updateStudent(request, pk):
         if data and len(data) != 0:
                 if data.get('name'):
                     student.name = data['name']
-                if data.get('school'):
-                    student.school = data['school']
+                
+                student.school = school
                 if data.get('phone'):
                     student.phone = data['phone']
                 if data.get('address'):

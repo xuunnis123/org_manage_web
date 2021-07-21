@@ -29,6 +29,7 @@ function SchoolEditScreen({ match, history}) {
 
 
     useEffect(()=>{
+        
         if(successUpdate){
             dispatch({ type: SCHOOL_UPDATE_RESET })
             history.push(redirect)

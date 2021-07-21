@@ -1,41 +1,46 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card,Dropdown,DropdownButton } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import {  STUDENT_UPDATE_RESET,STUDENT_DETAIL_REQUEST } from '../constants/studentConstants'
-import { listStudent, updateStudent } from '../actions/studentActions'
-
+import { listStudent, updateStudent, studentDetail } from '../actions/studentActions'
+import { listSchool } from '../actions/schoolActions'
 function StudentEditScreen({ match, history}) {
     
     const studentId = match.params.id
-
+    const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
     const [name, setName] = useState('')
     const [school, setSchool] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState('')
+    const [is_end, setIs_end] = useState('false')
     const [memo, setMemo] = useState('')
     const [file, setFile] = useState('')
 
     const dispatch = useDispatch()
   
-    const studentDetail = useSelector(state => state.studentDetail)
-    const { error, loading, student } = studentDetail
+    const studentDetailReducer = useSelector(state => state.studentDetail)
+    const { error, loading, student } = studentDetailReducer
 
     const studentUpdate = useSelector(state => state.studentUpdate)
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = studentUpdate
+
+    const schoolList = useSelector(state => state.schoolList)
+    const { schoolListerror, schoolListloading, schools } = schoolList
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/student'
 
 
     useEffect(()=>{
-        console.log("studentId=",studentId)
-        console.log("successUpdate=",successUpdate)
+        
+       
         dispatch({type:STUDENT_DETAIL_REQUEST})
+        dispatch(studentDetail(studentId))
+        dispatch(listSchool())
         if(successUpdate){
             dispatch({ type: STUDENT_UPDATE_RESET })
             history.push(redirect)
@@ -49,6 +54,7 @@ function StudentEditScreen({ match, history}) {
                 console.log("else")
                 setName(student.name)
                 setSchool(student.school)
+                setSchoolTitle(student.school)
                 setPhone(student.phone)
                 setAddress(student.address)
                 setTags(student.tags)
@@ -58,9 +64,18 @@ function StudentEditScreen({ match, history}) {
             }
             
         }
-    },[dispatch, history, student,studentId, successUpdate])
+    },[dispatch, history,studentId,successUpdate])
 
-    //dispatch(listSchool())
+    const handleSelect=(e)=>{
+        
+        var splitSchool = e.split(',');
+        var stringId = splitSchool[0]
+        setSchool(parseInt(stringId, 10))
+
+        setSchoolTitle(splitSchool[1]);  
+      }
+
+
     const submitHandler =(e) =>{
         e.preventDefault()
         dispatch(updateStudent({
@@ -100,17 +115,22 @@ function StudentEditScreen({ match, history}) {
                     </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='school'>
-                    <Form.Label>學校</Form.Label>
-                    <Form.Control
-                        required
-                        type='school'
-                        placeholder='選擇學校'
-                        value={school}
-                        onChange={(e) => setSchool(e.target.value)}
+            <Form.Group controlId='test'>
+                <Form.Label>學校</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {schoolTitle}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelect}
                     >
 
-                    </Form.Control>
+            {schools.map((school) =>{
+            
+            return <Dropdown.Item eventKey={[school._id,school.name]} >{school.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            
             </Form.Group>
 
             <Form.Group controlId='phone'>
@@ -149,18 +169,7 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
-            <Form.Group controlId='is_end'>
-                    <Form.Label>結束個案？</Form.Label>
-                    <Form.Control
-                        required
-                        type='is_end'
-                        placeholder=''
-                        value={is_end}
-                        onChange={(e) => setIs_end(e.target.value)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
+           
             <Form.Group controlId='memo'>
                     <Form.Label>備註</Form.Label>
                     <Form.Control
@@ -182,6 +191,12 @@ function StudentEditScreen({ match, history}) {
                     >
 
                     </Form.Control>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="is_end">
+                <Col>
+            <Form.Check label="結束個案" value={is_end}
+                        onChange={(e) => setIs_end(e.target.value)}/>
+            </Col>
             </Form.Group>
                 <Button type='submit' variant='primary'>
                     存檔
