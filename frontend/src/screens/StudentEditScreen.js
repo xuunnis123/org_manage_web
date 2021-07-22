@@ -11,15 +11,16 @@ import {  SCHOOLS_LIST_REQUEST } from '../constants/schoolConstants'
 import { listStudent, updateStudent, studentDetail } from '../actions/studentActions'
 import { listSchool } from '../actions/schoolActions'
 function StudentEditScreen({ match, history}) {
-    
+    var changeSchoolFlag = false
     const studentId = match.params.id
     const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
     const [name, setName] = useState('')
     const [school, setSchool] = useState('')
+    const [schoolId,setSchoolId] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState('false')
+    const [is_end, setIs_end] = useState(false)
     const [memo, setMemo] = useState('')
     const [file, setFile] = useState('')
 
@@ -35,42 +36,51 @@ function StudentEditScreen({ match, history}) {
     const { schoolListerror, schoolListloading, schools } = schoolList
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/student'
+
     
-    useEffect(()=>{
-        dispatch({type:SCHOOLS_LIST_REQUEST})
-        dispatch(listSchool())
-
-    },[dispatch,history,schools])
-
     useEffect(()=>{
         
        
         dispatch({type:STUDENT_DETAIL_REQUEST})
         dispatch(studentDetail(studentId))
-        
+        dispatch(listSchool())
         if(successUpdate){
             dispatch({ type: STUDENT_UPDATE_RESET })
             history.push(redirect)
         }else{
             if (!student.name || student.id != Number(studentId)){
-            
+                console.log("if")
+                console.log("student.id=",student.id)
+                console.log("studentId=",studentId)
                 dispatch(listStudent())
             }else{
-               
+                
+                console.log("else")
+                console.log(student.school)
                 setName(student.name)
+                
                 setSchool(student.school)
+                
                 setSchoolTitle(student.school)
                 setPhone(student.phone)
                 setAddress(student.address)
                 setTags(student.tags)
+                
+                if(student.is_end == true){
+                    
+                    setIs_end(true)
+                }
+                else{
+                    setIs_end(false)
+                }
                 setIs_end(student.is_end)
                 setMemo(student.memo)
                 setFile(student.file)
             }
             
         }
-    },[dispatch, history,studentId,student,successUpdate])
-
+    },[student.id])
+//[dispatch, history,studentId,student,successUpdate,schools]
     const handleSelect=(e)=>{
         
         var splitSchool = e.split(',');
@@ -78,10 +88,34 @@ function StudentEditScreen({ match, history}) {
         setSchool(parseInt(stringId, 10))
 
         setSchoolTitle(splitSchool[1]);  
+        changeSchoolFlag = true;
       }
 
-
+    const findSchoolId=(school)=>{
+        
+        var idschool;
+        
+            console.log(schools.length)
+            
+            var i;
+            for(i=0;i<schools.length;i++){
+                if(schools[i].name === school){
+                    idschool = schools[i]._id
+                    break;
+                }
+            }
+            console.log(idschool)
+            
+        return idschool
+    }
     const submitHandler =(e) =>{
+        console.log("look data")
+        console.log("is_end=",is_end)
+        console.log("school=",school)
+        if(!changeSchoolFlag){
+            setSchoolId(findSchoolId(school))
+            console.log(schoolId)
+        }
         e.preventDefault()
         dispatch(updateStudent({
             id: studentId,
@@ -127,6 +161,7 @@ function StudentEditScreen({ match, history}) {
                 title= {schoolTitle}
                 id="dropdown-menu-align-down"
                 onSelect={handleSelect}
+                
                     >
 
             {schools.map((school,index) =>{
@@ -192,15 +227,18 @@ function StudentEditScreen({ match, history}) {
                         type='file'
                         placeholder='上傳檔案'
                         value={file}
-                        onChange={(e) => setFile(e.target.value)}
+                        onChange={(e) => setFile(e.target.checked)}
                     >
 
                     </Form.Control>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="is_end">
                 <Col>
-            <Form.Check label="結束個案" value={is_end}
-                        onChange={(e) => setIs_end(e.target.value)}/>
+            <Form.Check 
+                id = "is_end_field"
+                label="結束個案" 
+                value={is_end}
+                onChange={() => setIs_end('true')}/>
             </Col>
             </Form.Group>
                 <Button type='submit' variant='primary'>

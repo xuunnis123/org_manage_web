@@ -68,7 +68,7 @@ function SchoolEditScreen({ match, history}) {
             {loadingUpdate && <Loader />}
             
             <Form onSubmit={submitHandler}>
-
+            
             <Form.Group controlId='name'>
                     <Form.Label>學校名稱</Form.Label>
                     <Form.Control

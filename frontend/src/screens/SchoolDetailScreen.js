@@ -27,6 +27,13 @@ function SchoolDetailScreen({ match,history }){
     }
     return (
         <Row>
+            <Row className='py-3'>
+                <Col>
+                     <Link to='/school'>
+                     返回
+                        </Link>
+                </Col>
+            </Row>
             <Col md={10}>
                 <h2>{school.name} 詳細資訊</h2>
                 {error && <Message variant='danger'>{error}</Message>}

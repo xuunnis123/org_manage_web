@@ -83,7 +83,7 @@ function StudentScreen({ match, location, history}) {
                                     <td>{oneStud.phone}</td>
                                     <td>{oneStud.address}</td>
                                     <td>{oneStud.tags}</td>
-                                    <td>{oneStud.is_end}</td>
+                                    <td>{oneStud.is_end == true ? "是":"否"}</td>
                                     <td>{oneStud.memo}</td>
                                     <td>{oneStud.file}</td>
                                 </tr>

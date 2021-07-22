@@ -11,7 +11,7 @@ import { listStudent, addStudent } from '../actions/studentActions'
 import { listSchool } from '../actions/schoolActions'
 
 function StudentCreateScreen({ match, location, history}) {
-    
+   
     const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
     const [name, setName] = useState('')
     const [school, setSchool] = useState('')
@@ -49,6 +49,8 @@ function StudentCreateScreen({ match, location, history}) {
 
         setSchoolTitle(splitSchool[1]);  
       }
+
+     
     const submitHandler =(e) =>{
         e.preventDefault()
         
@@ -88,9 +90,9 @@ function StudentCreateScreen({ match, location, history}) {
                 onSelect={handleSelect}
                     >
 
-            {schools.map((school) =>{
+            {schools.map((school,index) =>{
             
-            return <Dropdown.Item eventKey={[school._id,school.name]} >{school.name}</Dropdown.Item>
+            return <Dropdown.Item eventKey={[school._id,school.name]} key={index}>{school.name}</Dropdown.Item>
             })}
                        
             </DropdownButton>
@@ -168,8 +170,11 @@ function StudentCreateScreen({ match, location, history}) {
 
             <Form.Group as={Row} className="mb-3" controlId="is_end">
                 <Col>
-            <Form.Check label="結束個案" value={is_end}
-                        onChange={(e) => setIs_end(e.target.value)}/>
+            <Form.Check 
+                id = "is_end_field"
+                label="結束個案" 
+                value={is_end}
+                onChange={() => setIs_end('true')}/>
             </Col>
             </Form.Group>
                 <Button type='submit' variant='primary'>
