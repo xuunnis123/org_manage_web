@@ -80,7 +80,7 @@ function SchoolCreateScreen({ match, location, history}) {
                     <Form.Control
                         required
                         type='phone'
-                        placeholder='輸入密碼'
+                        placeholder='輸入聯絡電話'
                         value={represent_person_phone}
                         onChange={(e) => setRepresent_person_phone(e.target.value)}
                     >
