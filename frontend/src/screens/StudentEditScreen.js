@@ -74,7 +74,7 @@ function StudentEditScreen({ match, history}) {
                 else{
                     setIs_end(false)
                 }
-                setIs_end(student.is_end)
+                //setIs_end(student.is_end)
                 setMemo(student.memo)
                 setFile(student.file)
             }
@@ -231,18 +231,18 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
-            {is_end}
+            
             <Form.Group as={Row} className="mb-3" controlId="is_end">
                 <Col>
             <Form.Check 
                 id = "is_end_field"
                 label="結束個案" 
-                valued={is_end}
+                value={is_end}
                 checked={is_end}
                 onChange={checkboxHandle}/>
                 
             </Col>
-            {is_end}
+            
             </Form.Group>
                 <Button type='submit' variant='primary'>
                     存檔
