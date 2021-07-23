@@ -128,7 +128,7 @@ function StudentEditScreen({ match, history}) {
             file
         }))
         
-        history.push(redirect)
+        window.location.href = redirect
         
     }
     return (
