@@ -130,6 +130,7 @@ export const updateStudent = (student) => async(dispatch,getState) =>{
                     Authorization: `Bearer ${userInfo.access}`
                 }
             }
+        console.log({student})
         const {data} = await axios.put(
              `/api/student/update/${student.id}`,
              student,

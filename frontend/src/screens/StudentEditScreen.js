@@ -20,7 +20,8 @@ function StudentEditScreen({ match, history}) {
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState(false)
+    const [is_end, setIs_end] = useState('')
+
     const [memo, setMemo] = useState('')
     const [file, setFile] = useState('')
 
@@ -91,23 +92,29 @@ function StudentEditScreen({ match, history}) {
         
       }
     
-    const checkboxHandle=(e)=>
+    const checkboxHandle=()=>
       {
-        if (document.getElementById('is_end_field').checked) 
-        {
-            console.log("checkbox")
-            setIs_end(true)
-        } else {
-            console.log("not check")
-            setIs_end(false)
-        }
+          var save= is_end
+          save=!save
+        setIs_end(save)
+       
+        
       }
     
     const submitHandler =(e) =>{
         console.log("look data")
+        
         console.log("is_end=",is_end)
         console.log("school=",school)
-        
+        console.log(studentId,
+            name,
+            school,
+            phone,
+            address,
+            tags,
+            is_end,
+            memo,
+            file)
         e.preventDefault()
         dispatch(updateStudent({
             id: studentId,
@@ -224,14 +231,18 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
+            {is_end}
             <Form.Group as={Row} className="mb-3" controlId="is_end">
                 <Col>
             <Form.Check 
                 id = "is_end_field"
                 label="結束個案" 
-                value={is_end}
+                valued={is_end}
+                checked={is_end}
                 onChange={checkboxHandle}/>
+                
             </Col>
+            {is_end}
             </Form.Group>
                 <Button type='submit' variant='primary'>
                     存檔

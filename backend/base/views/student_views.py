@@ -40,7 +40,7 @@ def addStudent(request):
 
         # (1) Create student
         school = School.objects.get(_id=data['school'])
-        is_endTrans = data['is_end'] == 'true'
+        is_endTrans = data['is_end'] == True
         print("school:",school)
         student = Student.objects.create(
             name = data['name'],
@@ -76,8 +76,7 @@ def updateStudent(request, pk):
             
         else:
             school = School.objects.get(name=data['school'])
-            
-
+        
         if data and len(data) != 0:
                 if data.get('name'):
                     student.name = data['name']
@@ -89,15 +88,16 @@ def updateStudent(request, pk):
                     student.address = data['address']
                 if data.get('tags'):
                     student.tags = data['tags']
-                if data.get('is_end'):
-                    print("is_end",data.get('is_end'))
-                    is_endTrans = data['is_end'] == 'true'
-                    student.is_end = is_endTrans
+                
+                    
+                is_endTrans = data['is_end'] == True
+                
+                student.is_end = is_endTrans
                 if data.get('memo'):
                     student.memo = data['memo']
                 if data.get('file'):
                     student.file = data['file']
-                
+           
         student.save()
         
         serializer = StudentSerializer(student, many=False)
