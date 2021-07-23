@@ -68,12 +68,15 @@ def updateStudent(request, pk):
     
     
     student = Student.objects.get(id=pk)
-    print(student)
+    
     if student:
         data = request.data
-        
-        school = School.objects.get(_id=data['school'])
-        print("school=",school)
+        if isinstance(data['school'], int):
+            school = School.objects.get(_id=data['school'])
+            
+        else:
+            school = School.objects.get(name=data['school'])
+            
 
         if data and len(data) != 0:
                 if data.get('name'):

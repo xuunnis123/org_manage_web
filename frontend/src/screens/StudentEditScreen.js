@@ -11,12 +11,12 @@ import {  SCHOOLS_LIST_REQUEST } from '../constants/schoolConstants'
 import { listStudent, updateStudent, studentDetail } from '../actions/studentActions'
 import { listSchool } from '../actions/schoolActions'
 function StudentEditScreen({ match, history}) {
-    var changeSchoolFlag = false
+    
     const studentId = match.params.id
     const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
     const [name, setName] = useState('')
     const [school, setSchool] = useState('')
-    const [schoolId,setSchoolId] = useState('')
+
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
     const [tags, setTags] = useState('')
@@ -88,34 +88,26 @@ function StudentEditScreen({ match, history}) {
         setSchool(parseInt(stringId, 10))
 
         setSchoolTitle(splitSchool[1]);  
-        changeSchoolFlag = true;
+        
       }
-
-    const findSchoolId=(school)=>{
-        
-        var idschool;
-        
-            console.log(schools.length)
-            
-            var i;
-            for(i=0;i<schools.length;i++){
-                if(schools[i].name === school){
-                    idschool = schools[i]._id
-                    break;
-                }
-            }
-            console.log(idschool)
-            
-        return idschool
-    }
+    
+    const checkboxHandle=(e)=>
+      {
+        if (document.getElementById('is_end_field').checked) 
+        {
+            console.log("checkbox")
+            setIs_end(true)
+        } else {
+            console.log("not check")
+            setIs_end(false)
+        }
+      }
+    
     const submitHandler =(e) =>{
         console.log("look data")
         console.log("is_end=",is_end)
         console.log("school=",school)
-        if(!changeSchoolFlag){
-            setSchoolId(findSchoolId(school))
-            console.log(schoolId)
-        }
+        
         e.preventDefault()
         dispatch(updateStudent({
             id: studentId,
@@ -238,7 +230,7 @@ function StudentEditScreen({ match, history}) {
                 id = "is_end_field"
                 label="結束個案" 
                 value={is_end}
-                onChange={() => setIs_end('true')}/>
+                onChange={checkboxHandle}/>
             </Col>
             </Form.Group>
                 <Button type='submit' variant='primary'>
