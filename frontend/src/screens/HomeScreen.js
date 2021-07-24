@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
-import { listProducts } from '../actions/productActions'
+
 
 
 function HomeScreen() {
@@ -15,11 +15,7 @@ function HomeScreen() {
     const productList = useSelector(state => state.productList)
     const { error, loading, products } = productList
 
-    useEffect(() =>{
-        dispatch(listProducts())
-      
-
-    },[dispatch])
+   
 
     return (
         <div>

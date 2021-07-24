@@ -89,7 +89,7 @@ def updateStudent(request, pk):
                 if data.get('tags'):
                     student.tags = data['tags']
                 
-                    
+                
                 is_endTrans = data['is_end'] == True
                 
                 student.is_end = is_endTrans

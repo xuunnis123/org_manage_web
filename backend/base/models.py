@@ -71,15 +71,15 @@ class Finance(models.Model):
 
 class Member(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
-    name = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    id_num = models.CharField(max_length=200, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
     job = models.CharField(max_length=200, null=True, blank=True)
-    phone = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name = "member_phone")
+    phone = models.CharField(max_length=200,null=True, blank=True)
+    address = models.CharField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    family = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,related_name="member_family_User")
-    intro_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="member_family_Intro")
+    family = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True,related_name="member_family_User")
+    intro_by = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name="member_family_Intro")
     memo = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
