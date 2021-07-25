@@ -119,7 +119,7 @@ class FinanceSerializer(serializers.ModelSerializer):
         model = Finance
         fields = '__all__'
 
-class MemeberSerializer(serializers.ModelSerializer):
+class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = '__all__'
