@@ -129,17 +129,17 @@ def updateMember(request, pk):
 
                 
                 if data.get('intro_by'):
-                    print("data.get('intro_by')=",data.get('intro_by'))
+                    
                     if data['intro_by']!='':    
                         if isinstance(data['intro_by'], int):
-                            print("1")
+                            
                             intro_byMem = Member.objects.get(_id=data['intro_by'])
                             
                         else:
-                            print("2")
+                            
                             intro_byMem = Member.objects.get(_id=data['intro_by'])
                     else:
-                        print("3")
+                        
                         intro_byMem = None
 
                     member.intro_by = intro_byMem
