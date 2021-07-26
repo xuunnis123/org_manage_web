@@ -8,6 +8,12 @@ from django.contrib.auth.models import User
 from base.models import Case
 
 
-from base.serializers import SchoolSerializer
+from base.serializers import CaseSerializer
 
 from rest_framework import status
+
+@api_view(['GET'])
+def getCasesList(request):
+    cases = Case.objects.all()
+    serializer = CaseSerializer(cases, many=True)
+    return Response(serializer.data)
