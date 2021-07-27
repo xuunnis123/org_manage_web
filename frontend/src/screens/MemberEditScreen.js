@@ -5,127 +5,141 @@ import { Row, Col, ListGroup, Image, Form, Button, Card,Dropdown,DropdownButton 
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {  STUDENT_UPDATE_RESET,STUDENT_DETAIL_REQUEST } from '../constants/studentConstants'
-import {  SCHOOLS_LIST_REQUEST } from '../constants/schoolConstants'
+import {  MEMBER_UPDATE_RESET,MEMBER_DETAIL_REQUEST } from '../constants/memberConstants'
 
-import { listStudent, updateStudent, studentDetail } from '../actions/studentActions'
+import { listMember, updateMember, memberDetail } from '../actions/memberActions'
 import { listSchool } from '../actions/schoolActions'
-function StudentEditScreen({ match, history}) {
-    
-    const studentId = match.params.id
-    const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
-    const [name, setName] = useState('')
-    const [school, setSchool] = useState('')
+function MemberEditScreen({ match, history}) {
 
+    const memberId = match.params.id
+    const [familyName,setFamilyName] = useState('請選擇家庭')
+    const [intro_byName,setIntro_byName] = useState('請選擇介紹人')
+    const [name, setName] = useState('')
+    const [job, setJob] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
-    const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState('')
-
+    const [title, setTitle] = useState('')
+    const [is_staff, setIs_staff] = useState('True')
+    const [is_admin, setIs_admin] = useState('False')
     const [memo, setMemo] = useState('')
-    const [file, setFile] = useState('')
+    const [family, setFamily] = useState('')
+    const [intro_by, setIntro_by] = useState('')
 
     const dispatch = useDispatch()
   
-    const studentDetailReducer = useSelector(state => state.studentDetail)
-    const { error, loading, student } = studentDetailReducer
+    
+    const redirect = '/member'
 
-    const studentUpdate = useSelector(state => state.studentUpdate)
-    const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = studentUpdate
+    const memberDetailReducer = useSelector(state => state.memberDetail)
+    const { error, loading, member } = memberDetailReducer
 
-    const schoolList = useSelector(state => state.schoolList)
-    const { schoolListerror, schoolListloading, schools } = schoolList
-    //const redirect = location.search ? location.search.split('=')[1] :'/school'
-    const redirect = '/student'
+    const memberUpdate = useSelector(state => state.memberUpdate)
+    const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = memberUpdate
 
+
+    
+    const memberList = useSelector(state => state.memberList)
+    const { errorList, loadingList, members } = memberList
     
     useEffect(()=>{
         
        
-        dispatch({type:STUDENT_DETAIL_REQUEST})
-        dispatch(studentDetail(studentId))
-        dispatch(listSchool())
+        dispatch({type:MEMBER_DETAIL_REQUEST})
+        dispatch(memberDetail(memberId))
+        dispatch(listMember())
         if(successUpdate){
-            dispatch({ type: STUDENT_UPDATE_RESET })
+            dispatch({ type: MEMBER_UPDATE_RESET })
             history.push(redirect)
         }else{
-            if (!student.name || student.id != Number(studentId)){
+            if (!member.name || member._id != Number(memberId)){
                 console.log("if")
-                console.log("student.id=",student.id)
-                console.log("studentId=",studentId)
-                dispatch(listStudent())
+                console.log("member.id=",member._id)
+                console.log("memberId=",memberId)
+                dispatch(listMember())
             }else{
                 
-                console.log("else")
-                console.log(student.school)
-                setName(student.name)
-                
-                setSchool(student.school)
-                
-                setSchoolTitle(student.school)
-                setPhone(student.phone)
-                setAddress(student.address)
-                setTags(student.tags)
-                
-                if(student.is_end == true){
+
+                setFamilyName(member.family)
+                setIntro_byName(member.intro_by)
+                setName(member.name)
+                setJob(member.job)
+                setPhone(member.phone)
+                setAddress(member.address)
+                setTitle(member.title)
+                if(member.is_staff == true){
                     
-                    setIs_end(true)
+                    setIs_staff(true)
                 }
                 else{
-                    setIs_end(false)
+                    setIs_staff(false)
                 }
-                //setIs_end(student.is_end)
-                setMemo(student.memo)
-                setFile(student.file)
+                if(member.is_admin == true){
+                    
+                    setIs_admin(true)
+                }
+                else{
+                    setIs_admin(false)
+                }
+                setMemo(member.memo)
+                
             }
             
         }
-    },[student.id])
-//[dispatch, history,studentId,student,successUpdate,schools]
-    const handleSelect=(e)=>{
-        
-        var splitSchool = e.split(',');
-        var stringId = splitSchool[0]
-        setSchool(parseInt(stringId, 10))
+    },[member._id])
 
-        setSchoolTitle(splitSchool[1]);  
+    const handleSelectFamily=(e)=>{
+        
+        var splitFamily = e.split(',');
+        var stringId = splitFamily[0]
+        setFamily(parseInt(stringId, 10))
+
+        setFamilyName(splitFamily[1]);  
         
       }
+      const handleSelectIntro=(e)=>{
+        
+        var splitIntro = e.split(',');
+        var stringId = splitIntro[0]
+        setFamily(parseInt(stringId, 10))
+
+        setFamilyName(splitIntro[1]);  
+        
+      }
+
     
-    const checkboxHandle=()=>
+    const is_staff_checkboxHandle=()=>
       {
-          var save= is_end
+          var save= is_staff
           save=!save
-        setIs_end(save)
+        setIs_staff(save)
        
         
       }
-    
+      const is_admin_checkboxHandle=()=>
+      {
+          var save= is_admin
+          save=!save
+        setIs_admin(save)
+       
+        
+      }
     const submitHandler =(e) =>{
         console.log("look data")
-        
-        console.log("is_end=",is_end)
-        console.log("school=",school)
-        console.log(studentId,
-            name,
-            school,
-            phone,
-            address,
-            tags,
-            is_end,
-            memo,
-            file)
+       
+       
         e.preventDefault()
-        dispatch(updateStudent({
-            id: studentId,
+        dispatch(updateMember({
+            _id:memberId,
             name,
-            school,
-            phone,
-            address,
-            tags,
-            is_end,
-            memo,
-            file
+            job, 
+            phone, 
+            address, 
+            title, 
+            is_staff, 
+            is_admin, 
+            memo, 
+            family, 
+            intro_by
         }))
         
         window.location.href = redirect
@@ -133,43 +147,26 @@ function StudentEditScreen({ match, history}) {
     }
     return (
         <FormContainer>
-            <h1>修改學生</h1>
+            <h1>修改會員</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             
             <Form onSubmit={submitHandler}>
 
+            
+
             <Form.Group controlId='name'>
-                    <Form.Label>學生名字</Form.Label>
+                    <Form.Label>會員名字</Form.Label>
                     <Form.Control
                         required
                         type='name'
-                        placeholder='輸入學生名字'
+                        placeholder='輸入會員名字'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     >
 
                     </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='school'>
-                <Form.Label>學校</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {schoolTitle}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelect}
-                
-                    >
-
-            {schools.map((school,index) =>{
-            
-            return <Dropdown.Item eventKey={[school._id,school.name] } key={index} >{school.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            
             </Form.Group>
 
             <Form.Group controlId='phone'>
@@ -184,6 +181,7 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
+
             <Form.Group controlId='address'>
                     <Form.Label>聯絡地址</Form.Label>
                     <Form.Control
@@ -196,19 +194,18 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
-            <Form.Group controlId='tags'>
-                    <Form.Label>標籤</Form.Label>
+            <Form.Group controlId='title'>
+                    <Form.Label>職位</Form.Label>
                     <Form.Control
                         required
-                        type='tags'
+                        type='title'
                         placeholder='輸入地區標籤'
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     >
-
+                        
                     </Form.Control>
             </Form.Group>
-           
             <Form.Group controlId='memo'>
                     <Form.Label>備註</Form.Label>
                     <Form.Control
@@ -220,30 +217,63 @@ function StudentEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
-            <Form.Group controlId='file'>
-                    <Form.Label>檔案</Form.Label>
-                    <Form.Control
-                        type='file'
-                        placeholder='上傳檔案'
-                        value={file}
-                        onChange={(e) => setFile(e.target.checked)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
-            
-            <Form.Group as={Row} className="mb-3" controlId="is_end">
+           
+            <Form.Group as={Row} className="mb-3" controlId="is_staff">
                 <Col>
             <Form.Check 
-                id = "is_end_field"
-                label="結束個案" 
-                value={is_end}
-                checked={is_end}
-                onChange={checkboxHandle}/>
-                
+                id = "is_staff_field"
+                label="會員" 
+                value={is_staff}
+                checked={is_staff}
+                onChange={is_staff_checkboxHandle}/>
             </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="is_admin">
+                <Col>
+            <Form.Check 
+                id = "is_admin_field"
+                label="管理員" 
+                value={is_admin}
+                checked={is_admin}
+                onChange={is_admin_checkboxHandle}/>
+            </Col>
+            </Form.Group>
+            <Form.Group controlId='family'>
+                <Form.Label>家庭</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {familyName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectFamily}
+                    >
+
+            {members.map((member,index) =>{
+            
+            return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
             
             </Form.Group>
+
+            <Form.Group controlId='intro_by'>
+                <Form.Label>介紹人</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {intro_byName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectIntro}
+                    >
+
+            {members.map((member,index) =>{
+            
+            return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            
+            </Form.Group>
+           
                 <Button type='submit' variant='primary'>
                     存檔
                 </Button>
@@ -251,7 +281,7 @@ function StudentEditScreen({ match, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/student'>
+                     <Link to='/member'>
                      取消
                         </Link>
                 </Col>
@@ -259,4 +289,4 @@ function StudentEditScreen({ match, history}) {
         </FormContainer>
     )
 }
-export default StudentEditScreen
+export default MemberEditScreen

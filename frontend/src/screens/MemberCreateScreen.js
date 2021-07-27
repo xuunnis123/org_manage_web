@@ -6,62 +6,74 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
-import { listStudent, addStudent } from '../actions/studentActions'
+import { listMember, addMember } from '../actions/memberActions'
 
-import { listSchool } from '../actions/schoolActions'
 
-function StudentCreateScreen({ match, location, history}) {
+
+function MemberCreateScreen({ match, location, history}) {
    
-    const [schoolTitle,setSchoolTitle] = useState('請選擇學校')
+    const [familyName,setFamilyName] = useState('請選擇家庭')
+    const [intro_byName,setIntro_byName] = useState('請選擇介紹人')
     const [name, setName] = useState('')
-    const [school, setSchool] = useState('')
+    const [job, setJob] = useState('')
     const [phone, setPhone] = useState('')
     const [address, setAddress] = useState('')
-    const [tags, setTags] = useState('')
-    const [is_end, setIs_end] = useState('False')
+    const [title, setTitle] = useState('')
+    const [is_staff, setIs_staff] = useState('True')
+    const [is_admin, setIs_admin] = useState('False')
     const [memo, setMemo] = useState('')
-    const [file, setFile] = useState('')
+    const [family, setFamily] = useState('')
+    const [intro_by, setIntro_by] = useState('')
+
+    
     const dispatch = useDispatch()
   
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
-    const redirect = '/student'
-    const studentAdd = useSelector(state => state.studentAdd)
-    const {error, loading, student} = studentAdd
+    const redirect = '/member'
+    const memberAdd = useSelector(state => state.memberAdd)
+    const {error, loading, member} = memberAdd
     
-    const schoolList = useSelector(state => state.schoolList)
-    const { schoolListerror, schoolListloading, schools } = schoolList
+    const memberList = useSelector(state => state.memberList)
+    const { errorList, loadingList, members } = memberList
 
     useEffect(()=>{
-        dispatch(listSchool())
+        dispatch(listMember())
         
-        if(student){
+        if(member){
             history.push(redirect)
         }
-    },[history, student, redirect])
+    },[history, member, redirect])
 
    
    
-    const handleSelect=(e)=>{
+    const handleSelectFamily=(e)=>{
         
-        var splitSchool = e.split(',');
+        var splitFamily = e.split(',');
         
-        setSchool(splitSchool[0])
+        setFamily(splitFamily[0])
 
-        setSchoolTitle(splitSchool[1]);  
+        setFamilyName(splitFamily[1]);  
       }
+      
+      const handleSelectIntro=(e)=>{
+        
+        var splitIntro = e.split(',');
+        
+        setIntro_by(splitIntro[0])
 
-     
+        setIntro_byName(splitIntro[1]);  
+      }
     const submitHandler =(e) =>{
         e.preventDefault()
         
-        dispatch(addStudent(school, name, phone, address, tags, is_end, memo, file))
+        dispatch(addMember( name,job, phone, address, title, is_staff, is_admin, memo, family, intro_by))
         
         history.push(redirect)
         
     }
     return (
         <FormContainer>
-            <h1>新增學生</h1>
+            <h1>新增會員</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
@@ -69,11 +81,11 @@ function StudentCreateScreen({ match, location, history}) {
             <Form onSubmit={submitHandler}>
 
             <Form.Group controlId='name'>
-                    <Form.Label>學生名字</Form.Label>
+                    <Form.Label>會員名字</Form.Label>
                     <Form.Control
                         required
                         type='name'
-                        placeholder='輸入學生名字'
+                        placeholder='輸入會員名字'
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     >
@@ -81,30 +93,7 @@ function StudentCreateScreen({ match, location, history}) {
                     </Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='test'>
-                <Form.Label>學校</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {schoolTitle}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelect}
-                    >
-
-            {schools.map((school,index) =>{
-            
-            return <Dropdown.Item eventKey={[school._id,school.name]} key={index}>{school.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            
-            </Form.Group>
-            <Row className='py-3'>
-                <Col>
-                     <Link to='/school/create'>
-                     新增學校
-                        </Link>
-                </Col>
-            </Row>
+       
             
             <Form.Group controlId='phone'>
                     <Form.Label>聯絡電話</Form.Label>
@@ -130,14 +119,14 @@ function StudentCreateScreen({ match, location, history}) {
 
                     </Form.Control>
             </Form.Group>
-            <Form.Group controlId='tags'>
-                    <Form.Label>標籤</Form.Label>
+            <Form.Group controlId='title'>
+                    <Form.Label>職位</Form.Label>
                     <Form.Control
                         required
-                        type='tags'
+                        type='title'
                         placeholder='輸入地區標籤'
-                        value={tags}
-                        onChange={(e) => setTags(e.target.value)}
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     >
                         
                     </Form.Control>
@@ -156,26 +145,60 @@ function StudentCreateScreen({ match, location, history}) {
 
                     </Form.Control>
             </Form.Group>
-            <Form.Group controlId='file'>
-                    <Form.Label>檔案</Form.Label>
-                    <Form.Control
-                        type='file'
-                        placeholder='上傳檔案'
-                        value={file}
-                        onChange={(e) => setFile(e.target.value)}
-                    >
+           
 
-                    </Form.Control>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mb-3" controlId="is_end">
+            <Form.Group as={Row} className="mb-3" controlId="is_staff">
                 <Col>
             <Form.Check 
-                id = "is_end_field"
-                label="結束個案" 
-                value={is_end}
-                onChange={() => setIs_end('true')}/>
+                id = "is_staff_field"
+                label="會員" 
+                value={is_staff}
+                onChange={() => setIs_staff('true')}/>
             </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="is_admin">
+                <Col>
+            <Form.Check 
+                id = "is_admin_field"
+                label="管理員" 
+                value={is_admin}
+                onChange={() => setIs_admin('true')}/>
+            </Col>
+            </Form.Group>
+            <Form.Group controlId='family'>
+                <Form.Label>家庭</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {familyName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectFamily}
+                    >
+
+            {members.map((member,index) =>{
+            
+            return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            
+            </Form.Group>
+
+            <Form.Group controlId='intro_by'>
+                <Form.Label>介紹人</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {intro_byName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectIntro}
+                    >
+
+            {members.map((member,index) =>{
+            
+            return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            
             </Form.Group>
                 <Button type='submit' variant='primary'>
                     建立
@@ -184,7 +207,7 @@ function StudentCreateScreen({ match, location, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/student'>
+                     <Link to='/member'>
                      取消
                         </Link>
                 </Col>
@@ -192,4 +215,4 @@ function StudentCreateScreen({ match, location, history}) {
         </FormContainer>
     )
 }
-export default StudentCreateScreen
+export default MemberCreateScreen
