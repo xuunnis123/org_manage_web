@@ -60,9 +60,6 @@ class ContributeItem(models.Model):
 class Case(models.Model):
     case_no = models.CharField(max_length=200, null=True, blank=True)
     student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student")
-    phone = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="studnet_case")
-    school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True,related_name="school_case")
-    is_end = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now = True)
     _id = models.AutoField(primary_key=True, editable=False)
