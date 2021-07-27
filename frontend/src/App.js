@@ -16,7 +16,9 @@ import StudentScreen  from './screens/StudentScreen'
 import StudentCreateScreen from './screens/StudentCreateScreen'
 import StudentEditScreen from './screens/StudentEditScreen'
 
-
+import MemberScreen from './screens/MemberScreen'
+import MemberCreateScreen from './screens/MemberCreateScreen'
+import MemberEditScreen from './screens/MemberEditScreen'
 function App() {
   return (
     <Router>
@@ -36,6 +38,10 @@ function App() {
           <Route path='/student' component={StudentScreen} exact/>
           <Route path='/student/create' component={StudentCreateScreen} />
           <Route path='/student/:id/edit' component={StudentEditScreen} />
+
+          <Route path='/member' component={MemberScreen} exact/>
+          <Route path='/member/create' component={MemberCreateScreen} />
+          <Route path='/member/:id/edit' component={MemberEditScreen} />
         </Container>
       </main>
       

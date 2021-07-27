@@ -7,18 +7,13 @@ import Loader from '../components/Loader'
 
 import { listMember,removeFromMember } from '../actions/memberActions'
 
-function StudentScreen({ match, location, history}) {
-    
-    //const [name, setName] = useState('')
-    //const [represent_person_name, setRepresent_person_name] = useState('')
-    //const [represent_person_phone, setRepresent_person_phone] = useState('')
-    
+function MemberScreen({ match, location, history}) {
+  
 
     const dispatch = useDispatch()
-    const studentList = useSelector(state => state.studentList)
-    const { error, loading, students } = studentList
-    const studentDetail = useSelector(state => state.studentDetail)
-    const { detailerror, detailloading, student } = studentDetail
+    const memberList = useSelector(state => state.memberList)
+    const { error, loading, members } = memberList
+
 
     const redirect = '/member'
     useEffect(() =>{
@@ -55,35 +50,39 @@ function StudentScreen({ match, location, history}) {
                                 <th>動作</th>
                                 <th>ID</th>
                                 <th>會員名字</th>
-                                <th>學校</th>
+                                <th>職業</th>
                                 <th>電話</th>
                                 <th>地址</th>
-                                <th>區域標籤</th>
-                                <th>是否為結束個案</th>
+                                <th>服務名稱</th>
+                                <th>是否為慈善會會員</th>
+                                <th>是否為管理員</th>
                                 <th>備註</th>
-                                <th>檔案</th>
+                                <th>同家族</th>
+                                <th>介紹人</th>
                                 
                             </tr>
                         </thead>
 
                         <tbody>
-                            {students.map(oneStud => (
-                                <tr key={oneStud.id}>
-                                    <td><Link to={`/member/${oneStud.id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                            {members.map(oneMem => (
+                                <tr key={oneMem._id}>
+                                    <td><Link to={`/member/${oneMem._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>removeFromMemberHandler(oneStud.id)}><i className='fas fa-trash'> </i>
+                                    onClick={()=>removeFromMemberHandler(oneMem._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
-                                    <td>{oneStud.id}</td>
-                                    <td>{oneStud.name}</td>
-                                    <td>{oneStud.school}</td>
-                                    <td>{oneStud.phone}</td>
-                                    <td>{oneStud.address}</td>
-                                    <td>{oneStud.tags}</td>
-                                    <td>{oneStud.is_end == true ? "是":"否"}</td>
-                                    <td>{oneStud.memo}</td>
-                                    <td>{oneStud.file}</td>
+                                    <td>{oneMem._id}</td>
+                                    <td>{oneMem.name}</td>
+                                    <td>{oneMem.job}</td>
+                                    <td>{oneMem.phone}</td>
+                                    <td>{oneMem.address}</td>
+                                    <td>{oneMem.title}</td>
+                                    <td>{oneMem.is_staff == true ? "是":"否"}</td>
+                                    <td>{oneMem.is_admin == true ? "是":"否"}</td>
+                                    <td>{oneMem.memo}</td>
+                                    <td>{oneMem.family}</td>
+                                    <td>{oneMem.intro_by}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -104,4 +103,4 @@ function StudentScreen({ match, location, history}) {
         </div>
     )
 }
-export default StudentScreen
+export default MemberScreen

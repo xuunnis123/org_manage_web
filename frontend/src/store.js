@@ -10,6 +10,7 @@ import {  schoolListReducers, schoolDetailsReducer, schoolAddReducers, schoolUpd
 
 import { studentListReducers,studentAddReducers,studentDetailsReducer,studentUpdateReducers } from './reducers/studentReducers'
 
+import { memberListReducers,memberAddReducers,memberDetailsReducer,memberUpdateReducers } from './reducers/memberReducers'
 const reducer = combineReducers({
     productList: productListReducers,
     productDetails: productDetailsReducer,
@@ -30,6 +31,11 @@ const reducer = combineReducers({
     studentAdd:studentAddReducers,
     studentUpdate:studentUpdateReducers,
     studentDetail:studentDetailsReducer,
+
+    memberList:memberListReducers,
+    memberAdd:memberAddReducers,
+    memberUpdate:memberUpdateReducers,
+    memberDetail:memberDetailsReducer,
 })
 
 
