@@ -57,7 +57,7 @@ function MemberScreen({ match, location, history}) {
                                 <th>是否為慈善會會員</th>
                                 <th>是否為管理員</th>
                                 <th>備註</th>
-                                <th>同家族</th>
+                                <th>家族</th>
                                 <th>介紹人</th>
                                 
                             </tr>
@@ -72,6 +72,7 @@ function MemberScreen({ match, location, history}) {
                                     variant='danger'
                                     onClick={()=>removeFromMemberHandler(oneMem._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
+                                    
                                     <td>{oneMem._id}</td>
                                     <td>{oneMem.name}</td>
                                     <td>{oneMem.job}</td>

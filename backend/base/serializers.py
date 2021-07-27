@@ -120,10 +120,24 @@ class FinanceSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MemberSerializer(serializers.ModelSerializer):
+    family = serializers.SerializerMethodField(read_only = True)
+    intro_by = serializers.SerializerMethodField(read_only = True)
     class Meta:
         model = Member
         fields = '__all__'
+    
+    def get_family(self, obj):
+        family_one = obj.family
+    
+        serializer = MemberSerializer(family_one, many=False)
+       
+        return serializer.data['name']
 
+    def get_intro_by(self, obj):
+        intro_by_one = obj.intro_by
+        serializer = MemberSerializer(intro_by_one, many=False)
+        
+        return serializer.data['name']
 class ScholorshipSerializer(serializers.ModelSerializer):
 
     class Meta:
