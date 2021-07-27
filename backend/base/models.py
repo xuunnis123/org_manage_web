@@ -38,18 +38,33 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
-
-
-class Case(models.Model):
-    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student")
-    phone = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
-    school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True)
+class ContributeContext(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
     context = models.CharField(max_length=200, null=True, blank=True)
-    
-    file = models.ImageField(null=True, blank=True,
-                              default='/placeholder.png')
 
+    def __str__(self):
+        return self.context
+
+class ContributeItem(models.Model):
+    item_name = models.ForeignKey(ContributeContext, on_delete=models.SET_NULL, null=True,related_name="contribute_context")
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="contribute_studnet")
+    name = models.CharField(max_length=200, null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True, default=0)
+    month = models.DecimalField(
+        max_digits=7, decimal_places=1, null=True, blank=True)
+    
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return str(self.name)
+class Case(models.Model):
+    case_no = models.CharField(max_length=200, null=True, blank=True)
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student")
+    phone = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="studnet_case")
+    school = models.ForeignKey(School, on_delete=models.SET_NULL, null=True,related_name="school_case")
+    is_end = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now = True)
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
@@ -59,11 +74,11 @@ class Finance(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     status = models.CharField(max_length=200, null=True, blank=True)
     title = models.CharField(max_length=200, null=True, blank=True)
-    name = models.ForeignKey(Case, on_delete=models.SET_NULL, null=True)
+    name = models.ForeignKey(Case, on_delete=models.SET_NULL, null=True,related_name="finance_case")
     price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True)
     unit = models.CharField(max_length=200, null=True, blank=True,default='TWD')
-    create_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    create_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,related_name="finance_user")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -85,10 +100,20 @@ class Member(models.Model):
 
     def __str__(self):
         return self.name
+class CaseData(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
+    name = models.ForeignKey(Case, on_delete=models.SET_NULL, null=True, related_name="caseName_caseData")
+    file = models.ImageField(null=True, blank=True,
+                              default='/placeholder.png')
+    url = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
 class Data(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200, null=True, blank=True)
+    
     url = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
