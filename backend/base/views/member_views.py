@@ -81,7 +81,7 @@ def addMember(request):
 def updateMember(request, pk):
     
     
-    
+    print("pk:",pk)
     member = Member.objects.get(_id=pk)
     print("!!member=",member)
     if member:
@@ -107,14 +107,10 @@ def updateMember(request, pk):
                 if data.get('title'):
                     member.title = data['title']
                 
-                if data.get('is_staff'):
-
-                    member.is_staff = data['is_staff'] == 'True'
-
-                if data.get('is_admin'):
-
-                    member.is_admin = data['is_admin'] == 'True'
-
+                member.is_staff = data['is_staff'] == True
+               
+                member.is_admin = data['is_admin'] == True
+                
                 if data.get('family'):
                     if data['family']!='':
                         if isinstance(data['family'], int):

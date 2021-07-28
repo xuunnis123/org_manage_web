@@ -42,7 +42,7 @@ function MemberEditScreen({ match, history}) {
     const { errorList, loadingList, members } = memberList
     
     useEffect(()=>{
-        
+        console.log(memberId)
        
         dispatch({type:MEMBER_DETAIL_REQUEST})
         dispatch(memberDetail(memberId))
@@ -53,6 +53,7 @@ function MemberEditScreen({ match, history}) {
         }else{
             if (!member.name || member._id != Number(memberId)){
                 console.log("if")
+                console.log(member)
                 console.log("member.id=",member._id)
                 console.log("memberId=",memberId)
                 dispatch(listMember())
@@ -100,9 +101,9 @@ function MemberEditScreen({ match, history}) {
         
         var splitIntro = e.split(',');
         var stringId = splitIntro[0]
-        setFamily(parseInt(stringId, 10))
+        setIntro_by(parseInt(stringId, 10))
 
-        setFamilyName(splitIntro[1]);  
+        setIntro_byName(splitIntro[1]);  
         
       }
 
@@ -194,6 +195,19 @@ function MemberEditScreen({ match, history}) {
 
                     </Form.Control>
             </Form.Group>
+            <Form.Group controlId='job'>
+                    <Form.Label>職業</Form.Label>
+                    <Form.Control
+                        required
+                        type='job'
+                        placeholder='輸入職業'
+                        value={job}
+                        onChange={(e) => setJob(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
+
             <Form.Group controlId='title'>
                     <Form.Label>職位</Form.Label>
                     <Form.Control

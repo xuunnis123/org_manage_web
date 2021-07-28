@@ -119,6 +119,18 @@ function MemberCreateScreen({ match, location, history}) {
 
                     </Form.Control>
             </Form.Group>
+            <Form.Group controlId='job'>
+                    <Form.Label>職業</Form.Label>
+                    <Form.Control
+                        required
+                        type='job'
+                        placeholder='輸入職業'
+                        value={job}
+                        onChange={(e) => setJob(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
             <Form.Group controlId='title'>
                     <Form.Label>職位</Form.Label>
                     <Form.Control

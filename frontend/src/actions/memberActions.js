@@ -132,7 +132,7 @@ export const updateMember = (member) => async(dispatch,getState) =>{
             }
         
         const {data} = await axios.put(
-             `/api/member/update/${member.id}`,
+             `/api/member/update/${member._id}`,
              member,
              config
              ) 
