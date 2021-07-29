@@ -103,7 +103,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class CaseSerializer(serializers.ModelSerializer):
     scholorship = serializers.SerializerMethodField(read_only = True)
-    school = serializers.SerializerMethodField(read_only = True)
+    
     student = serializers.SerializerMethodField(read_only = True)
     finance = serializers.SerializerMethodField(read_only = True)
     class Meta:
@@ -111,9 +111,31 @@ class CaseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_scholorship(self, obj):
-        scholorship = obj.scholorship_set.all()
+        try:
+
+            scholorship = obj.scholorship
+        except :
+            scholorship = None
+
         serializer = ScholorshipSerializer(scholorship, many=True)
         return serializer.data
+
+    
+    
+    def get_student(self, obj):
+        
+        student = obj.student_name
+        serializer = StudentSerializer(student, many=False)
+        return serializer.data
+
+    def get_finance(self, obj):
+        try:
+            finance = obj.finance
+        except:
+            finance=None
+        serializer = FinanceSerializer(finance, many=True)
+        return serializer.data
+    
 class FinanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Finance

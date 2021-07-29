@@ -36,7 +36,7 @@ class Student(models.Model):
 
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 class ContributeContext(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
@@ -59,13 +59,13 @@ class ContributeItem(models.Model):
         return str(self.name)
 class Case(models.Model):
     case_no = models.CharField(max_length=200, null=True, blank=True)
-    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student")
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student_case")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now = True)
     _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
-        return self.student_name
+        return str(self.student_name)
 
 class Finance(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
