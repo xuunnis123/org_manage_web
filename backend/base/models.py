@@ -16,6 +16,10 @@ class Semester(models.Model):
     year = models.CharField(max_length=200)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.name
+        
 class School(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200, null=True, blank=True)
@@ -48,7 +52,7 @@ class ContributeContext(models.Model): #資助項目
     context = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
-        return self.context
+        return str(self.context)
 
 class ContributeItem(models.Model):
     item_name = models.ForeignKey(ContributeContext, on_delete=models.SET_NULL, null=True,related_name="contribute_context")
@@ -96,13 +100,17 @@ class MoneyCategory(models.Model): #傳票號數種類
     name = models.CharField(max_length=200)
     detail = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.name 
+
+
 class OutCome(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     category = models.ForeignKey(MoneyCategory,on_delete=models.SET_NULL, null=True,related_name="outcome_category")
-    subject = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200,null=True,blank=True)
     title = models.ForeignKey(ContributeContext,on_delete=models.SET_NULL, null=True,related_name="outcome_contribute_context")
     to_whom = models.ForeignKey(Student,on_delete=models.SET_NULL, null=True,related_name="outcome_to_whom")
-    detail = models.CharField(max_length=200)
+    detail = models.CharField(max_length=200,null=True,blank=True)
     outcome_money = models.IntegerField(null=True, blank=True, default=0)
     unit = models.CharField(max_length=200, default="NTD")
     confirmed_person = models.ForeignKey(Member,on_delete=models.SET_NULL, null=True,related_name="member_outcome" )
@@ -110,15 +118,15 @@ class OutCome(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
-        return self.title + "|" +self.to_whom
+        return str(self.title) + ":" + str(self.to_whom)
 
 class InCome(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     category = models.ForeignKey(MoneyCategory,on_delete=models.SET_NULL, null=True,related_name="income_category")
-    subject = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200,null=True,blank=True)
     title = models.ForeignKey(ContributeContext,on_delete=models.SET_NULL, null=True,related_name="income_contribute_context")
     from_whom = models.ForeignKey(Student,on_delete=models.SET_NULL, null=True,related_name="income_from_whom")
-    detail = models.CharField(max_length=200)
+    detail = models.CharField(max_length=200,null=True,blank=True)
     income_money = models.IntegerField(null=True, blank=True, default=0)
     unit = models.CharField(max_length=200, default="NTD")
     confirmed_person = models.ForeignKey(Member,on_delete=models.SET_NULL, null=True,related_name="member_income" )
@@ -126,7 +134,7 @@ class InCome(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     
     def __str__(self):
-        return self.title + "|" + self.from_whom
+        return str(self.title) + ":" + str(self.from_whom)
 
 
 class CaseData(models.Model):

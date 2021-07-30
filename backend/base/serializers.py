@@ -105,7 +105,7 @@ class CaseSerializer(serializers.ModelSerializer):
     scholorship = serializers.SerializerMethodField(read_only = True)
     
     student = serializers.SerializerMethodField(read_only = True)
-    finance = serializers.SerializerMethodField(read_only = True)
+    
     class Meta:
         model = Case
         fields = '__all__'
@@ -128,13 +128,7 @@ class CaseSerializer(serializers.ModelSerializer):
         serializer = StudentSerializer(student, many=False)
         return serializer.data
 
-    def get_finance(self, obj):
-        try:
-            finance = obj.finance
-        except:
-            finance=None
-        serializer = FinanceSerializer(finance, many=True)
-        return serializer.data
+    
     
 
 
