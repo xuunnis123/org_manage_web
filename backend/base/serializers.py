@@ -136,10 +136,7 @@ class CaseSerializer(serializers.ModelSerializer):
         serializer = FinanceSerializer(finance, many=True)
         return serializer.data
     
-class FinanceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Finance
-        fields = '__all__'
+
 
 class MemberSerializer(serializers.ModelSerializer):
     family = serializers.SerializerMethodField(read_only = True)
