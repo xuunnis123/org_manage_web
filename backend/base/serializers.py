@@ -161,9 +161,7 @@ class StudentSerializer(serializers.ModelSerializer):
     school = serializers.SerializerMethodField(read_only = True)
     print("school=",school)
     
-    class Meta:
-        model = Student
-        fields = '__all__'
+    
 
     def get_school(self, obj):
         school_one = obj.school
@@ -173,5 +171,50 @@ class StudentSerializer(serializers.ModelSerializer):
         print("serializer=",serializer)
         print("serializer.data=",serializer.data['name'])
         return serializer.data['name']
+class MoneyCategorySerilizer(serializers.ModelSerializer):
+    class Meta:
+            model = MoneyCategory
+            fields = '__all__'
 
-   
+class ContributeContextSerilizer(serializers.ModelSerializer):
+    class Meta:
+            model = ContributeContext
+            fields = '__all__'
+
+class IncomeSerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField(read_only = True)
+    title = serializers.SerializerMethodField(read_only = True)
+    from_whom = serializers.SerializerMethodField(read_only = True)
+    confirmed_person = serializers.SerializerMethodField(read_only = True)
+
+
+    class Meta:
+        model = InCome
+        fields = '__all__'
+
+    def get_category(self, obj):
+        category_one = obj.category
+        
+        serializer = MoneyCategorySerilizer(category_one, many=False)
+        
+        return serializer.data['name']
+    def get_title(self, obj):
+        title_one = obj.title
+        
+        serializer = ContributeContextSerilizer(title_one, many=False)
+        
+        return serializer.data['context']
+
+    def get_from_whom(self, obj):
+        member_one = obj.from_whom
+        
+        serializer = MemberSerializer(member_one, many=False)
+        print("serializer=",serializer.data)
+        return serializer.data['name']
+
+    def get_confirmed_person(self, obj):
+        member_one = obj.confirmed_person
+        
+        serializer = MemberSerializer(member_one, many=False)
+       
+        return serializer.data['name']

@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/case/',include('base.urls.case_urls')),
     path('api/student/',include('base.urls.student_urls')),
     path('api/member/',include('base.urls.member_urls')),
+    path('api/finance/',include('base.urls.finance_urls')),
     
 ]
 

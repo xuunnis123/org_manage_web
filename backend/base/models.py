@@ -125,7 +125,7 @@ class InCome(models.Model):
     category = models.ForeignKey(MoneyCategory,on_delete=models.SET_NULL, null=True,related_name="income_category")
     subject = models.CharField(max_length=200,null=True,blank=True)
     title = models.ForeignKey(ContributeContext,on_delete=models.SET_NULL, null=True,related_name="income_contribute_context")
-    from_whom = models.ForeignKey(Student,on_delete=models.SET_NULL, null=True,related_name="income_from_whom")
+    from_whom = models.ForeignKey(Member,on_delete=models.SET_NULL, null=True,related_name="income_from_whom")
     detail = models.CharField(max_length=200,null=True,blank=True)
     income_money = models.IntegerField(null=True, blank=True, default=0)
     unit = models.CharField(max_length=200, default="NTD")
