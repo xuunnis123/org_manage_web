@@ -19,3 +19,11 @@ def getIncomeList(request):
     incomes = InCome.objects.all()
     serializer = IncomeSerializer(incomes, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getIncome(request,pk):
+    
+    income = InCome.objects.get(_id=pk)
+    serializer = IncomeSerializer(income, many=False)
+    return Response(serializer.data)
