@@ -78,3 +78,113 @@ def addIncome(request):
         serializer = IncomeSerializer(income, many=False)
         print("serializer:",serializer)
         return Response(serializer.data)
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateIncome(request, pk):
+    
+    
+    print("pk:",pk)
+    income = InCome.objects.get(_id=pk)
+    print("!!income=",income)
+    if income:
+        data = request.data
+        print("data=",data)
+    
+        
+
+        if data and len(data) != 0:
+                
+                if data.get('subject'):
+                    income.subject = data['subject']
+
+                if data.get('detail'):
+                    income.detail = data['detail']
+                
+                if data.get('income_money'):
+                    income.income_money = data['income_money']
+
+                if data.get('unit'):
+                    income.unit = data['unit']
+
+                
+                
+               
+                
+                if data.get('category'):
+                    if data['category']!='':
+                        if isinstance(data['category'], int):
+                            category = MoneyCategory.objects.get(_id=data['category'])
+                            
+                        else:
+                            category = MoneyCategory.objects.get(_id=data['category'])
+                    else:
+                        category = None
+                
+                    income.category = category
+
+                
+                if data.get('title'):
+                    
+                    if data['title']!='':    
+                        if isinstance(data['title'], int):
+                            
+                            title = ContributeContext.objects.get(_id=data['title'])
+                            
+                        else:
+                            
+                            title = ContributeContext.objects.get(_id=data['title'])
+                    else:
+                        
+                        title = None
+
+                    income.title = title
+
+                if data.get('from_whom'):
+                    
+                    if data['from_whom']!='':    
+                        if isinstance(data['from_whom'], int):
+                            
+                            from_whom = Member.objects.get(_id=data['from_whom'])
+                            
+                        else:
+                            
+                            from_whom = Member.objects.get(_id=data['from_whom'])
+                    else:
+                        
+                        from_whom = None
+
+                    income.from_whom = from_whom
+
+                if data.get('confirmed_person'):
+                    
+                    if data['confirmed_person']!='':    
+                        if isinstance(data['confirmed_person'], int):
+                            
+                            confirmed_person = Member.objects.get(_id=data['confirmed_person'])
+                            
+                        else:
+                            
+                            confirmed_person = Member.objects.get(_id=data['confirmed_person'])
+                    else:
+                        
+                        confirmed_person = None
+
+                    income.confirmed_person = confirmed_person
+
+                
+                
+           
+        income.save()
+        
+        serializer = IncomeSerializer(income, many=False)
+
+        return Response(serializer.data)
+    
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteIncome(request, pk):
+    imcomeForDeletion = InCome.objects.get(_id=pk)
+    imcomeForDeletion.delete()
+    return Response('此筆收入已刪除')
