@@ -228,7 +228,7 @@ def addOutcome(request):
             title = None
         
         if data['to_whom']!='':
-            to_whom = Student.objects.get(_id=data['to_whom'])
+            to_whom = Student.objects.get(id=data['to_whom'])
         else:
             to_whom = None
 
@@ -242,7 +242,7 @@ def addOutcome(request):
         print("title=",title)
         print("to_whom=",to_whom)
         print("confirmed_person=",confirmed_person)
-        outcome = InCome.objects.create(
+        outcome = OutCome.objects.create(
 
             category=category,
             subject = data['subject'],
@@ -324,11 +324,11 @@ def updateOutcome(request, pk):
                     if data['to_whom']!='':    
                         if isinstance(data['to_whom'], int):
                             
-                            to_whom = Student.objects.get(_id=data['to_whom'])
+                            to_whom = Student.objects.get(id=data['to_whom'])
                             
                         else:
                             
-                            to_whom = Student.objects.get(_id=data['to_whom'])
+                            to_whom = Student.objects.get(id=data['to_whom'])
                     else:
                         
                         to_whom = None

@@ -161,6 +161,9 @@ class StudentSerializer(serializers.ModelSerializer):
     school = serializers.SerializerMethodField(read_only = True)
     print("school=",school)
     
+    class Meta:
+        model = Student
+        fields = '__all__'
     
 
     def get_school(self, obj):
@@ -246,7 +249,7 @@ class OutcomeSerializer(serializers.ModelSerializer):
     def get_to_whom(self, obj):
         to_whom_one = obj.to_whom
         
-        serializer = MemberSerializer(to_whom_one, many=False)
+        serializer = StudentSerializer(to_whom_one, many=False)
         print("serializer=",serializer.data)
         return serializer.data['name']
 
