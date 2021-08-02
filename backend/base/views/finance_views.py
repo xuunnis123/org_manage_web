@@ -367,3 +367,8 @@ def deleteOutcome(request, pk):
     outcomeForDeletion = OutCome.objects.get(_id=pk)
     outcomeForDeletion.delete()
     return Response('此筆支出已刪除')
+
+@api_view(['GET'])
+def showAllMoney(request):
+   #TODO
+    return ""
