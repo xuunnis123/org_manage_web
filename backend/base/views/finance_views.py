@@ -369,6 +369,8 @@ def deleteOutcome(request, pk):
     return Response('此筆支出已刪除')
 
 @api_view(['GET'])
-def showAllMoney(request):
-   #TODO
+def calculateAllMoney(request):
+    
+
+    
     return ""
