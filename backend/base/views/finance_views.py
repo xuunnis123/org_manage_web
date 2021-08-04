@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import InCome, MoneyCategory, ContributeContext, Member, Student, OutCome
+from base.models import InCome, IncomeMoneyCategory, IncomeContributeContext,OutcomeMoneyCategory, OutcomeContributeContext, Member, Student, OutCome
 
 from django.db.models import F, Sum
 from base.serializers import IncomeSerializer, OutcomeSerializer
@@ -39,12 +39,12 @@ def addIncome(request):
     else:
         print("data=",data)
         if data['category']!='':
-            category = MoneyCategory.objects.get(_id=data['category'])
+            category = IncomeMoneyCategory.objects.get(_id=data['category'])
         else:
             category = None
 
         if data['title']!='':
-            title = ContributeContext.objects.get(_id=data['title'])
+            title = IncomeContributeContext.objects.get(_id=data['title'])
         else:
             title = None
         
@@ -114,10 +114,10 @@ def updateIncome(request, pk):
                 if data.get('category'):
                     if data['category']!='':
                         if isinstance(data['category'], int):
-                            category = MoneyCategory.objects.get(_id=data['category'])
+                            category = IncomeMoneyCategory.objects.get(_id=data['category'])
                             
                         else:
-                            category = MoneyCategory.objects.get(_id=data['category'])
+                            category = IncomeMoneyCategory.objects.get(_id=data['category'])
                     else:
                         category = None
                 
@@ -129,11 +129,11 @@ def updateIncome(request, pk):
                     if data['title']!='':    
                         if isinstance(data['title'], int):
                             
-                            title = ContributeContext.objects.get(_id=data['title'])
+                            title = IncomeContributeContext.objects.get(_id=data['title'])
                             
                         else:
                             
-                            title = ContributeContext.objects.get(_id=data['title'])
+                            title = IncomeContributeContext.objects.get(_id=data['title'])
                     else:
                         
                         title = None
@@ -218,12 +218,12 @@ def addOutcome(request):
     else:
         print("data=",data)
         if data['category']!='':
-            category = MoneyCategory.objects.get(_id=data['category'])
+            category = OutcomeMoneyCategory.objects.get(_id=data['category'])
         else:
             category = None
 
         if data['title']!='':
-            title = ContributeContext.objects.get(_id=data['title'])
+            title = OutcomeContributeContext.objects.get(_id=data['title'])
         else:
             title = None
         
@@ -293,10 +293,10 @@ def updateOutcome(request, pk):
                 if data.get('category'):
                     if data['category']!='':
                         if isinstance(data['category'], int):
-                            category = MoneyCategory.objects.get(_id=data['category'])
+                            category = OutcomeMoneyCategory.objects.get(_id=data['category'])
                             
                         else:
-                            category = MoneyCategory.objects.get(_id=data['category'])
+                            category = OutcomeMoneyCategory.objects.get(_id=data['category'])
                     else:
                         category = None
                 
@@ -308,11 +308,11 @@ def updateOutcome(request, pk):
                     if data['title']!='':    
                         if isinstance(data['title'], int):
                             
-                            title = ContributeContext.objects.get(_id=data['title'])
+                            title = OutcomeContributeContext.objects.get(_id=data['title'])
                             
                         else:
                             
-                            title = ContributeContext.objects.get(_id=data['title'])
+                            title = OutcomeContributeContext.objects.get(_id=data['title'])
                     else:
                         
                         title = None

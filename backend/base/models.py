@@ -47,20 +47,40 @@ class Student(models.Model):
     def __str__(self):
         return str(self.name)
 
-class ContributeContext(models.Model): #資助項目
+class IncomeContributeContext(models.Model): #資助項目
     _id = models.AutoField(primary_key=True, editable=False)
     context = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return str(self.context)
 
-class ContributeItem(models.Model):
-    item_name = models.ForeignKey(ContributeContext, on_delete=models.SET_NULL, null=True,related_name="contribute_context")
-    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="contribute_studnet")
+class OutcomeContributeContext(models.Model): #資助項目
+    _id = models.AutoField(primary_key=True, editable=False)
+    context = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.context)
+
+class IncomeContributeItem(models.Model):
+    item_name = models.ForeignKey(IncomeContributeContext, on_delete=models.SET_NULL, null=True,related_name="income_contribute_context")
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="income_contribute_studnet")
     name = models.CharField(max_length=200, null=True, blank=True)
     price = models.IntegerField(null=True, blank=True, default=0)
     semester = models.ForeignKey(
-         Semester, on_delete=models.SET_NULL, null=True,related_name="contribute_item_semester")
+         Semester, on_delete=models.SET_NULL, null=True,related_name="income_contribute_item_semester")
+    
+    _id = models.AutoField(primary_key=True, editable=False)
+
+    def __str__(self):
+        return str(self.name)
+
+class OutcomeContributeItem(models.Model):
+    item_name = models.ForeignKey(OutcomeContributeContext, on_delete=models.SET_NULL, null=True,related_name="outcome_contribute_context")
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True,related_name="outcome_contribute_studnet")
+    name = models.CharField(max_length=200, null=True, blank=True)
+    price = models.IntegerField(null=True, blank=True, default=0)
+    semester = models.ForeignKey(
+         Semester, on_delete=models.SET_NULL, null=True,related_name="outcome_contribute_item_semester")
     
     _id = models.AutoField(primary_key=True, editable=False)
 
@@ -95,7 +115,7 @@ class Member(models.Model):
     def __str__(self):
         return self.name
 
-class MoneyCategory(models.Model): #傳票號數種類
+class OutcomeMoneyCategory(models.Model): #傳票號數種類
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200)
     detail = models.CharField(max_length=200)
@@ -103,12 +123,19 @@ class MoneyCategory(models.Model): #傳票號數種類
     def __str__(self):
         return self.name 
 
+class IncomeMoneyCategory(models.Model): #傳票號數種類
+    _id = models.AutoField(primary_key=True, editable=False)
+    name = models.CharField(max_length=200)
+    detail = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name 
 
 class OutCome(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
-    category = models.ForeignKey(MoneyCategory,on_delete=models.SET_NULL, null=True,related_name="outcome_category")
+    category = models.ForeignKey(OutcomeMoneyCategory,on_delete=models.SET_NULL, null=True,related_name="outcome_category")
     subject = models.CharField(max_length=200,null=True,blank=True)
-    title = models.ForeignKey(ContributeContext,on_delete=models.SET_NULL, null=True,related_name="outcome_contribute_context")
+    title = models.ForeignKey(OutcomeContributeContext,on_delete=models.SET_NULL, null=True,related_name="outcome_outcome_contribute_context")
     to_whom = models.ForeignKey(Student,on_delete=models.SET_NULL, null=True,related_name="outcome_to_whom")
     detail = models.CharField(max_length=200,null=True,blank=True)
     outcome_money = models.IntegerField(null=True, blank=True, default=0)
@@ -124,9 +151,9 @@ class OutCome(models.Model):
 
 class InCome(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
-    category = models.ForeignKey(MoneyCategory,on_delete=models.SET_NULL, null=True,related_name="income_category")
+    category = models.ForeignKey(IncomeMoneyCategory,on_delete=models.SET_NULL, null=True,related_name="income_category")
     subject = models.CharField(max_length=200,null=True,blank=True)
-    title = models.ForeignKey(ContributeContext,on_delete=models.SET_NULL, null=True,related_name="income_contribute_context")
+    title = models.ForeignKey(IncomeContributeContext,on_delete=models.SET_NULL, null=True,related_name="income_income_contribute_context")
     from_whom = models.ForeignKey(Member,on_delete=models.SET_NULL, null=True,related_name="income_from_whom")
     detail = models.CharField(max_length=200,null=True,blank=True)
     income_money = models.IntegerField(null=True, blank=True, default=0)

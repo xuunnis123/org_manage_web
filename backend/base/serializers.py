@@ -171,14 +171,24 @@ class StudentSerializer(serializers.ModelSerializer):
         serializer = SchoolSerializer(school_one, many=False)
        
         return serializer.data['name']
-class MoneyCategorySerilizer(serializers.ModelSerializer):
+class OutcomeMoneyCategorySerilizer(serializers.ModelSerializer):
     class Meta:
-            model = MoneyCategory
+            model = OutcomeMoneyCategory
             fields = '__all__'
 
-class ContributeContextSerilizer(serializers.ModelSerializer):
+class IncomeMoneyCategorySerilizer(serializers.ModelSerializer):
     class Meta:
-            model = ContributeContext
+            model = IncomeMoneyCategory
+            fields = '__all__'
+
+class IncomeContributeContextSerilizer(serializers.ModelSerializer):
+    class Meta:
+            model = IncomeContributeContext
+            fields = '__all__'
+
+class OutcomeContributeContextSerilizer(serializers.ModelSerializer):
+    class Meta:
+            model = OutcomeContributeContext
             fields = '__all__'
 
 class IncomeSerializer(serializers.ModelSerializer):
@@ -196,13 +206,13 @@ class IncomeSerializer(serializers.ModelSerializer):
     def get_category(self, obj):
         category_one = obj.category
         
-        serializer = MoneyCategorySerilizer(category_one, many=False)
+        serializer = IncomeMoneyCategorySerilizer(category_one, many=False)
         
         return serializer.data['name']
     def get_title(self, obj):
         title_one = obj.title
         
-        serializer = ContributeContextSerilizer(title_one, many=False)
+        serializer = IncomeContributeContextSerilizer(title_one, many=False)
         
         return serializer.data['context']
 
@@ -234,13 +244,13 @@ class OutcomeSerializer(serializers.ModelSerializer):
     def get_category(self, obj):
         category_one = obj.category
         
-        serializer = MoneyCategorySerilizer(category_one, many=False)
+        serializer = OutcomeMoneyCategorySerilizer(category_one, many=False)
         
         return serializer.data['name']
     def get_title(self, obj):
         title_one = obj.title
         
-        serializer = ContributeContextSerilizer(title_one, many=False)
+        serializer = OutcomeContributeContextSerilizer(title_one, many=False)
         
         return serializer.data['context']
 
