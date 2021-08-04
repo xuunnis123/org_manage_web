@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from base.models import InCome, MoneyCategory, ContributeContext, Member, Student, OutCome
 
-
+from django.db.models import F, Sum
 from base.serializers import IncomeSerializer, OutcomeSerializer
 
 from rest_framework import status
@@ -369,8 +369,86 @@ def deleteOutcome(request, pk):
     return Response('此筆支出已刪除')
 
 @api_view(['GET'])
-def calculateAllMoney(request):
+def sumOutComeRequest(request):
     
+    outcomes = OutCome.objects.all()
+    
+    outcomeSerializer = OutcomeSerializer(outcomes, many=True)
+    totalOutcome = 0
 
+    #InCome.objects.annotate(the_sum=Sum(F('income__in') - F('billinfo__concession')))
     
-    return ""
+    for outcome in outcomeSerializer.data:
+        totalOutcome += outcome.get('outcome_money')
+        print(outcome.get('title'))
+        print(outcome.get('_id'))
+        print(outcome.get('outcome_money'))
+        print("-----")
+    print("Outcome total=",totalOutcome)
+    
+    return Response(str(totalOutcome))
+
+@api_view(['GET'])
+def sumInComeRequest(request):
+    incomes = InCome.objects.all()
+    incomeSerializer = IncomeSerializer(incomes, many=True)
+    totalIncome = 0
+
+    #InCome.objects.annotate(the_sum=Sum(F('income__in') - F('billinfo__concession')))
+    
+    for income in incomeSerializer.data:
+        totalIncome += income.get('income_money')
+        print(income.get('title'))
+        print(income.get('_id'))
+        print(income.get('income_money'))
+        print("-----")
+    print("Income total=",totalIncome)
+    
+    return Response(str(totalIncome))
+
+def sumOutCome():
+    
+    outcomes = OutCome.objects.all()
+    
+    outcomeSerializer = OutcomeSerializer(outcomes, many=True)
+    totalOutcome = 0
+
+    #InCome.objects.annotate(the_sum=Sum(F('income__in') - F('billinfo__concession')))
+    
+    for outcome in outcomeSerializer.data:
+        totalOutcome += outcome.get('outcome_money')
+        print(outcome.get('title'))
+        print(outcome.get('_id'))
+        print(outcome.get('outcome_money'))
+        print("-----")
+    print("Outcome total=",totalOutcome)
+    
+    return totalOutcome
+
+
+def sumInCome():
+    incomes = InCome.objects.all()
+    incomeSerializer = IncomeSerializer(incomes, many=True)
+    totalIncome = 0
+
+    #InCome.objects.annotate(the_sum=Sum(F('income__in') - F('billinfo__concession')))
+    
+    for income in incomeSerializer.data:
+        totalIncome += income.get('income_money')
+        print(income.get('title'))
+        print(income.get('_id'))
+        print(income.get('income_money'))
+        print("-----")
+    print("Income total=",totalIncome)
+    
+    return totalIncome
+
+@api_view(['GET'])
+def calculateAllMoney(request):
+    total = 0
+    total = sumInCome()-sumOutCome()
+   
+   
+    print("total=",total)
+   
+    return Response(str(total))

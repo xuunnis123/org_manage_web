@@ -159,7 +159,6 @@ class ScholorshipSerializer(serializers.ModelSerializer):
     
 class StudentSerializer(serializers.ModelSerializer):
     school = serializers.SerializerMethodField(read_only = True)
-    print("school=",school)
     
     class Meta:
         model = Student
@@ -168,11 +167,9 @@ class StudentSerializer(serializers.ModelSerializer):
 
     def get_school(self, obj):
         school_one = obj.school
-        print("school_one=",school_one)
         
         serializer = SchoolSerializer(school_one, many=False)
-        print("serializer=",serializer)
-        print("serializer.data=",serializer.data['name'])
+       
         return serializer.data['name']
 class MoneyCategorySerilizer(serializers.ModelSerializer):
     class Meta:
@@ -213,7 +210,7 @@ class IncomeSerializer(serializers.ModelSerializer):
         member_one = obj.from_whom
         
         serializer = MemberSerializer(member_one, many=False)
-        print("serializer=",serializer.data)
+        
         return serializer.data['name']
 
     def get_confirmed_person(self, obj):
@@ -251,7 +248,7 @@ class OutcomeSerializer(serializers.ModelSerializer):
         to_whom_one = obj.to_whom
         
         serializer = StudentSerializer(to_whom_one, many=False)
-        print("serializer=",serializer.data)
+        
         return serializer.data['name']
 
     def get_confirmed_person(self, obj):
