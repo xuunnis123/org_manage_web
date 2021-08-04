@@ -194,6 +194,7 @@ class IncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = InCome
         fields = '__all__'
+    
 
     def get_category(self, obj):
         category_one = obj.category

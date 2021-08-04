@@ -119,6 +119,8 @@ class OutCome(models.Model):
 
     def __str__(self):
         return str(self.title) + ":" + str(self.to_whom)
+    class Meta:
+        ordering = ('-created_at',)
 
 class InCome(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
@@ -135,7 +137,8 @@ class InCome(models.Model):
     
     def __str__(self):
         return str(self.title) + ":" + str(self.from_whom)
-
+    class Meta:
+        ordering = ('-created_at',)
 
 class CaseData(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
