@@ -452,3 +452,4 @@ def calculateAllMoney(request):
     print("total=",total)
    
     return Response(str(total))
+
