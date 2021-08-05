@@ -4,9 +4,10 @@ import { Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
+
 import { listFinance, listIncome, listOutcome } from '../actions/financeActions'
 
-function FinanceScreen() {
+function SettingScreen() {
     
     const dispatch = useDispatch()
     const financeList = useSelector(state => state.financeList)
@@ -19,32 +20,26 @@ function FinanceScreen() {
     const { outcomeError, outcomeLoading, outcomes } = outcomeList
     
     useEffect(() =>{
-        dispatch(listFinance())
-        dispatch(listIncome())
-        dispatch(listOutcome())
+       
       
 
     },[dispatch])
 
     return (
         <div>
+            <h1>設定頁面</h1>
             
-            <h1>財務管理頁面</h1>
-            <h2>概況</h2>
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
                 : 
                 <Row>
-                 目前結餘：{ finance } 元
-                 收入：{incomes} 元
-                 支出：{outcomes} 元
+               設定頁面
             </Row>
-            
         }
 
-        
+            
         </div>
     )
 }
 
-export default FinanceScreen
+export default SettingScreen

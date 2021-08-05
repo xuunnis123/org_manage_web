@@ -54,7 +54,7 @@ export const listFinance = () => async(dispatch) =>{
             type: FINANCE_LIST_REQUEST
         })
 
-        const {data} = await axios.get('/api/member/members/') 
+        const {data} = await axios.get('/api/finance/allsum/') 
         
         dispatch({
             type:FINANCE_LIST_SUCCESS,
@@ -77,7 +77,7 @@ export const listIncome = () => async(dispatch) =>{
             type: INCOME_LIST_REQUEST
         })
 
-        const {data} = await axios.get('/api/member/members/') 
+        const {data} = await axios.get('/api/finance/income/sum/') 
         
         dispatch({
             type:INCOME_LIST_SUCCESS,
@@ -100,7 +100,7 @@ export const listOutcome = () => async(dispatch) =>{
             type: OUTCOME_LIST_REQUEST
         })
 
-        const {data} = await axios.get('/api/member/members/') 
+        const {data} = await axios.get('/api/finance/outcome/sum/') 
         
         dispatch({
             type:OUTCOME_LIST_SUCCESS,

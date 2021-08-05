@@ -19,6 +19,14 @@ import StudentEditScreen from './screens/StudentEditScreen'
 import MemberScreen from './screens/MemberScreen'
 import MemberCreateScreen from './screens/MemberCreateScreen'
 import MemberEditScreen from './screens/MemberEditScreen'
+
+import SettingScreen from './screens/SettingScreen'
+
+import FinanceScreen from './screens/FinanceScreen'
+import FinanceIncomeCreateScreen from './screens/FinanceIncomeCreateScreen'
+import FinanceIncomeDetailScreen from './screens/FinanceIncomeDetailScreen'
+import FinanceIncomeEditScreen from './screens/FinanceIncomeEditScreen'
+
 function App() {
   return (
     <Router>
@@ -42,6 +50,13 @@ function App() {
           <Route path='/member' component={MemberScreen} exact/>
           <Route path='/member/create' component={MemberCreateScreen} />
           <Route path='/member/:id/edit' component={MemberEditScreen} />
+
+          <Route path='/finance' component={FinanceScreen} exact/>
+          <Route path='/finance/income/create' component={FinanceIncomeCreateScreen} />
+          <Route path='/finance/income/:id' component={FinanceIncomeDetailScreen} />
+          <Route path='/finance/income/:id/edit' component={FinanceIncomeEditScreen} />
+
+
         </Container>
       </main>
       
