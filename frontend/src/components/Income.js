@@ -25,10 +25,13 @@ function Income() {
 
     },[dispatch])
     return (
+        
         <Row>
+        <tr><td><Button variant="outline-primary">新增收入款項</Button></td></tr>
+        
         <h1>收入列表</h1>
        
-                   
+        <h3>總收入統計 {incomesum}</h3>           
 
                         <Table striped bordered hover responsive className='table-sm'>
                         <thead>

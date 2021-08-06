@@ -36,21 +36,23 @@ function Finance() {
                     <Table striped bordered hover responsive className='table-lg'>
                     <thead>
                         <tr>
-                            <th>目前結餘</th>
+                            
                             <th>收入</th>
                             <th>支出</th>
+                            <th>目前結餘</th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                { finance }
-                                </td>
+                               
                                 <td>
                                 { incomesum }
                                 </td>
                                 <td>
                                 { outcomesum }
+                                </td>
+                                <td>
+                                { finance }
                                 </td>
                             </tr>
                         </tbody>
