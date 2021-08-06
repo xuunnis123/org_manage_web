@@ -1,0 +1,80 @@
+
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { Table, Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
+import  Tab  from 'react-bootstrap/Tab'
+import Tabs  from 'react-bootstrap/Tabs'
+import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { Link } from 'react-router-dom'
+import { listIncome,sumIncome  } from '../actions/financeActions'
+function Income() {
+    const dispatch = useDispatch()
+    const financeList = useSelector(state => state.financeList)
+    const { error, loading, finance } = financeList
+    const incomeSum = useSelector(state => state.incomeSum)
+    const { incomeSumError, incomeSumLoading, incomesum } = incomeSum
+
+    const incomeList = useSelector(state => state.incomeList)
+    const { incomeError, incomeLoading, incomes } = incomeList
+   
+    useEffect(() =>{
+       
+        dispatch(listIncome())
+        dispatch(sumIncome())
+
+    },[dispatch])
+    return (
+        <Row>
+        <h1>收入列表</h1>
+       
+                   
+
+                        <Table striped bordered hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>動作</th>
+                            
+                                <th>日期</th>
+                                <th>傳票號數</th>
+                                <th>科目</th>
+                                <th>類別</th>
+                                <th>摘要</th>
+                                <th>捐助來源</th>
+                                <th>收入金額</th>
+                                <th>單位</th>
+                                
+                                <th>經手人</th>
+                               
+                                
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {incomes.map(oneIncome => (
+                                <tr key={oneIncome._id}>
+                                    <td><Link to={``}><Button type="button"><i className='fas fa-edit'></i></Button></Link></td>
+                                    
+                                    
+                
+                                    <td>{oneIncome.modified_at}</td>
+                                    <td>{oneIncome.category}</td>
+                                    <td>{oneIncome.subject}</td>
+                                    <td>{oneIncome.title}</td>
+                                    <td>{oneIncome.detail}</td>
+                                    <td>{oneIncome.from_whom}</td>
+                                    <td>{oneIncome.income_money}</td>
+                                    <td>{oneIncome.unit}</td>
+                                    <td>{oneIncome.confirmed_person}</td>
+                            
+                                </tr>
+                            ))}
+                        </tbody>
+                        </Table>
+        </Row>                        
+       
+         
+    )
+}
+
+export default Income
