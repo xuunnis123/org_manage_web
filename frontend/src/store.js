@@ -12,7 +12,7 @@ import { studentListReducers,studentAddReducers,studentDetailsReducer,studentUpd
 
 import { memberListReducers,memberAddReducers,memberDetailsReducer,memberUpdateReducers } from './reducers/memberReducers'
 
-import { financeListReducers,incomeListReducers,outcomeListReducers,incomeDetailsReducer,outcomeDetailsReducer,incomeAddReducers,outcomeAddReducers,incomeUpdateReducers,outcomeUpdateReducers } from './reducers/financeReducers'
+import { financeListReducers,incomeListReducers,outcomeListReducers,incomeDetailsReducer,outcomeDetailsReducer,incomeAddReducers,outcomeAddReducers,incomeUpdateReducers,outcomeUpdateReducers ,incomeSumReducers, outcomeSumReducers} from './reducers/financeReducers'
 
 const reducer = combineReducers({
     productList: productListReducers,
@@ -49,7 +49,10 @@ const reducer = combineReducers({
     incomeAdd:incomeAddReducers,
     outcomeAdd:outcomeAddReducers,
     incomeUpdate:incomeUpdateReducers,
-    outcomeUpdate:outcomeUpdateReducers
+    outcomeUpdate:outcomeUpdateReducers,
+
+    incomeSum:incomeSumReducers,
+    outcomeSum:outcomeSumReducers,
 
 })
 

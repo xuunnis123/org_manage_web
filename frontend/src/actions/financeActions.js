@@ -47,6 +47,14 @@ import {
     OUTCOME_DELETE_SUCCESS,
     OUTCOME_DELETE_FAIL,
 
+    INCOME_SUM_REQUEST,
+    INCOME_SUM_SUCCESS,
+    INCOME_SUM_FAIL,
+
+    OUTCOME_SUM_REQUEST,
+    OUTCOME_SUM_SUCCESS,
+    OUTCOME_SUM_FAIL,
+
 } from '../constants/financeConstants'
 export const listFinance = () => async(dispatch) =>{
     try {
@@ -71,13 +79,59 @@ export const listFinance = () => async(dispatch) =>{
         })
     }
 }
+export const sumIncome = () => async(dispatch) =>{
+    try {
+        dispatch({
+            type: INCOME_SUM_REQUEST
+        })
+
+        const {data} = await axios.get('/api/finance/income/sum/') 
+        
+        dispatch({
+            type:INCOME_SUM_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: INCOME_SUM_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+export const sumOutcome = () => async(dispatch) =>{
+    try {
+        dispatch({
+            type: OUTCOME_SUM_REQUEST
+        })
+
+        const {data} = await axios.get('/api/finance/outcome/sum/') 
+        
+        dispatch({
+            type:OUTCOME_SUM_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: OUTCOME_SUM_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
 export const listIncome = () => async(dispatch) =>{
     try {
         dispatch({
             type: INCOME_LIST_REQUEST
         })
 
-        const {data} = await axios.get('/api/finance/income/sum/') 
+        const {data} = await axios.get('/api/finance/incomeList') 
         
         dispatch({
             type:INCOME_LIST_SUCCESS,
@@ -100,7 +154,7 @@ export const listOutcome = () => async(dispatch) =>{
             type: OUTCOME_LIST_REQUEST
         })
 
-        const {data} = await axios.get('/api/finance/outcome/sum/') 
+        const {data} = await axios.get('/api/finance/outcomeList') 
         
         dispatch({
             type:OUTCOME_LIST_SUCCESS,

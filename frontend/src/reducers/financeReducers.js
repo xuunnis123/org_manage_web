@@ -46,6 +46,14 @@ import {
      OUTCOME_DELETE_SUCCESS,
      OUTCOME_DELETE_FAIL,
 
+     INCOME_SUM_REQUEST,
+     INCOME_SUM_SUCCESS,
+     INCOME_SUM_FAIL,
+
+     OUTCOME_SUM_REQUEST,
+     OUTCOME_SUM_SUCCESS,
+     OUTCOME_SUM_FAIL,
+
  } from '../constants/financeConstants'
 
 
@@ -67,7 +75,42 @@ import {
     }
 
 }
+export const incomeSumReducers = ( state = { incomesum:[] }, action) =>{
+    switch(action.type){
+        case INCOME_SUM_REQUEST:
+            return { loading : true, incomesum:[] }
+        
+        case INCOME_SUM_SUCCESS:
+            return { loading : false, incomesum: action.payload }
 
+        case INCOME_SUM_FAIL:
+            return { loading : false, error: action.payload }
+
+        
+
+        default:
+            return state    
+    }
+
+}
+export const outcomeSumReducers = ( state = { outcomesum:[] }, action) =>{
+    switch(action.type){
+        case OUTCOME_SUM_REQUEST:
+            return { loading : true, outcomesum:[] }
+        
+        case OUTCOME_SUM_SUCCESS:
+            return { loading : false, outcomesum: action.payload }
+
+        case OUTCOME_SUM_FAIL:
+            return { loading : false, error: action.payload }
+
+        
+
+        default:
+            return state    
+    }
+
+}
 export const incomeListReducers = ( state = { incomes:[] }, action) =>{
     switch(action.type){
         case INCOME_LIST_REQUEST:
