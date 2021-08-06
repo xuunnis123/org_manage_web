@@ -219,7 +219,7 @@ export const outcomeDetail = (id) => async(dispatch) =>{
     }
 }
 
-export const addIncome = ( name,job, phone, address, title, is_staff, is_admin, memo, family, intro_by) => async(dispatch,getState) =>{
+export const addIncome = ( category,title, from_whom, confirmed_person, subject, detail, income_money, unit) => async(dispatch,getState) =>{
     try{
         dispatch({
 
@@ -236,7 +236,7 @@ export const addIncome = ( name,job, phone, address, title, is_staff, is_admin, 
                 }
             }
         const {data} = await axios.post(
-             '/api/INCOME/create/',
+             '/api/income/create/',
              {'job': job, 'name': name ,'phone':phone,'address':address,'title':title,'is_staff':is_staff,'memo':memo, 'is_admin': is_admin,'family':family,'intro_by':intro_by},
              config
              ) 
@@ -276,7 +276,7 @@ export const addOutcome = ( name,job, phone, address, title, is_staff, is_admin,
                 }
             }
         const {data} = await axios.post(
-             '/api/OUTCOME/create/',
+             '/api/outcome/create/',
              {'job': job, 'name': name ,'phone':phone,'address':address,'title':title,'is_staff':is_staff,'memo':memo, 'is_admin': is_admin,'family':family,'intro_by':intro_by},
              config
              ) 

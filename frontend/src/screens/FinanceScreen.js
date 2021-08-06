@@ -21,6 +21,8 @@ function FinanceScreen() {
 
     },[dispatch])
 
+   
+    
     return (
         
             <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">

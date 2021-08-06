@@ -8,7 +8,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { Link } from 'react-router-dom'
 import { listIncome,sumIncome  } from '../actions/financeActions'
-function Income() {
+function Income({history}) {
     const dispatch = useDispatch()
     const financeList = useSelector(state => state.financeList)
     const { error, loading, finance } = financeList
@@ -24,10 +24,18 @@ function Income() {
         dispatch(sumIncome())
 
     },[dispatch])
+
+    const addToIncomeHandler =() =>{
+        history.push('/finance/income/create')
+    }
     return (
         
         <Row>
-        <tr><td><Button variant="outline-primary">新增收入款項</Button></td></tr>
+        <tr><td><Button 
+        variant="outline-primary"
+        onClick = {addToIncomeHandler}
+        className='btn-block' 
+        type='button'>新增收入款項</Button></td></tr>
         
         <h1>收入列表</h1>
        
