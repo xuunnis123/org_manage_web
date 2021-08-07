@@ -31,11 +31,11 @@ function Income({history}) {
     return (
         
         <Row>
-        <tr><td><Button 
+        <Col><Button 
         variant="outline-primary"
         onClick = {addToIncomeHandler}
         className='btn-block' 
-        type='button'>新增收入款項</Button></td></tr>
+        type='button'>新增收入款項</Button></Col>
         
         <h1>收入列表</h1>
        

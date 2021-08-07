@@ -8,9 +8,8 @@ import Message from '../components/Message'
 import Finance from '../components/Finance'
 import Income from '../components/Income'
 import Outcome from '../components/Outcome'
-import CategoryContributeContext from '../components/CategoryContributeContext'
 import { Link } from 'react-router-dom'
-
+import SettingScreen from './SettingScreen'
 
 function FinanceScreen() {
     
@@ -35,8 +34,8 @@ function FinanceScreen() {
         <Tab eventKey="outcome" title="支出" >
             <Outcome />
         </Tab>
-        <Tab eventKey="category_contributecontext" title="項目管理" >
-            <CategoryContributeContext />
+        <Tab eventKey="settingScreen" title="項目管理" >
+            <SettingScreen />
         </Tab>
         </Tabs>
         

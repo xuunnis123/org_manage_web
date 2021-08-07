@@ -56,7 +56,15 @@ function App() {
           <Route path='/finance/income/:id' component={FinanceIncomeDetailScreen} />
           <Route path='/finance/income/:id/edit' component={FinanceIncomeEditScreen} />
 
-
+          <Route path='/setting' component={SettingScreen} exact/>
+          <Route path='/setting/income/contributecontext/create' component={SettingScreen} />
+          <Route path='/setting/outcome/contributecontext/create' component={SettingScreen} />
+          <Route path='/setting/income/moneycategory/create' component={SettingScreen} />
+          <Route path='/setting/outcome/moneycategory/create' component={SettingScreen} />
+          <Route path='/setting/outcome/moneycategory/:id/edit' component={SettingScreen} />
+          <Route path='/setting/income/moneycategory/:id/edit' component={SettingScreen} />
+          <Route path='/setting/outcome/contributecontext/:id/edit' component={SettingScreen} />
+          <Route path='/setting/income/contributecontext/:id/edit' component={SettingScreen} />
         </Container>
       </main>
       

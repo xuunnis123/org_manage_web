@@ -77,13 +77,13 @@ import{
 
 }from '../constants/settingConstants'
 
-export const incomeContributeContextListReducers = ( state = { incomeContributeContextList:[] }, action) =>{
+export const incomeContributeContextListReducers = ( state = { incomeContributeContext:[] }, action) =>{
     switch(action.type){
         case INCOME_CONTRIBUTE_CONTEXT_LIST_REQUEST:
-            return { loading : true, incomeContributeContextList:[] }
+            return { loading : true, incomeContributeContext:[] }
         
         case INCOME_CONTRIBUTE_CONTEXT_LIST_SUCCESS:
-            return { loading : false, incomeContributeContextList: action.payload }
+            return { loading : false, incomeContributeContext: action.payload }
 
         case INCOME_CONTRIBUTE_CONTEXT_LIST_FAIL:
             return { loading : false, error: action.payload }
@@ -96,16 +96,16 @@ export const incomeContributeContextListReducers = ( state = { incomeContributeC
 
 }
 
-export const outcomeContributeContextListReducers = ( state = { outcomeContributeContextList:[] }, action) =>{
+export const outcomeContributeContextListReducers = ( state = { outcomeContributeContext:[] }, action) =>{
     switch(action.type){
         case OUTCOME_CONTRIBUTE_CONTEXT_LIST_REQUEST:
-            return { loading : true, outcomeContributeContextList:[] }
+            return { loadingoutcomeContributeContextList : true, outcomeContributeContext:[] }
         
         case OUTCOME_CONTRIBUTE_CONTEXT_LIST_SUCCESS:
-            return { loading : false, outcomeContributeContextList: action.payload }
+            return { loadingoutcomeContributeContextList : false, outcomeContributeContext: action.payload }
 
         case OUTCOME_CONTRIBUTE_CONTEXT_LIST_FAIL:
-            return { loading : false, error: action.payload }
+            return { loadingoutcomeContributeContextList : false, erroroutcomeContributeContextList: action.payload }
 
         
 
@@ -115,16 +115,16 @@ export const outcomeContributeContextListReducers = ( state = { outcomeContribut
 
 }
 
-export const incomeMoneyCategoryListReducers = ( state = { incomeMoneyCategoryList:[] }, action) =>{
+export const incomeMoneyCategoryListReducers = ( state = { incomeMoneyCategory:[] }, action) =>{
     switch(action.type){
         case INCOME_MONEY_CATEGORY_LIST_REQUEST:
-            return { loading : true, incomeMoneyCategoryList:[] }
+            return { loadingincomeMoneyCategoryList : true, incomeMoneyCategory:[] }
         
         case INCOME_MONEY_CATEGORY_LIST_SUCCESS:
-            return { loading : false, incomeMoneyCategoryList: action.payload }
+            return { loadingincomeMoneyCategoryList : false, incomeMoneyCategory: action.payload }
 
         case INCOME_MONEY_CATEGORY_LIST_FAIL:
-            return { loading : false, error: action.payload }
+            return { loadingincomeMoneyCategoryList : false, errorincomeMoneyCategoryList: action.payload }
 
         
 
@@ -134,16 +134,16 @@ export const incomeMoneyCategoryListReducers = ( state = { incomeMoneyCategoryLi
 
 }
 
-export const outcomeMoneyCategoryListReducers = ( state = { outcomeMoneyCategoryList:[] }, action) =>{
+export const outcomeMoneyCategoryListReducers = ( state = { outcomeMoneyCategory:[] }, action) =>{
     switch(action.type){
         case OUTCOME_MONEY_CATEGORY_LIST_REQUEST:
-            return { loading : true, outcomeMoneyCategoryList:[] }
+            return { loadingoutcomeMoneyCategoryList : true, outcomeMoneyCategory:[] }
         
         case OUTCOME_MONEY_CATEGORY_LIST_SUCCESS:
-            return { loading : false, outcomeMoneyCategoryList: action.payload }
+            return { loadingoutcomeMoneyCategoryList : false, outcomeMoneyCategory: action.payload }
 
         case OUTCOME_MONEY_CATEGORY_LIST_FAIL:
-            return { loading : false, error: action.payload }
+            return { loadingoutcomeMoneyCategoryList : false, erroroutcomeMoneyCategoryList: action.payload }
 
         
 

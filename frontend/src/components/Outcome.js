@@ -26,7 +26,7 @@ function Income() {
     return (
         
         <Row>
-            <tr><td><Button variant="outline-primary">新增支出款項</Button></td></tr>
+            <Col><Button variant="outline-primary">新增支出款項</Button></Col>
             
                     <h1>支出列表</h1>
                     <h3>總支出統計 {outcomesum}</h3>

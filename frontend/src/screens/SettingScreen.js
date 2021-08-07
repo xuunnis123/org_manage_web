@@ -1,30 +1,43 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Row, Col,Table,Button } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 
 
-import { listFinance, listIncome, listOutcome } from '../actions/financeActions'
+import { listIncomeContributeContext,listOutcomeContributeContext,listIncomeMoneyCategory, listOutcomeMoneyCategory,addIncomeContributeContext,addOutcomeContributeContext,addIncomeMoneyCategory,addOutcomeMoneyCategory,updateIncomeContributeContext,updateOutcomeContributeContext,updateIncomeMoneyCategory,updateOutcomeMoneyCategory,removeFromIncomeContributeContext,removeFromOutcomeContributeContext,removeFromIncomeMoneyCategory,removeFromOutcomeMoneyCategory} from '../actions/settingActions'
 
-function SettingScreen() {
+function SettingScreen(history) {
     
     const dispatch = useDispatch()
-    const financeList = useSelector(state => state.financeList)
-    const { error, loading, finance } = financeList
-
-    const incomeList = useSelector(state => state.incomeList)
-    const { incomeError, incomeLoading, incomes } = incomeList
-    
-    const outcomeList = useSelector(state => state.outcomeList)
-    const { outcomeError, outcomeLoading, outcomes } = outcomeList
-    
+    const incomeContributeContextList = useSelector(state => state.incomeContributeContextList)
+    const { error, loading, incomeContributeContext } = incomeContributeContextList
+    const outcomeContributeContextList = useSelector(state => state.outcomeContributeContextList)
+    const { erroroutcomeContributeContextList, loadingoutcomeContributeContextList, outcomeContributeContext } = outcomeContributeContextList
+    const incomeMoneyCategoryList = useSelector(state => state.incomeMoneyCategoryList)
+    const { errorincomeMoneyCategoryList, loadingincomeMoneyCategoryList, incomeMoneyCategory} = incomeMoneyCategoryList
+    const outcomeMoneyCategoryList = useSelector(state => state.outcomeMoneyCategoryList)
+    const { erroroutcomeMoneyCategoryList, loadingoutcomeMoneyCategoryList, outcomeMoneyCategory} = outcomeMoneyCategoryList
     useEffect(() =>{
-       
-      
-
+        dispatch(listIncomeContributeContext())
+        dispatch(listOutcomeContributeContext())
+        dispatch(listIncomeMoneyCategory())
+        dispatch(listOutcomeMoneyCategory())
+    
     },[dispatch])
-
+    const addToIncomeContributeContextHandler =() =>{
+        history.push('/setting/income/contributecontext/create')
+    }
+    const addToOutcomeContributeContextHandler =() =>{
+        history.push('/setting/outcome/contributecontext/create')
+    }
+    const addToIncomeMoneyCategoryHandler =() =>{
+        history.push('/setting/income/moneycategory/create')
+    }
+    const addToOutcomeMoneyCategoryHandler =() =>{
+        history.push('/setting/outcome/moneycategory/create')
+    }
     return (
         <div>
             <h1>設定頁面</h1>
@@ -33,7 +46,160 @@ function SettingScreen() {
             : error ? <Message variant='danger'>{error}</Message>
                 : 
                 <Row>
-               設定頁面
+                    <h2>項目種類</h2>
+                    <h3>收入部分</h3>
+                    <Col>
+                    <Button
+                        onClick = {addToIncomeContributeContextHandler}
+                        className='btn-block' 
+                        type='button'> 
+                        新增收入來源分類
+                    </Button>
+                    </Col>
+                     <Table striped bordered hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>動作</th>
+                                
+                                <th>收入來源分類</th>
+                                
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {incomeContributeContext.map(oneIncomeContributeContext => (
+                                <tr key={oneIncomeContributeContext._id}>
+                                    <td><Link to={`/setting/income/contributecontext/${oneIncomeContributeContext._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                                    onClick={()=>(oneIncomeContributeContext._id)}><i className='fas fa-trash'> </i>
+                                    </Button></td>
+                                    
+                                    <td>{oneIncomeContributeContext.context}</td>
+                                   
+                                    
+                                </tr>
+                            ))}
+                        </tbody>
+                        </Table>
+
+                        <h3>支出部分</h3>
+                        <Col>
+                        <Button 
+                        onClick = {addToOutcomeContributeContextHandler}
+                        className='btn-block' 
+                        type='button'> 
+                        新增支出來源分類
+                    </Button>
+                    </Col>
+                        <Table striped bordered hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>動作</th>
+                                
+                                <th>支出來源分類</th>
+                                
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {outcomeContributeContext.map(oneOutcomeContributeContext => (
+                                <tr key={oneOutcomeContributeContext._id}>
+                                    <td><Link to={`/setting/income/contributecontext/${oneOutcomeContributeContext._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                                    onClick={()=>(oneOutcomeContributeContext._id)}><i className='fas fa-trash'> </i>
+                                    </Button></td>
+                                    
+                                    <td>{oneOutcomeContributeContext.context}</td>
+                                   
+                                    
+                                </tr>
+                            ))}
+                        </tbody>
+                        </Table>
+
+                        <h2>傳票種類</h2>
+                        <h3>收入部分</h3>
+                        <Col>
+                        <Button 
+                        onClick = {addToIncomeMoneyCategoryHandler}
+                        className='btn-block' 
+                        type='button'> 
+                        新增收入傳票號數代碼
+                    </Button>
+                    </Col>
+                        <Table striped bordered hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>動作</th>
+                                
+                                <th>收入傳票號數代碼</th>
+                                <th>收入傳票號數解釋</th>
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {incomeMoneyCategory.map(oneIncomeMoneyCategory => (
+                                <tr key={oneIncomeMoneyCategory._id}>
+                                    <td><Link to={`/setting/income/moneycategory/${oneIncomeMoneyCategory._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                                    onClick={()=>(oneIncomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
+                                    </Button></td>
+                                    
+                                    <td>{oneIncomeMoneyCategory.name}</td>
+                                    <td>{oneIncomeMoneyCategory.detail}</td>
+                                   
+                                    
+                                </tr>
+                            ))}
+                        </tbody>
+                        </Table>
+                        <h3>支出部分</h3>
+                        <Col>
+                        <Button 
+                        onClick = {addToOutcomeMoneyCategoryHandler}
+                        className='btn-block' 
+                        type='button'> 
+                        新增支出傳票號數代碼
+                    </Button>
+                    </Col>
+                        <Table striped bordered hover responsive className='table-sm'>
+                        <thead>
+                            <tr>
+                                <th>動作</th>
+                                
+                                <th>支出傳票號數代碼</th>
+                                <th>支出傳票號數解釋</th>
+                               
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {outcomeMoneyCategory.map(oneOutcomeMoneyCategory => (
+                                <tr key={oneOutcomeMoneyCategory._id}>
+                                    <td><Link to={`/setting/outcome/moneycategory/${oneOutcomeMoneyCategory._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                                    onClick={()=>(oneOutcomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
+                                    </Button></td>
+                                    
+                                    <td>{oneOutcomeMoneyCategory.name}</td>
+                                    <td>{oneOutcomeMoneyCategory.detail}</td>
+                                   
+                                    
+                                </tr>
+                            ))}
+                        </tbody>
+                        </Table>
             </Row>
         }
 
