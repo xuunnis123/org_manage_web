@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
+import { Route , withRouter,useHistory} from 'react-router-dom';
 import { Row, Col,Table,Button } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
@@ -8,8 +9,9 @@ import Message from '../components/Message'
 
 import { listIncomeContributeContext,listOutcomeContributeContext,listIncomeMoneyCategory, listOutcomeMoneyCategory,addIncomeContributeContext,addOutcomeContributeContext,addIncomeMoneyCategory,addOutcomeMoneyCategory,updateIncomeContributeContext,updateOutcomeContributeContext,updateIncomeMoneyCategory,updateOutcomeMoneyCategory,removeFromIncomeContributeContext,removeFromOutcomeContributeContext,removeFromIncomeMoneyCategory,removeFromOutcomeMoneyCategory} from '../actions/settingActions'
 
-function SettingScreen(history) {
+function SettingScreen() {
     
+    let history = useHistory();
     const dispatch = useDispatch()
     const incomeContributeContextList = useSelector(state => state.incomeContributeContextList)
     const { error, loading, incomeContributeContext } = incomeContributeContextList
@@ -25,8 +27,10 @@ function SettingScreen(history) {
         dispatch(listIncomeMoneyCategory())
         dispatch(listOutcomeMoneyCategory())
     
+        
     },[dispatch])
     const addToIncomeContributeContextHandler =() =>{
+        
         history.push('/setting/income/contributecontext/create')
     }
     const addToOutcomeContributeContextHandler =() =>{
@@ -44,7 +48,10 @@ function SettingScreen(history) {
             
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
-                : 
+                : erroroutcomeContributeContextList?<Message variant='danger'>{erroroutcomeContributeContextList}</Message>
+                :errorincomeMoneyCategoryList?<Message variant='danger'>{errorincomeMoneyCategoryList}</Message>
+                :erroroutcomeMoneyCategoryList?<Message variant='danger'>{erroroutcomeMoneyCategoryList}</Message>
+                :
                 <Row>
                     <h2>項目種類</h2>
                     <h3>收入部分</h3>

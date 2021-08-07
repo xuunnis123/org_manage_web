@@ -24,6 +24,7 @@ function FinanceScreen() {
     
     return (
         
+        
             <Tabs defaultActiveKey="home" id="uncontrolled-tab-example" className="mb-3">
         <Tab eventKey="home" title="概況">
             <Finance />

@@ -22,6 +22,8 @@ import MemberEditScreen from './screens/MemberEditScreen'
 
 import SettingScreen from './screens/SettingScreen'
 
+import SettingIncomeContributeCreateScreen from './screens/SettingIncomeContributeCreateScreen'
+
 import FinanceScreen from './screens/FinanceScreen'
 import FinanceIncomeCreateScreen from './screens/FinanceIncomeCreateScreen'
 import FinanceIncomeDetailScreen from './screens/FinanceIncomeDetailScreen'
@@ -57,7 +59,7 @@ function App() {
           <Route path='/finance/income/:id/edit' component={FinanceIncomeEditScreen} />
 
           <Route path='/setting' component={SettingScreen} exact/>
-          <Route path='/setting/income/contributecontext/create' component={SettingScreen} />
+          <Route path='/setting/income/contributecontext/create' component={SettingIncomeContributeCreateScreen} />
           <Route path='/setting/outcome/contributecontext/create' component={SettingScreen} />
           <Route path='/setting/income/moneycategory/create' component={SettingScreen} />
           <Route path='/setting/outcome/moneycategory/create' component={SettingScreen} />
