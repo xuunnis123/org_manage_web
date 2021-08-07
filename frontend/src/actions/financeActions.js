@@ -236,8 +236,8 @@ export const addIncome = ( category,title, from_whom, confirmed_person, subject,
                 }
             }
         const {data} = await axios.post(
-             '/api/income/create/',
-             {'job': job, 'name': name ,'phone':phone,'address':address,'title':title,'is_staff':is_staff,'memo':memo, 'is_admin': is_admin,'family':family,'intro_by':intro_by},
+             '/api/finance/income/create/',
+             {'category': category, 'title': title ,'from_whom':from_whom,'confirmed_person':confirmed_person,'subject':subject,'detail':detail,'income_money':income_money, 'unit': unit},
              config
              ) 
          
@@ -276,7 +276,7 @@ export const addOutcome = ( name,job, phone, address, title, is_staff, is_admin,
                 }
             }
         const {data} = await axios.post(
-             '/api/outcome/create/',
+             '/api/finance/outcome/create/',
              {'job': job, 'name': name ,'phone':phone,'address':address,'title':title,'is_staff':is_staff,'memo':memo, 'is_admin': is_admin,'family':family,'intro_by':intro_by},
              config
              ) 

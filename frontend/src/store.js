@@ -14,6 +14,8 @@ import { memberListReducers,memberAddReducers,memberDetailsReducer,memberUpdateR
 
 import { financeListReducers,incomeListReducers,outcomeListReducers,incomeDetailsReducer,outcomeDetailsReducer,incomeAddReducers,outcomeAddReducers,incomeUpdateReducers,outcomeUpdateReducers ,incomeSumReducers, outcomeSumReducers} from './reducers/financeReducers'
 
+import { incomeContributeContextListReducers,outcomeContributeContextListReducers,incomeMoneyCategoryListReducers,outcomeMoneyCategoryListReducers,incomeContributeContextAddReducers,incomeMoneyCategoryAddReducers,outcomeContributeContextAddReducers,outcomeMoneyCategoryAddReducers,incomeContributeContextUpdateReducers,incomeMoneyCategoryUpdateReducers,outcomeContributeContextUpdateReducers,outcomeMoneyCategoryUpdateReducers} from './reducers/settingReducers'
+
 const reducer = combineReducers({
     productList: productListReducers,
     productDetails: productDetailsReducer,
@@ -53,6 +55,24 @@ const reducer = combineReducers({
 
     incomeSum:incomeSumReducers,
     outcomeSum:outcomeSumReducers,
+
+    incomeContributeContextList:incomeContributeContextListReducers,
+    outcomeContributeContextList:outcomeContributeContextListReducers,
+
+    incomeMoneyCategoryList:incomeMoneyCategoryListReducers,
+    outcomeMoneyCategoryList:outcomeMoneyCategoryListReducers,
+
+    incomeContributeContextAdd:incomeContributeContextAddReducers,
+    incomeMoneyCategoryAdd:incomeMoneyCategoryAddReducers,
+
+    outcomeContributeContextAdd:outcomeContributeContextAddReducers,
+    outcomeMoneyCategoryAdd:outcomeMoneyCategoryAddReducers,
+
+    incomeContributeContextUpdate:incomeContributeContextUpdateReducers,
+    incomeMoneyCategoryUpdate:incomeMoneyCategoryUpdateReducers,
+
+    outcomeContributeContextUpdate:outcomeContributeContextUpdateReducers,
+    outcomeMoneyCategoryUpdate:outcomeMoneyCategoryUpdateReducers,
 
 })
 
