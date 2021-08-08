@@ -217,7 +217,7 @@ export const addOutcomeContributeContext = ( context) => async(dispatch,getState
                 }
             }
         const {data} = await axios.post(
-             '/api/setting/income/contributeContext/create/',
+             '/api/setting/outcome/contributeContext/create/',
              {'context': context},
              config
              ) 

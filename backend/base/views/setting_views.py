@@ -194,7 +194,7 @@ def addOutcomeMoneyCategory(request):
         
         outcomeMoneyCategory = OutcomeMoneyCategory.objects.create(
             name = data['name'],
-            datail = data['datail'],
+            detail = data['detail'],
         )
 
         serializer = OutcomeMoneyCategorySerilizer(outcomeMoneyCategory, many=False)
