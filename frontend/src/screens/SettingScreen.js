@@ -42,6 +42,26 @@ function SettingScreen() {
     const addToOutcomeMoneyCategoryHandler =() =>{
         history.push('/setting/outcome/moneycategory/create')
     }
+
+    const removeFromIncomeContributeContextHandler = (id) => {
+        dispatch(removeFromIncomeContributeContext(id))
+        window.location.reload()
+    }
+    const removeFromOutcomeContributeContextHandler = (id) => {
+        dispatch(removeFromOutcomeContributeContext(id))
+        window.location.reload()
+    }
+
+    
+    const removeFromIncomeMoneyCategoryHandler = (id) => {
+        dispatch(removeFromIncomeMoneyCategory(id))
+        window.location.reload()
+    }
+
+    const removeFromOutcomeMoneyCategoryHandler = (id) => {
+        dispatch(removeFromOutcomeMoneyCategory(id))
+        window.location.reload()
+    }
     return (
         <div>
             <h1>設定頁面</h1>
@@ -81,7 +101,8 @@ function SettingScreen() {
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>(oneIncomeContributeContext._id)}><i className='fas fa-trash'> </i>
+                        
+                                    onClick={()=>removeFromIncomeContributeContextHandler(oneIncomeContributeContext._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
                                     
                                     <td>{oneIncomeContributeContext.context}</td>
@@ -119,7 +140,7 @@ function SettingScreen() {
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>(oneOutcomeContributeContext._id)}><i className='fas fa-trash'> </i>
+                                    onClick={()=>removeFromOutcomeContributeContextHandler(oneOutcomeContributeContext._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
                                     
                                     <td>{oneOutcomeContributeContext.context}</td>
@@ -158,7 +179,7 @@ function SettingScreen() {
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>(oneIncomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
+                                    onClick={()=>removeFromIncomeMoneyCategoryHandler(oneIncomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
                                     
                                     <td>{oneIncomeMoneyCategory.name}</td>
@@ -196,7 +217,7 @@ function SettingScreen() {
                                     <Button
                                     type='button'
                                     variant='danger'
-                                    onClick={()=>(oneOutcomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
+                                    onClick={()=>removeFromOutcomeMoneyCategoryHandler(oneOutcomeMoneyCategory._id)}><i className='fas fa-trash'> </i>
                                     </Button></td>
                                     
                                     <td>{oneOutcomeMoneyCategory.name}</td>
