@@ -72,6 +72,21 @@ import{
     OUTCOME_MONEY_CATEGORY_DELETE_SUCCESS,
     OUTCOME_MONEY_CATEGORY_DELETE_FAIL,
     
+    INCOME_MONEY_CATEGORY_DETAIL_REQUEST,
+    INCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+    INCOME_MONEY_CATEGORY_DETAIL_FAIL,
+
+    OUTCOME_MONEY_CATEGORY_DETAIL_REQUEST,
+    OUTCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+    OUTCOME_MONEY_CATEGORY_DETAIL_FAIL,
+
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST,
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
+
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST,
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
 
 
 
@@ -299,4 +314,98 @@ export const outcomeMoneyCategoryUpdateReducers = ( state = { outcome_money_cate
         default:
             return state    
     }
+}
+
+
+
+export const incomeContributeContextDetailsReducer = ( state = { incomeContribute:{} }, action) =>{
+    switch(action.type){
+        case INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST:
+            return { loading : true, ...state }
+        
+        case INCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS:
+            console.log(action.payload)
+            return { loading : false, incomeContribute: action.payload }
+
+        case INCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL:
+            return { loading : false, error: action.payload }
+
+        case INCOME_CONTRIBUTE_CONTEXT_UPDATE_RESET:
+            return {
+                loading : false, error: action.payload 
+            }
+
+        default:
+            return state    
+    }
+
+}
+
+export const outcomeContributeContextDetailsReducer = ( state = { outcomeContribute:{} }, action) =>{
+    switch(action.type){
+        case OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST:
+            return { loading : true, ...state }
+        
+        case OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS:
+            console.log(action.payload)
+            return { loading : false, outcomeContribute: action.payload }
+
+        case OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL:
+            return { loading : false, error: action.payload }
+
+        case OUTCOME_CONTRIBUTE_CONTEXT_UPDATE_RESET:
+            return {
+                loading : false, error: action.payload 
+            }
+
+        default:
+            return state    
+    }
+
+}
+
+export const incomeMoneyCategoryDetailsReducer = ( state = { incomeMoneyCate:{} }, action) =>{
+    switch(action.type){
+        case INCOME_MONEY_CATEGORY_DETAIL_REQUEST:
+            return { loading : true, ...state }
+        
+        case INCOME_MONEY_CATEGORY_DETAIL_SUCCESS:
+            console.log(action.payload)
+            return { loading : false, incomeMoneyCate: action.payload }
+
+        case INCOME_MONEY_CATEGORY_DETAIL_FAIL:
+            return { loading : false, error: action.payload }
+
+        case INCOME_MONEY_CATEGORY_LIST_UPDATE_RESET:
+            return {
+                loading : false, error: action.payload 
+            }
+
+        default:
+            return state    
+    }
+
+}
+
+export const outcomeMoneyCategoryDetailsReducer = ( state = { outcomeMoneyCate:{} }, action) =>{
+    switch(action.type){
+        case OUTCOME_MONEY_CATEGORY_DETAIL_REQUEST:
+            return { loading : true, ...state }
+        
+        case OUTCOME_MONEY_CATEGORY_DETAIL_SUCCESS:
+            console.log(action.payload)
+            return { loading : false, outcomeMoneyCate: action.payload }
+
+        case OUTCOME_MONEY_CATEGORY_DETAIL_FAIL:
+            return { loading : false, error: action.payload }
+
+        case OUTCOME_MONEY_CATEGORY_LIST_UPDATE_RESET:
+            return {
+                loading : false, error: action.payload 
+            }
+
+        default:
+            return state    
+    }
+
 }

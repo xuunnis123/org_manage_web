@@ -63,6 +63,24 @@ import {
     OUTCOME_MONEY_CATEGORY_DELETE_REQUEST,
     OUTCOME_MONEY_CATEGORY_DELETE_SUCCESS,
     OUTCOME_MONEY_CATEGORY_DELETE_FAIL,
+
+    INCOME_MONEY_CATEGORY_DETAIL_REQUEST,
+    INCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+    INCOME_MONEY_CATEGORY_DETAIL_FAIL,
+
+    OUTCOME_MONEY_CATEGORY_DETAIL_REQUEST,
+    OUTCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+    OUTCOME_MONEY_CATEGORY_DETAIL_FAIL,
+
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST,
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+    INCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
+
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST,
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+    OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
+
+
     
 
 } from '../constants/settingConstants'
@@ -159,6 +177,103 @@ export const listOutcomeMoneyCategory = () => async(dispatch) =>{
     }
 }
 
+
+export const incomeContributeContextDetail = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST
+        })
+        console.log(id)
+        const {data} = await axios.get(`/api/setting/income/contributeContext/${id}`) 
+        
+        dispatch({
+            type:INCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: INCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+
+export const outcomeContributeContextDetail = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST
+        })
+        console.log(id)
+        const {data} = await axios.get(`/api/setting/outcome/contributeContext/${id}`) 
+        
+        dispatch({
+            type:OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: OUTCOME_CONTRIBUTE_CONTEXT_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+
+
+export const incomeMoneyCategoryDetail = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: INCOME_MONEY_CATEGORY_DETAIL_REQUEST
+        })
+        console.log(id)
+        const {data} = await axios.get(`/api/setting/income/moneycategory/${id}`) 
+        
+        dispatch({
+            type:INCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: INCOME_MONEY_CATEGORY_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+
+export const outcomeMoneyCategoryDetail = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: OUTCOME_MONEY_CATEGORY_DETAIL_REQUEST
+        })
+        console.log(id)
+        const {data} = await axios.get(`/api/setting/outcome/moneycategory/${id}`) 
+        
+        dispatch({
+            type:OUTCOME_MONEY_CATEGORY_DETAIL_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: OUTCOME_MONEY_CATEGORY_DETAIL_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
 
 export const addIncomeContributeContext = ( context) => async(dispatch,getState) =>{
     try{
@@ -337,7 +452,7 @@ export const updateIncomeContributeContext = (incomeContributeContext) => async(
                     Authorization: `Bearer ${userInfo.access}`
                 }
             }
-        
+        console.log(incomeContributeContext)
         const {data} = await axios.put(
              `/api/setting/income/contributeContext/update/${incomeContributeContext._id}`,
              incomeContributeContext,

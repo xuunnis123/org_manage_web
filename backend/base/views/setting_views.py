@@ -45,6 +45,8 @@ def addIncomeContributeContext(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateIncomeContributeContext(request,pk):
+    print("updateIncomeContributeContext")
+    print("pk=",pk)
     incomeContributeContext = IncomeContributeContext.objects.get(_id=pk)
     if incomeContributeContext:
         data = request.data
