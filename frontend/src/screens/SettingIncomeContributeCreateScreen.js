@@ -13,7 +13,7 @@ import { addIncomeContributeContext } from '../actions/settingActions'
 function SettingIncomeContributeCreateScreen({ location, history}) {
    
     const [context,setContext] = useState('')
-   
+
 
     
     const dispatch = useDispatch()

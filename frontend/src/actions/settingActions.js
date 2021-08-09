@@ -452,7 +452,7 @@ export const updateIncomeContributeContext = (incomeContributeContext) => async(
                     Authorization: `Bearer ${userInfo.access}`
                 }
             }
-        console.log(incomeContributeContext)
+    
         const {data} = await axios.put(
              `/api/setting/income/contributeContext/update/${incomeContributeContext._id}`,
              incomeContributeContext,

@@ -25,12 +25,14 @@ function SettingIncomeContributeEditScreen({ match, history}) {
     useEffect(()=>{
         dispatch({type:INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST})
         dispatch(incomeContributeContextDetail(incomeContributeContextId))
+       
+    
         if(successUpdate){
             dispatch({ type: INCOME_CONTRIBUTE_CONTEXT_UPDATE_RESET })
             history.push(redirect)
         }else{
             if (!incomeContribute.context || incomeContribute._id != Number(incomeContributeContextId)){
-               console.log("into")
+               
                 history.push(redirect)
             }else{
                 setContext(incomeContribute.context)
@@ -43,7 +45,12 @@ function SettingIncomeContributeEditScreen({ match, history}) {
     const submitHandler =(e) =>{
         e.preventDefault()
         
-        dispatch(updateIncomeContributeContext( context))
+        dispatch(updateIncomeContributeContext( 
+            {
+                _id:incomeContributeContextId,
+                context:context,
+            }
+            ))
         
         window.location.href = redirect
         
