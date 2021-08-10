@@ -27,6 +27,10 @@ import SettingOutcomeContributeCreateScreen from './screens/SettingOutcomeContri
 import SettingOutcomeMoneyCategoryCreateScreen from './screens/SettingOutcomeMoneyCategoryCreateScreen'
 import SettingIncomeMoneyCategoryCreateScreen from './screens/SettingIncomeMoneyCategoryCreateScreen'
 import SettingIncomeContributeEditScreen from './screens/SettingIncomeContributeEditScreen'
+import SettingOutcomeContributeEditScreen from './screens/SettingOutcomeContributeEditScreen'
+import SettingIncomeMoneyCategoryEditScreen from './screens/SettingIncomeMoneyCategoryEditScreen'
+import SettingOutcomeMoneyCategoryEditScreen from './screens/SettingOutcomeMoneyCategoryEditScreen'
+
 
 import FinanceScreen from './screens/FinanceScreen'
 import FinanceIncomeCreateScreen from './screens/FinanceIncomeCreateScreen'
@@ -67,10 +71,11 @@ function App() {
           <Route path='/setting/outcome/contributecontext/create' component={SettingOutcomeContributeCreateScreen} />
           <Route path='/setting/income/moneycategory/create' component={SettingIncomeMoneyCategoryCreateScreen} />
           <Route path='/setting/outcome/moneycategory/create' component={SettingOutcomeMoneyCategoryCreateScreen} />
-          <Route path='/setting/outcome/moneycategory/:id/edit' component={SettingScreen} />
-          <Route path='/setting/income/moneycategory/:id/edit' component={SettingScreen} />
-          <Route path='/setting/outcome/contributecontext/:id/edit' component={SettingScreen} />
+          <Route path='/setting/outcome/moneycategory/:id/edit' component={SettingOutcomeMoneyCategoryEditScreen} />
+          <Route path='/setting/income/moneycategory/:id/edit' component={SettingIncomeMoneyCategoryEditScreen} />
+          <Route path='/setting/outcome/contributecontext/:id/edit' component={SettingOutcomeContributeEditScreen} />
           <Route path='/setting/income/contributecontext/:id/edit' component={SettingIncomeContributeEditScreen} />
+          
         </Container>
       </main>
       

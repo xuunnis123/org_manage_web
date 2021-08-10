@@ -26,9 +26,9 @@ function Finance() {
     return (
         <Row>
         <h1>財務管理頁面</h1>
-           
-            <tr>
-            <h2>概況</h2>
+        <h2>概況</h2>
+            
+            
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
                 : 
@@ -61,7 +61,7 @@ function Finance() {
             </Row>
             
             }
-            </tr>
+            
             </Row>
     )
 }

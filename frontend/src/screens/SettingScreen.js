@@ -136,7 +136,7 @@ function SettingScreen() {
                         <tbody>
                             {outcomeContributeContext.map(oneOutcomeContributeContext => (
                                 <tr key={oneOutcomeContributeContext._id}>
-                                    <td><Link to={`/setting/income/contributecontext/${oneOutcomeContributeContext._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <td><Link to={`/setting/outcome/contributecontext/${oneOutcomeContributeContext._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
                                     <Button
                                     type='button'
                                     variant='danger'
