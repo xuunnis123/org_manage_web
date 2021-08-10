@@ -403,7 +403,7 @@ export const removeFromIncome = (id) => async(dispatch, getState) => {
             }
         }
         const {data} = await axios.delete(
-         `/api/INCOME/delete/${id}`,
+         `/api/finance/income/delete/${id}`,
          config
          ) 
         

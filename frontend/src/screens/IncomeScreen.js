@@ -7,7 +7,7 @@ import Tabs  from 'react-bootstrap/Tabs'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { Link, useHistory } from 'react-router-dom'
-import { listIncome,sumIncome  } from '../actions/financeActions'
+import { listIncome,sumIncome,removeFromIncome  } from '../actions/financeActions'
 function IncomeScreen() {
     let history = useHistory();
     const dispatch = useDispatch()
@@ -29,6 +29,10 @@ function IncomeScreen() {
     const addToIncomeHandler =() =>{
         
         history.push('/finance/income/create')
+    }
+    const removeFromIncomeHandler = (id) => {
+        dispatch(removeFromIncome(id))
+        window.location.reload()
     }
     return (
         
@@ -66,7 +70,14 @@ function IncomeScreen() {
                         <tbody>
                             {incomes.map(oneIncome => (
                                 <tr key={oneIncome._id}>
-                                    <td><Link to={``}><Button type="button"><i className='fas fa-edit'></i></Button></Link></td>
+                                    <td><Link to={`/finance/income/${oneIncome._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                        
+                                    onClick={()=>removeFromIncomeHandler(oneIncome._id)}><i className='fas fa-trash'> </i>
+                                    </Button>
+                                    </td>
                                     
                                     
                 

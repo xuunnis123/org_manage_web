@@ -16,7 +16,7 @@ function FinanceScreen() {
     const dispatch = useDispatch()
    
     useEffect(() =>{
-      
+        
 
     },[dispatch])
 
