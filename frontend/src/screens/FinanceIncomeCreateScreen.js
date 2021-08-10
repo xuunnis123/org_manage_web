@@ -7,9 +7,12 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
 import {  addIncome } from '../actions/financeActions'
-
+import { listMember, addMember } from '../actions/memberActions'
 function FinanceIncomeCreateScreen({history}) {
-    
+    const [categoryName, setCategoryName] = useState('請選擇傳票票號')
+    const [titleName, setTitleName] = useState('請選擇收入項目')
+    const [from_whomName, setFrom_whomName] = useState('請選擇捐款人')
+    const [confirmed_personName, setConfirmed_personName] = useState('請選擇經手人')
     const [category, setCategory] = useState('')
     const [title, setTitle] = useState('')
     const [from_whom, setFrom_whom] = useState('')
@@ -34,15 +37,19 @@ function FinanceIncomeCreateScreen({history}) {
     const incomeMoneyCategoryList = useSelector(state => state.incomeMoneyCategoryList)
     const { errorincomeMoneyCategoryList, loadingincomeMoneyCategoryList, incomeMoneyCategory} = incomeMoneyCategoryList
     
+    const memberList = useSelector(state => state.memberList)
+    const { errorList, loadingList, members } = memberList
     useEffect(()=>{
         
-        
+        dispatch(listMember())
     },[income,history, redirect])
 
     const handleSelectCategory=(e)=>{
         
-        var splitFamily = e.split(',');
-        
+        var splitCategory = e.split(',');
+        setCategory(splitCategory[0])
+
+        setCategoryName(splitCategory[1]);  
         
       }
 
@@ -50,7 +57,30 @@ function FinanceIncomeCreateScreen({history}) {
 
       const handleSelectTitle=(e)=>{
         
-        var splitFamily = e.split(',');
+        var splitTitle = e.split(',');
+        setTitle(splitTitle[0])
+
+        setTitleName(splitTitle[1]); 
+        
+        
+      }
+      
+      const handleSelectFrom_whom=(e)=>{
+        
+        var splitTitle = e.split(',');
+        setFrom_whom(splitTitle[0])
+
+        setFrom_whomName(splitTitle[1]); 
+        
+        
+      }
+
+      const handleSelectConfirm_person=(e)=>{
+        
+        var splitTitle = e.split(',');
+        setConfirmed_person(splitTitle[0])
+
+        setConfirmed_personName(splitTitle[1]); 
         
         
       }
@@ -75,7 +105,7 @@ function FinanceIncomeCreateScreen({history}) {
                     <Form.Label>傳票號數</Form.Label>
                     <DropdownButton
                 aligndown="true"
-                title= {category}
+                title= {categoryName}
                 id="dropdown-menu-align-down"
                 onSelect={handleSelectCategory}
                     >
@@ -92,14 +122,14 @@ function FinanceIncomeCreateScreen({history}) {
                     <Form.Label>內容</Form.Label>
                     <DropdownButton
                 aligndown="true"
-                title= {title}
+                title= {titleName}
                 id="dropdown-menu-align-down"
                 onSelect={handleSelectTitle}
                     >
 
             {incomeContributeContext.map((title,index) =>{
             
-            return <Dropdown.Item eventKey={[title._id,title.name]} key={index}>{title.name}</Dropdown.Item>
+            return <Dropdown.Item eventKey={[title._id,title.context]} key={index}>{title.context}</Dropdown.Item>
             })}
                        
             </DropdownButton>
@@ -133,18 +163,25 @@ function FinanceIncomeCreateScreen({history}) {
            
             <Form.Group controlId='from_whom'>
                     <Form.Label>捐贈人</Form.Label>
-                    <Form.Control
-                        type='from_whom'
-                        placeholder='備註欄'
-                        value={from_whom}
-                        onChange={(e) => setFrom_whom(e.target.value)}
-                    >
+                    
+                    <DropdownButton
+                        aligndown="true"
+                        title= {from_whomName}
+                        id="dropdown-menu-align-down"
+                        onSelect={handleSelectFrom_whom}
+                            >
 
-                    </Form.Control>
+                    {members.map((member,index) =>{
+                    
+                    return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+                    })}
+                            
+                    </DropdownButton>
             </Form.Group>
             <Form.Group controlId='income_money'>
                     <Form.Label>收入金額</Form.Label>
                     <Form.Control
+                        required
                         type='memo'
                         placeholder='備註欄'
                         value={income_money}
@@ -164,16 +201,22 @@ function FinanceIncomeCreateScreen({history}) {
 
                     </Form.Control>
             </Form.Group>
+            
             <Form.Group controlId='confirmed_person'>
                     <Form.Label>審核人</Form.Label>
-                    <Form.Control
-                        type='memo'
-                        placeholder='備註欄'
-                        value={confirmed_person}
-                        onChange={(e) => setConfirmed_person(e.target.value)}
-                    >
+                    <DropdownButton
+                        aligndown="true"
+                        title= {confirmed_personName}
+                        id="dropdown-menu-align-down"
+                        onSelect={handleSelectConfirm_person}
+                            >
 
-                    </Form.Control>
+                    {members.map((member,index) =>{
+                    
+                    return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+                    })}
+                            
+                    </DropdownButton>
             </Form.Group>
                 <Button type='submit' variant='primary'>
                     建立
