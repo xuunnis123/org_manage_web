@@ -24,22 +24,24 @@ function SettingIncomeContributeEditScreen({ match, history}) {
     const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = incomeContributeContextUpdate
     useEffect(()=>{
         dispatch({type:INCOME_CONTRIBUTE_CONTEXT_DETAIL_REQUEST})
+        
         dispatch(incomeContributeContextDetail(incomeContributeContextId))
        
     
         if(successUpdate){
+            
             dispatch({ type: INCOME_CONTRIBUTE_CONTEXT_UPDATE_RESET })
             history.push(redirect)
         }else{
             if (!incomeContribute.context || incomeContribute._id != Number(incomeContributeContextId)){
-               
-                history.push(redirect)
+              
+                
             }else{
                 setContext(incomeContribute.context)
 
             }
         }
-    },[incomeContribute._id])
+    },[incomeContribute._id,match,incomeContributeContextId])
 
    
     const submitHandler =(e) =>{
