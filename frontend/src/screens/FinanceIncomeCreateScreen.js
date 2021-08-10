@@ -22,21 +22,33 @@ function FinanceIncomeCreateScreen({history}) {
   
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/finance'
+
+
     const incomeAdd = useSelector(state => state.incomeAdd)
     const {error, loading, income} = incomeAdd
 
-    const categoryList = useSelector(state => state.categoryList)
-    const {cateerror, cateloading, categories} = categoryList
+
+    const incomeContributeContextList = useSelector(state => state.incomeContributeContextList)
+    const { errorincomeContribute, loadingincomeContribute, incomeContributeContext } = incomeContributeContextList
+
+    const incomeMoneyCategoryList = useSelector(state => state.incomeMoneyCategoryList)
+    const { errorincomeMoneyCategoryList, loadingincomeMoneyCategoryList, incomeMoneyCategory} = incomeMoneyCategoryList
+    
     useEffect(()=>{
         
-        if(income){
-            
-            history.push(redirect)
-        }
         
-    },[history, income, redirect])
+    },[income,history, redirect])
 
     const handleSelectCategory=(e)=>{
+        
+        var splitFamily = e.split(',');
+        
+        
+      }
+
+      
+
+      const handleSelectTitle=(e)=>{
         
         var splitFamily = e.split(',');
         
@@ -68,9 +80,26 @@ function FinanceIncomeCreateScreen({history}) {
                 onSelect={handleSelectCategory}
                     >
 
-            {categories.map((category,index) =>{
+            {incomeMoneyCategory.map((category,index) =>{
             
             return <Dropdown.Item eventKey={[category._id,category.name]} key={index}>{category.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            </Form.Group>
+
+            <Form.Group controlId='title'>
+                    <Form.Label>內容</Form.Label>
+                    <DropdownButton
+                aligndown="true"
+                title= {title}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectTitle}
+                    >
+
+            {incomeContributeContext.map((title,index) =>{
+            
+            return <Dropdown.Item eventKey={[title._id,title.name]} key={index}>{title.name}</Dropdown.Item>
             })}
                        
             </DropdownButton>
@@ -153,7 +182,7 @@ function FinanceIncomeCreateScreen({history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/school'>
+                     <Link to='/finance'>
                      取消
                         </Link>
                 </Col>

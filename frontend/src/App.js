@@ -63,8 +63,8 @@ function App() {
 
           <Route path='/finance' component={FinanceScreen} exact/>
           <Route path='/finance/income/create' component={FinanceIncomeCreateScreen} />
-          <Route path='/finance/income/:id' component={FinanceIncomeDetailScreen} />
-          <Route path='/finance/income/:id/edit' component={FinanceIncomeEditScreen} />
+          <Route path='/finance/income/detail/:id' component={HomeScreen} />
+          <Route path='/finance/income/:id/edit' component={HomeScreen} />
 
           <Route path='/setting' component={SettingScreen} exact/>
           <Route path='/setting/income/contributecontext/create' component={SettingIncomeContributeCreateScreen} />

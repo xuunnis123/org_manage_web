@@ -6,9 +6,9 @@ import Tabs  from 'react-bootstrap/Tabs'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Finance from '../components/Finance'
-import Income from '../components/Income'
-import Outcome from '../components/Outcome'
-import { Link } from 'react-router-dom'
+import IncomeScreen from './IncomeScreen'
+import OutcomeScreen from './OutcomeScreen'
+import { Link,useHistory } from 'react-router-dom'
 import SettingScreen from './SettingScreen'
 
 function FinanceScreen() {
@@ -30,10 +30,10 @@ function FinanceScreen() {
             <Finance />
         </Tab>
         <Tab eventKey="income" title="收入">
-            <Income />
+            <IncomeScreen />
         </Tab>
         <Tab eventKey="outcome" title="支出" >
-            <Outcome />
+            <OutcomeScreen />
         </Tab>
         <Tab eventKey="settingScreen" title="項目管理" >
             <SettingScreen />

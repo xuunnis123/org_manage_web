@@ -6,9 +6,10 @@ import  Tab  from 'react-bootstrap/Tab'
 import Tabs  from 'react-bootstrap/Tabs'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { listIncome,sumIncome  } from '../actions/financeActions'
-function Income({history}) {
+function IncomeScreen() {
+    let history = useHistory();
     const dispatch = useDispatch()
     const financeList = useSelector(state => state.financeList)
     const { error, loading, finance } = financeList
@@ -26,6 +27,7 @@ function Income({history}) {
     },[dispatch])
 
     const addToIncomeHandler =() =>{
+        
         history.push('/finance/income/create')
     }
     return (
@@ -88,4 +90,4 @@ function Income({history}) {
     )
 }
 
-export default Income
+export default IncomeScreen
