@@ -259,7 +259,7 @@ export const addIncome = ( category,title, from_whom, confirmed_person, subject,
     }
 }
 
-export const addOutcome = ( name,job, phone, address, title, is_staff, is_admin, memo, family, intro_by) => async(dispatch,getState) =>{
+export const addOutcome = ( category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit) => async(dispatch,getState) =>{
     try{
         dispatch({
 
@@ -277,7 +277,7 @@ export const addOutcome = ( name,job, phone, address, title, is_staff, is_admin,
             }
         const {data} = await axios.post(
              '/api/finance/outcome/create/',
-             {'job': job, 'name': name ,'phone':phone,'address':address,'title':title,'is_staff':is_staff,'memo':memo, 'is_admin': is_admin,'family':family,'intro_by':intro_by},
+             {'category': category, 'title': title ,'to_whom':to_whom,'confirmed_person':confirmed_person,'subject':subject,'detail':detail,'outcome_money':outcome_money, 'unit': unit},
              config
              ) 
          
@@ -441,7 +441,7 @@ export const removeFromOutcome = (id) => async(dispatch, getState) => {
             }
         }
         const {data} = await axios.delete(
-         `/api/OUTCOME/delete/${id}`,
+         `/api/finance/outcome/delete/${id}`,
          config
          ) 
         

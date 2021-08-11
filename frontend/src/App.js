@@ -34,8 +34,9 @@ import SettingOutcomeMoneyCategoryEditScreen from './screens/SettingOutcomeMoney
 
 import FinanceScreen from './screens/FinanceScreen'
 import FinanceIncomeCreateScreen from './screens/FinanceIncomeCreateScreen'
-import FinanceIncomeDetailScreen from './screens/FinanceIncomeDetailScreen'
 import FinanceIncomeEditScreen from './screens/FinanceIncomeEditScreen'
+import FinanceOutcomeEditScreen from './screens/FinanceOutcomeEditScreen'
+import FinanceOutcomeCreateScreen from './screens/FinanceOutcomeCreateScreen'
 
 function App() {
   return (
@@ -63,8 +64,11 @@ function App() {
 
           <Route path='/finance' component={FinanceScreen} exact/>
           <Route path='/finance/income/create' component={FinanceIncomeCreateScreen} />
-          <Route path='/finance/income/detail/:id' component={HomeScreen} />
           <Route path='/finance/income/:id/edit' component={FinanceIncomeEditScreen} />
+
+          <Route path='/finance/outcome/create' component={FinanceOutcomeCreateScreen} />
+          <Route path='/finance/outcome/:id/edit' component={FinanceOutcomeEditScreen} />
+
 
           <Route path='/setting' component={SettingScreen} exact/>
           <Route path='/setting/income/contributecontext/create' component={SettingIncomeContributeCreateScreen} />

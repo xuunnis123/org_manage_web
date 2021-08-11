@@ -6,9 +6,10 @@ import  Tab  from 'react-bootstrap/Tab'
 import Tabs  from 'react-bootstrap/Tabs'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import { Link } from 'react-router-dom'
-import { listOutcome,sumOutcome } from '../actions/financeActions'
-function Income() {
+import { Link,useHistory } from 'react-router-dom'
+import { listOutcome,sumOutcome,removeFromOutcome } from '../actions/financeActions'
+function OutcomeScreen() {
+    let history = useHistory();
     const dispatch = useDispatch()
   
     const outcomeList = useSelector(state => state.outcomeList)
@@ -23,13 +24,27 @@ function Income() {
         dispatch(sumOutcome())
 
     },[dispatch])
+
+    const addToOutcomeHandler =() =>{
+        
+        history.push('/finance/outcome/create')
+    }
+
+    const removeFromOutcomeHandler = (id) => {
+        dispatch(removeFromOutcome(id))
+        window.location.reload()
+    }
     return (
         
         <Row>
-            <Col><Button variant="outline-primary">新增支出款項</Button></Col>
+        <Col><Button 
+        variant="outline-primary"
+        onClick = {addToOutcomeHandler}
+        className='btn-block' 
+        type='button'>新增支出款項</Button></Col>
             
                     <h1>支出列表</h1>
-                    <h3>總支出統計 {outcomesum}</h3>
+                    <h3>總支出統計 - {outcomesum} NTD </h3>
                         <Table striped bordered hover responsive className='table-sm'>
                         <thead>
                             <tr>
@@ -53,7 +68,14 @@ function Income() {
                         <tbody>
                             {outcomes.map(oneOutcome => (
                                 <tr key={oneOutcome._id}>
-                                    <td><Link to={``}><Button type="button"><i className='fas fa-edit'></i></Button></Link></td>
+                                    <td><Link to={`/finance/outcome/${oneOutcome._id}/edit`}><Button type="button"><i className='fas fa-edit'></i></Button></Link>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                        
+                                    onClick={()=>removeFromOutcomeHandler(oneOutcome._id)}><i className='fas fa-trash'> </i>
+                                    </Button>
+                                    </td>
                    
                                     <td>{oneOutcome.modified_at}</td>
                                     <td>{oneOutcome.category}</td>
@@ -73,4 +95,4 @@ function Income() {
     )
 }
 
-export default Income
+export default OutcomeScreen
