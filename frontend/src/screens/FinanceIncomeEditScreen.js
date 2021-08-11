@@ -262,7 +262,7 @@ function FinanceIncomeEditScreen({match,history}) {
                     </DropdownButton>
             </Form.Group>
                 <Button type='submit' variant='primary'>
-                    建立
+                    保存
                 </Button>
             </Form>
         

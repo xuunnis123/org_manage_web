@@ -178,7 +178,7 @@ export const incomeDetail = (id) => async(dispatch) =>{
             type: INCOME_DETAIL_REQUEST
         })
         console.log(id)
-        const {data} = await axios.get(`/api/INCOME/${id}`) 
+        const {data} = await axios.get(`/api/finance/income/${id}`) 
         
         dispatch({
             type:INCOME_DETAIL_SUCCESS,
@@ -201,7 +201,7 @@ export const outcomeDetail = (id) => async(dispatch) =>{
             type: OUTCOME_DETAIL_REQUEST
         })
         console.log(id)
-        const {data} = await axios.get(`/api/OUTCOME/${id}`) 
+        const {data} = await axios.get(`/api/finance/outcome/${id}`) 
         
         dispatch({
             type:OUTCOME_DETAIL_SUCCESS,
