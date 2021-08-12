@@ -151,11 +151,7 @@ class MemberSerializer(serializers.ModelSerializer):
         serializer = MemberSerializer(intro_by_one, many=False)
         
         return serializer.data['name']
-class ScholorshipSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Scholorship
-        fields = '__all__'
     
 class StudentSerializer(serializers.ModelSerializer):
     school = serializers.SerializerMethodField(read_only = True)
@@ -266,4 +262,31 @@ class OutcomeSerializer(serializers.ModelSerializer):
         
         serializer = MemberSerializer(member_one, many=False)
        
+        return serializer.data['name']
+
+class SemesterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Semester
+        fields = '__all__'
+
+class ScholorshipSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only = True)
+    semester = serializers.SerializerMethodField(read_only = True)
+
+    class Meta:
+        model = Scholorship
+        fields = '__all__'
+
+    def get_name(self, obj):
+        studentname = obj.name
+        
+        serializer = StudentSerializer(studentname, many=False)
+        
+        return serializer.data['name']
+
+    def get_semester(self, obj):
+        semesterone = obj.semester
+        
+        serializer = SemesterSerializer(semesterone, many=False)
+        
         return serializer.data['name']

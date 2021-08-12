@@ -14,8 +14,8 @@ class Semester(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200)
     year = models.CharField(max_length=200)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.name
