@@ -5,10 +5,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Scholorship, Student, Semester
+from base.models import Scholorship, Student, Semester,OutCome,OutcomeMoneyCategory,OutcomeContributeContext,Member
 
  
-from base.serializers import ScholorshipSerializer,StudentSerializer,SemesterSerializer
+from base.serializers import ScholorshipSerializer,StudentSerializer,SemesterSerializer,OutcomeSerializer
 
 from rest_framework import status
 
@@ -30,15 +30,19 @@ def getScholorship(request,pk):
 def addScholorship(request):
     
     data = request.data
-    #TODO add Outcome 
+  
     if data and len(data) == 0:
         return Response({'detail': 'No Scholorship Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
+        #FIX
+        outcomeMoneyId = OutcomeMoneyCategory.objects.get(_id=1) #B-2
+        outcomeContributeId = OutcomeContributeContext.objects.get(_id=4) #獎學金
+        confrimed_personId = Member.objects.get(_id=4) #李小姐
 
-      
         if data['name']!='':
 
             studentName = Student.objects.get(id=data['name'])
+            
         else:studentName = None
 
         if data['semester']!='':
@@ -46,14 +50,26 @@ def addScholorship(request):
             semesterName = Semester.objects.get(_id=data['semester'])
         else:
             semesterName = None
+
         scholorship = Scholorship.objects.create(
             name = studentName,
             price = data['price'],
             semester = semesterName,
         )
+        outcome = OutCome.objects.create(
+            category =   outcomeMoneyId,
+            title = outcomeContributeId,
+            to_whom = studentName,
+            detail = str(semesterName)+'| 獎學金:'+ str(studentName),
+            outcome_money = data['price'],
+            unit = 'NTD',
+            confirmed_person = confrimed_personId,
 
+        )
         serializer = ScholorshipSerializer(scholorship, many=False)
-        print("serializer:",serializer)
+        serializer2 = OutcomeSerializer(outcome, many=False)
+        print("serializer2:",serializer2)
+
         return Response(serializer.data)
 
 
