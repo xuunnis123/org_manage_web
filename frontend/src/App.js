@@ -38,6 +38,10 @@ import FinanceIncomeEditScreen from './screens/FinanceIncomeEditScreen'
 import FinanceOutcomeEditScreen from './screens/FinanceOutcomeEditScreen'
 import FinanceOutcomeCreateScreen from './screens/FinanceOutcomeCreateScreen'
 
+import ScholarshipScreen from './screens/ScholarshipScreen'
+import ScholarshipCreateScreen from './screens/ScholarshipCreateScreen'
+import ScholarshipEditScreen from './screens/ScholarshipEditScreen'
+
 function App() {
   return (
     <Router>
@@ -80,6 +84,9 @@ function App() {
           <Route path='/setting/outcome/contributecontext/:id/edit' component={SettingOutcomeContributeEditScreen} />
           <Route path='/setting/income/contributecontext/:id/edit' component={SettingIncomeContributeEditScreen} />
           
+          <Route path='/scholarship' component={ScholarshipScreen} exact/>
+          <Route path='/scholarship/create' component={ScholarshipCreateScreen} />
+          <Route path='/scholarship/:id/edit' component={ScholarshipEditScreen} />
         </Container>
       </main>
       

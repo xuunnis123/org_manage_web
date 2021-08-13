@@ -60,7 +60,7 @@ function Header() {
                                 <Nav.Link><i className="fas fa-briefcase"></i> 關懷戶</Nav.Link>
                                 
                             </LinkContainer>
-                            <LinkContainer to='/scholorship'>
+                            <LinkContainer to='/scholarship'>
                                 <Nav.Link><i className="fas fa-envelope-open-text"></i> 獎學金</Nav.Link>
                             </LinkContainer>
                             <LinkContainer to='/finance'>

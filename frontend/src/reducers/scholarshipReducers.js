@@ -1,37 +1,37 @@
 import { 
-    MEMBERS_LIST_REQUEST,
-    MEMBERS_LIST_SUCCESS,
-    MEMBERS_LIST_FAIL,
+    SCHOLARSHIP_LIST_REQUEST,
+    SCHOLARSHIP_LIST_SUCCESS,
+    SCHOLARSHIP_LIST_FAIL,
 
     
 
-    MEMBER_ADD_REQUEST,
-    MEMBER_ADD_SUCCESS,
-    MEMBER_ADD_FAIL,
+    SCHOLARSHIP_ADD_REQUEST,
+    SCHOLARSHIP_ADD_SUCCESS,
+    SCHOLARSHIP_ADD_FAIL,
 
-    MEMBER_UPDATE_REQUEST,
-    MEMBER_UPDATE_SUCCESS,
-    MEMBER_UPDATE_FAIL,
+    SCHOLARSHIP_UPDATE_REQUEST,
+    SCHOLARSHIP_UPDATE_SUCCESS,
+    SCHOLARSHIP_UPDATE_FAIL,
 
-    MEMBER_DETAIL_REQUEST,
-    MEMBER_DETAIL_SUCCESS,
-    MEMBER_DETAIL_FAIL,
-    MEMBER_UPDATE_RESET,
+    SCHOLARSHIP_DETAIL_REQUEST,
+    SCHOLARSHIP_DETAIL_SUCCESS,
+    SCHOLARSHIP_DETAIL_FAIL,
+    SCHOLARSHIP_UPDATE_RESET,
 
-    MEMBER_DELETE_REQUEST,
-    MEMBER_DELETE_SUCCESS,
-    MEMBER_DELETE_FAIL,
+    SCHOLARSHIP_DELETE_REQUEST,
+    SCHOLARSHIP_DELETE_SUCCESS,
+    SCHOLARSHIP_DELETE_FAIL,
 
- } from '../constants/memberConstants'
- export const memberListReducers = ( state = { members:[] }, action) =>{
+ } from '../constants/scholarshipConstants'
+ export const scholarshipListReducers = ( state = { scholarships:[] }, action) =>{
     switch(action.type){
-        case MEMBERS_LIST_REQUEST:
-            return { loading : true, members:[] }
+        case SCHOLARSHIP_LIST_REQUEST:
+            return { loading : true, scholarships:[] }
         
-        case MEMBERS_LIST_SUCCESS:
-            return { loading : false, members: action.payload }
+        case SCHOLARSHIP_LIST_SUCCESS:
+            return { loading : false, scholarships: action.payload }
 
-        case MEMBERS_LIST_FAIL:
+        case SCHOLARSHIP_LIST_FAIL:
             return { loading : false, error: action.payload }
 
         
@@ -43,19 +43,19 @@ import {
 }
 
 
-export const memberDetailsReducer = ( state = { member:{} }, action) =>{
+export const scholarshipDetailsReducer = ( state = { scholarship:{} }, action) =>{
     switch(action.type){
-        case MEMBER_DETAIL_REQUEST:
+        case SCHOLARSHIP_DETAIL_REQUEST:
             return { loading : true, ...state }
         
-        case MEMBER_DETAIL_SUCCESS:
+        case SCHOLARSHIP_DETAIL_SUCCESS:
             console.log(action.payload)
-            return { loading : false, member: action.payload }
+            return { loading : false, scholarship: action.payload }
 
-        case MEMBER_DETAIL_FAIL:
+        case SCHOLARSHIP_DETAIL_FAIL:
             return { loading : false, error: action.payload }
 
-        case MEMBER_UPDATE_RESET:
+        case SCHOLARSHIP_UPDATE_RESET:
             return {
                 loading : false, error: action.payload 
             }
@@ -66,15 +66,15 @@ export const memberDetailsReducer = ( state = { member:{} }, action) =>{
 
 }
 
-export const memberAddReducers = ( state = {  }, action) =>{
+export const scholarshipAddReducers = ( state = {  }, action) =>{
     switch(action.type){
-        case MEMBER_ADD_REQUEST:
+        case SCHOLARSHIP_ADD_REQUEST:
             return { loading : true }
         
-        case MEMBER_ADD_SUCCESS:
-            return { loading : false, member: action.payload }
+        case SCHOLARSHIP_ADD_SUCCESS:
+            return { loading : false, scholarship: action.payload }
 
-        case MEMBER_ADD_FAIL:
+        case SCHOLARSHIP_ADD_FAIL:
             return { loading : false, error: action.payload }
 
         
@@ -84,19 +84,19 @@ export const memberAddReducers = ( state = {  }, action) =>{
     }
 
 }
-export const memberUpdateReducers = ( state = { member:{} }, action) =>{
+export const scholarshipUpdateReducers = ( state = { scholarship:{} }, action) =>{
     switch(action.type){
-        case MEMBER_UPDATE_REQUEST:
+        case SCHOLARSHIP_UPDATE_REQUEST:
             return { loading : true }
         
-        case MEMBER_UPDATE_SUCCESS:
-            return { loading : false, success:true, member: action.payload }
+        case SCHOLARSHIP_UPDATE_SUCCESS:
+            return { loading : false, success:true, scholarship: action.payload }
 
-        case MEMBER_UPDATE_FAIL:
+        case SCHOLARSHIP_UPDATE_FAIL:
             return { loading : false, error: action.payload }
 
-        case MEMBER_UPDATE_RESET:
-                return { member: {} }
+        case SCHOLARSHIP_UPDATE_RESET:
+                return { scholarship: {} }
 
         default:
             return state    
