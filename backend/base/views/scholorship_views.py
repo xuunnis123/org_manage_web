@@ -34,7 +34,7 @@ def addScholorship(request):
     if data and len(data) == 0:
         return Response({'detail': 'No Scholorship Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        #FIX
+        #TODO
         outcomeMoneyId = OutcomeMoneyCategory.objects.get(_id=1) #B-2
         outcomeContributeId = OutcomeContributeContext.objects.get(_id=4) #獎學金
         confrimed_personId = Member.objects.get(_id=4) #李小姐
@@ -83,10 +83,15 @@ def addScholorship(request):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def updateScholorship(request, pk):
-    #TODO add Outcome
     
-    print("pk:",pk)
+    
     scholorship = Scholorship.objects.get(_id=pk)
+
+    scholorshipOutcome= ScholorshipWithOutcomeRelation.objects.get(scholorship_id=pk)
+    outcome_id = scholorshipOutcome.outcome_id
+    
+    outcome = OutCome.objects.get(_id=outcome_id)
+    
     if scholorship:
         data = request.data
         
@@ -94,7 +99,7 @@ def updateScholorship(request, pk):
                 
                 if data.get('price'):
                     scholorship.price = data['price']
-
+                    outcome.outcome_money = data['price']
               
                 if data.get('name'):
                     if data['name']!='':
@@ -107,7 +112,10 @@ def updateScholorship(request, pk):
                         studentName = None
                 
                     scholorship.name = studentName
-
+                    outcome.to_whom = studentName
+                    semesterName=scholorship.semester.name
+                    
+                    outcome.detail = str(semesterName)+'| 獎學金:'+ str(studentName)
                 
                 if data.get('semester'):
                     
@@ -123,11 +131,11 @@ def updateScholorship(request, pk):
                         
                         semestername = None
 
-                    scholorship.semestername = semestername
-
+                    scholorship.semester = semestername
+                    outcome.detail = str(semestername)+'| 獎學金:'+ str(studentName)
            
         scholorship.save()
-        
+        outcome.save()
         serializer = ScholorshipSerializer(scholorship, many=False)
 
         return Response(serializer.data)
@@ -136,7 +144,13 @@ def updateScholorship(request, pk):
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
 def deleteScholorship(request, pk):
-    #TODO OUTCOME
     scholorForDeletion = Scholorship.objects.get(_id=pk)
+    
+    scholorshipOutcome= ScholorshipWithOutcomeRelation.objects.get(scholorship_id=pk)
+    outcome_id = scholorshipOutcome.outcome_id
+    outcomeForDeletion = OutCome.objects.get(_id=outcome_id)
+
     scholorForDeletion.delete()
+    outcomeForDeletion.delete()
+    scholorshipOutcome.delete()
     return Response('獎學金已刪除')
