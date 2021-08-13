@@ -207,3 +207,8 @@ class Scholorship(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class ScholorshipWithOutcomeRelation(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
+    scholorship_id = models.IntegerField( max_length=200, null = True, blank=True)
+    outcome_id = models.IntegerField( max_length=200, null = True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)

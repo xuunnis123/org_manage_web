@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Scholorship, Student, Semester,OutCome,OutcomeMoneyCategory,OutcomeContributeContext,Member
+from base.models import Scholorship, Student, Semester,OutCome,OutcomeMoneyCategory,OutcomeContributeContext,Member,ScholorshipWithOutcomeRelation
 
  
 from base.serializers import ScholorshipSerializer,StudentSerializer,SemesterSerializer,OutcomeSerializer
@@ -66,6 +66,12 @@ def addScholorship(request):
             confirmed_person = confrimed_personId,
 
         )
+       
+
+        ScholorshipWithOutcomeRelation.objects.create(
+            scholorship_id = scholorship._id,
+            outcome_id = outcome._id,
+            )
         serializer = ScholorshipSerializer(scholorship, many=False)
         serializer2 = OutcomeSerializer(outcome, many=False)
         print("serializer2:",serializer2)

@@ -290,3 +290,8 @@ class ScholorshipSerializer(serializers.ModelSerializer):
         serializer = SemesterSerializer(semesterone, many=False)
         
         return serializer.data['name']
+
+class ScholorshipWithOutcomeRelationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ScholorshipWithOutcomeRelation
+        fields = '__all__'
