@@ -102,7 +102,7 @@ class SchoolSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CaseSerializer(serializers.ModelSerializer):
-    scholorship = serializers.SerializerMethodField(read_only = True)
+    scholarship = serializers.SerializerMethodField(read_only = True)
     
     student = serializers.SerializerMethodField(read_only = True)
     
@@ -110,14 +110,14 @@ class CaseSerializer(serializers.ModelSerializer):
         model = Case
         fields = '__all__'
 
-    def get_scholorship(self, obj):
+    def get_scholarship(self, obj):
         try:
 
-            scholorship = obj.scholorship
+            scholarship = obj.scholarship
         except :
-            scholorship = None
+            scholarship = None
 
-        serializer = ScholorshipSerializer(scholorship, many=True)
+        serializer = ScholarshipSerializer(scholarship, many=True)
         return serializer.data
 
     
@@ -269,12 +269,12 @@ class SemesterSerializer(serializers.ModelSerializer):
         model = Semester
         fields = '__all__'
 
-class ScholorshipSerializer(serializers.ModelSerializer):
+class ScholarshipSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only = True)
     semester = serializers.SerializerMethodField(read_only = True)
 
     class Meta:
-        model = Scholorship
+        model = Scholarship
         fields = '__all__'
 
     def get_name(self, obj):
@@ -291,7 +291,7 @@ class ScholorshipSerializer(serializers.ModelSerializer):
         
         return serializer.data['name']
 
-class ScholorshipWithOutcomeRelationSerializer(serializers.ModelSerializer):
+class ScholarshipWithOutcomeRelationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ScholorshipWithOutcomeRelation
+        model = ScholarshipWithOutcomeRelation
         fields = '__all__'

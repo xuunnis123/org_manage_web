@@ -5,34 +5,34 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Scholorship, Student, Semester,OutCome,OutcomeMoneyCategory,OutcomeContributeContext,Member,ScholorshipWithOutcomeRelation
+from base.models import Scholarship, Student, Semester,OutCome,OutcomeMoneyCategory,OutcomeContributeContext,Member,ScholarshipWithOutcomeRelation
 
  
-from base.serializers import ScholorshipSerializer,StudentSerializer,SemesterSerializer,OutcomeSerializer
+from base.serializers import ScholarshipSerializer,StudentSerializer,SemesterSerializer,OutcomeSerializer
 
 from rest_framework import status
 
 @api_view(['GET'])
-def getScholorshipList(request):
-    scholorships = Scholorship.objects.all()
-    serializer = ScholorshipSerializer(scholorships, many=True)
+def getScholarshipList(request):
+    scholarships = Scholarship.objects.all()
+    serializer = ScholarshipSerializer(scholarships, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getScholorship(request,pk):
-    scholorship = Scholorship.objects.get(_id=pk)
-    serializer = ScholorshipSerializer(scholorship, many=False)
+def getScholarship(request,pk):
+    scholarship = Scholarship.objects.get(_id=pk)
+    serializer = ScholarshipSerializer(scholarship, many=False)
     return Response(serializer.data)
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def addScholorship(request):
+def addScholarship(request):
     
     data = request.data
   
     if data and len(data) == 0:
-        return Response({'detail': 'No Scholorship Items'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'No Scholarship Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         #TODO
         outcomeMoneyId = OutcomeMoneyCategory.objects.get(_id=1) #B-2
@@ -51,7 +51,7 @@ def addScholorship(request):
         else:
             semesterName = None
 
-        scholorship = Scholorship.objects.create(
+        scholarship = Scholarship.objects.create(
             name = studentName,
             price = data['price'],
             semester = semesterName,
@@ -68,11 +68,11 @@ def addScholorship(request):
         )
        
 
-        ScholorshipWithOutcomeRelation.objects.create(
-            scholorship_id = scholorship._id,
+        ScholarshipWithOutcomeRelation.objects.create(
+            scholarship_id = scholarship._id,
             outcome_id = outcome._id,
             )
-        serializer = ScholorshipSerializer(scholorship, many=False)
+        serializer = ScholarshipSerializer(scholarship, many=False)
         serializer2 = OutcomeSerializer(outcome, many=False)
         print("serializer2:",serializer2)
 
@@ -82,23 +82,23 @@ def addScholorship(request):
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
-def updateScholorship(request, pk):
+def updateScholarship(request, pk):
     
     
-    scholorship = Scholorship.objects.get(_id=pk)
+    scholarship = Scholarship.objects.get(_id=pk)
 
-    scholorshipOutcome= ScholorshipWithOutcomeRelation.objects.get(scholorship_id=pk)
-    outcome_id = scholorshipOutcome.outcome_id
+    scholarshipOutcome= ScholarshipWithOutcomeRelation.objects.get(scholarship_id=pk)
+    outcome_id = scholarshipOutcome.outcome_id
     
     outcome = OutCome.objects.get(_id=outcome_id)
     
-    if scholorship:
+    if scholarship:
         data = request.data
         
         if data and len(data) != 0:
                 
                 if data.get('price'):
-                    scholorship.price = data['price']
+                    scholarship.price = data['price']
                     outcome.outcome_money = data['price']
               
                 if data.get('name'):
@@ -111,9 +111,9 @@ def updateScholorship(request, pk):
                     else:
                         studentName = None
                 
-                    scholorship.name = studentName
+                    scholarship.name = studentName
                     outcome.to_whom = studentName
-                    semesterName=scholorship.semester.name
+                    semesterName=scholarship.semester.name
                     
                     outcome.detail = str(semesterName)+'| 獎學金:'+ str(studentName)
                 
@@ -131,26 +131,26 @@ def updateScholorship(request, pk):
                         
                         semestername = None
 
-                    scholorship.semester = semestername
+                    scholarship.semester = semestername
                     outcome.detail = str(semestername)+'| 獎學金:'+ str(studentName)
            
-        scholorship.save()
+        scholarship.save()
         outcome.save()
-        serializer = ScholorshipSerializer(scholorship, many=False)
+        serializer = ScholarshipSerializer(scholarship, many=False)
 
         return Response(serializer.data)
 
 
 @api_view(['DELETE'])
 @permission_classes([IsAdminUser])
-def deleteScholorship(request, pk):
-    scholorForDeletion = Scholorship.objects.get(_id=pk)
+def deleteScholarship(request, pk):
+    scholarForDeletion = Scholarship.objects.get(_id=pk)
     
-    scholorshipOutcome= ScholorshipWithOutcomeRelation.objects.get(scholorship_id=pk)
-    outcome_id = scholorshipOutcome.outcome_id
+    scholarshipOutcome= ScholarshipWithOutcomeRelation.objects.get(scholarship_id=pk)
+    outcome_id = scholarshipOutcome.outcome_id
     outcomeForDeletion = OutCome.objects.get(_id=outcome_id)
 
-    scholorForDeletion.delete()
+    scholarForDeletion.delete()
     outcomeForDeletion.delete()
-    scholorshipOutcome.delete()
+    scholarshipOutcome.delete()
     return Response('獎學金已刪除')

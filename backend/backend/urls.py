@@ -29,7 +29,7 @@ urlpatterns = [
     path('api/finance/',include('base.urls.finance_urls')),
     path('api/setting/',include('base.urls.setting_urls')),
     path('api/semester/',include('base.urls.semester_urls')),
-    path('api/scholorship/',include('base.urls.scholorship_urls')),
+    path('api/scholarship/',include('base.urls.scholarship_urls')),
     
 ]
 
