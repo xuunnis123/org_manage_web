@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Route , withRouter,useHistory} from 'react-router-dom';
-import { Row, Col,Table,Button } from 'react-bootstrap'
+import { Row, Col,Table,Button,Nav } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-
+import { LinkContainer } from 'react-router-bootstrap'
 
 import { listIncomeContributeContext,listOutcomeContributeContext,listIncomeMoneyCategory, listOutcomeMoneyCategory,addIncomeContributeContext,addOutcomeContributeContext,addIncomeMoneyCategory,addOutcomeMoneyCategory,updateIncomeContributeContext,updateOutcomeContributeContext,updateIncomeMoneyCategory,updateOutcomeMoneyCategory,removeFromIncomeContributeContext,removeFromOutcomeContributeContext,removeFromIncomeMoneyCategory,removeFromOutcomeMoneyCategory} from '../actions/settingActions'
 
@@ -73,6 +73,9 @@ function SettingScreen() {
                 :erroroutcomeMoneyCategoryList?<Message variant='danger'>{erroroutcomeMoneyCategoryList}</Message>
                 :
                 <Row>
+                    <LinkContainer to='/semester'>
+                                <Nav.Link><i className="far fa-clipboard"></i> 學期設定</Nav.Link>
+                    </LinkContainer>
                     <h2>項目種類</h2>
                     <h3>收入部分</h3>
                     <Col>

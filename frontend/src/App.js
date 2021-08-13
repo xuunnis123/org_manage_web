@@ -42,6 +42,10 @@ import ScholarshipScreen from './screens/ScholarshipScreen'
 import ScholarshipCreateScreen from './screens/ScholarshipCreateScreen'
 import ScholarshipEditScreen from './screens/ScholarshipEditScreen'
 
+import SemesterScreen from './screens/SemesterScreen'
+import SemesterCreateScreen from './screens/SemesterCreateScreen'
+import SemesterEditScreen from './screens/SemesterEditScreen'
+
 function App() {
   return (
     <Router>
@@ -87,6 +91,10 @@ function App() {
           <Route path='/scholarship' component={ScholarshipScreen} exact/>
           <Route path='/scholarship/create' component={ScholarshipCreateScreen} />
           <Route path='/scholarship/:id/edit' component={ScholarshipEditScreen} />
+
+          <Route path='/semester' component={SemesterScreen} exact/>
+          <Route path='/semester/create' component={SemesterCreateScreen} />
+          <Route path='/semester/:id/edit' component={SemesterEditScreen} />
         </Container>
       </main>
       
