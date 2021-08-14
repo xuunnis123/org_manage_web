@@ -5,131 +5,107 @@ import { Row, Col, ListGroup, Image, Form, Button, Card, FormControl,FormLabel,D
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
+import { addSemester } from '../actions/semesterActions'
 
-import { listScholarship, addScholarship } from '../actions/scholarshipActions'
-import { listSemester } from '../actions/semesterActions'
-import { listStudent } from '../actions/studentActions'
+function SemesterCreateScreen({ match, location, history}) {
 
-function ScholarshipCreateScreen({ match, location, history}) {
-   
-    const [semesterName,setSemesterName] = useState('請選擇學期')
-    const [studentName, setStudentName] = useState('請選擇申請學生')
     const [name, setName] = useState('')
-    const [semester, setSemester] = useState('')
-    const [price, setPrice] = useState('')
+    const [year, setYear] = useState('')
+    const [start_date, setStart_date] = useState(new Date())
+    const [end_date, setEnd_date] = useState(new Date())
    
-
+    
     
     const dispatch = useDispatch()
   
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
-    const redirect = '/scholarship'
-    const scholarshipAdd = useSelector(state => state.scholarshipAdd)
-    const {error, loading, scholarship} = scholarshipAdd
+    const redirect = '/semester'
+    const semesterAdd = useSelector(state => state.semesterAdd)
+    const {error, loading, semester} = semesterAdd
+   
     
-    const scholarshipList = useSelector(state => state.scholarshipList)
-    const { errorList, loadingList, scholarships } = scholarshipList
-
-    const studentList = useSelector(state => state.studentList)
-    const { errorStudentList, loadingStudentList, students } = studentList
-
-    const semesterList = useSelector(state => state.semesterList)
-    const { errorsemesterList, loadingsemesterList, semesters } = semesterList
     useEffect(()=>{
-        dispatch(listSemester())
-        dispatch(listStudent())
-        
-        
-        if(scholarship){
+       
+        if(semester){
             history.push(redirect)
         }
-    },[history, scholarship, redirect])
+        
+    },[history,semester, redirect])
 
    
    
-    const handleSelectSemester=(e)=>{
-        
-        var splitSemester = e.split(',');
-        
-        setSemester(splitSemester[0]);
-
-        setSemesterName(splitSemester[1]);  
-      }
-      const handleSelectStudent=(e)=>{
-        
-        var splitStudent = e.split(',');
-        
-        setName(splitStudent[0]);
-
-        setStudentName(splitStudent[1]);  
-      }
      
     const submitHandler =(e) =>{
         e.preventDefault()
         
-        dispatch(addScholarship( name,semester, price))
+        var format_start_date = moment(start_date).format('YYYY-MM-DD') ;
+        var format_end_date = moment(end_date).format('YYYY-MM-DD') ;
+        
+        
+        
+        dispatch(addSemester( name,year, format_start_date,format_end_date))
         
         history.push(redirect)
         
     }
     return (
         <FormContainer>
-            <h1>新增獎學金</h1>
+            <h1>新增學期</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             
             <Form onSubmit={submitHandler}>
-
+            
          
             <Form.Group controlId='name'>
-                <Form.Label>申請人名字</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {studentName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectStudent}
-                    >
-
-            {students.map((student,index) =>{
-            
-            return <Dropdown.Item eventKey={[student.id,student.name]} key={index}>{student.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            </Form.Group>
-            
-
-            <Form.Group controlId='semester'>
-                <Form.Label>申請學期</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {semesterName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectSemester}
-                    >
-
-            {semesters.map((semester,index) =>{
-            
-            return <Dropdown.Item eventKey={[semester._id,semester.name]} key={index}>{semester.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            
-            </Form.Group>
-            <Form.Group controlId='price'>
-                    <Form.Label>申請金額</Form.Label>
-                    <Form.Control
+                <Form.Label>學期</Form.Label>
+                <Form.Control
                         required
-                        type='price'
-                        placeholder='輸入金額'
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        type='name'
+                        placeholder='輸入學期名稱：XXX 年度上/下學期'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     >
                         
                     </Form.Control>
             </Form.Group>
-           
+            
+
+            
+            <Form.Group controlId='year'>
+                    <Form.Label>年份</Form.Label>
+                    <Form.Control
+                        required
+                        type='year'
+                        placeholder='輸入西元年份(YYYY)'
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                    >
+                        
+                    </Form.Control>
+            </Form.Group>
+            <Form.Group controlId='start_date'>
+                    <Form.Label>學期開始日期</Form.Label>
+                    
+                        <DatePicker 
+                        selected={start_date} 
+                        onChange={(date) => setStart_date(date)} 
+                        dateFormat = "yyyy-MM-dd"
+                        />
+                    
+            </Form.Group>
+            <Form.Group controlId='end_date'>
+                    <Form.Label>學期結束日期</Form.Label>
+                    <DatePicker 
+                    selected={end_date} 
+                    onChange={(date) => setEnd_date(date)} 
+                    dateFormat = "yyyy-MM-dd"
+                    />
+            </Form.Group>
                 <Button type='submit' variant='primary'>
                     建立
                 </Button>
@@ -137,7 +113,7 @@ function ScholarshipCreateScreen({ match, location, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/scholarship'>
+                     <Link to='/semester'>
                      取消
                         </Link>
                 </Col>
@@ -145,4 +121,4 @@ function ScholarshipCreateScreen({ match, location, history}) {
         </FormContainer>
     )
 }
-export default ScholarshipCreateScreen
+export default SemesterCreateScreen

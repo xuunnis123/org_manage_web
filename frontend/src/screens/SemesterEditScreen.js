@@ -5,88 +5,77 @@ import { Row, Col, ListGroup, Image, Form, Button, Card,Dropdown,DropdownButton 
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {  SCHOLARSHIP_UPDATE_RESET,SCHOLARSHIP_DETAIL_REQUEST } from '../constants/scholarshipConstants'
 
-import { listScholarship, updateScholarship,scholarshipDetail } from '../actions/scholarshipActions'
-import { listSemester } from '../actions/semesterActions'
-import { listStudent } from '../actions/studentActions'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
 
-function ScholarshipEditScreen({ match, history}) {
+import {  SEMESTER_UPDATE_RESET,SEMESTER_DETAIL_REQUEST } from '../constants/semesterConstants'
 
-    const scholarshipId = match.params.id
-    const [semesterName,setSemesterName] = useState('請選擇學期')
-    const [studentName, setStudentName] = useState('請選擇申請學生')
+import { listSemester, updateSemester,semesterDetail } from '../actions/semesterActions'
+
+
+
+function SemesterEditScreen({ match, history}) {
+
+    const semesterId = match.params.id
     const [name, setName] = useState('')
-    const [semester, setSemester] = useState('')
-    const [price, setPrice] = useState('')
+    const [year, setYear] = useState('')
+    const [start_date, setStart_date] = useState(new Date())
+    const [end_date, setEnd_date] = useState(new Date())
 
     const dispatch = useDispatch()
   
     
-    const redirect = '/scholarship'
+    const redirect = '/semester'
 
-    const scholarshipDetailReducer = useSelector(state => state.scholarshipDetail)
-    const { error, loading, scholarship } = scholarshipDetailReducer
+    const semesterDetailReducer = useSelector(state => state.semesterDetail)
+    const { error, loading, semester } = semesterDetailReducer
 
-    const scholarshipUpdate = useSelector(state => state.scholarshipUpdate)
-    const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = scholarshipUpdate
+    const semesterUpdate = useSelector(state => state.semesterUpdate)
+    const { error: errorUpdate, loading: loadingUpdate, success: successUpdate } = semesterUpdate
 
-    const studentList = useSelector(state => state.studentList)
-    const { errorStudentList, loadingStudentList, students } = studentList
 
-    const semesterList = useSelector(state => state.semesterList)
-    const { errorsemesterList, loadingsemesterList, semesters } = semesterList
     
     useEffect(()=>{
-        console.log(scholarshipId)
+        console.log(semesterId)
        
-        dispatch({type:SCHOLARSHIP_DETAIL_REQUEST})
-        dispatch(scholarshipDetail(scholarshipId))
-        dispatch(listSemester())
-        dispatch(listStudent())
+        dispatch({type:SEMESTER_DETAIL_REQUEST})
+        dispatch(semesterDetail(semesterId))
+       
         if(successUpdate){
-            dispatch({ type: SCHOLARSHIP_UPDATE_RESET })
+            dispatch({ type: SEMESTER_UPDATE_RESET })
             history.push(redirect)
         }else{
-            if (!scholarship.name || scholarship._id != Number(scholarshipId)){
+            if (!semester.name || semester._id != Number(semesterId)){
                
             }else{
-                setStudentName(scholarship.name)
-                setSemesterName(scholarship.semester)
-                setPrice(scholarship.price)
+                setName(semester.name)
+                setYear(semester.year)
+                var start_date_for=moment(semester.start_date).toDate();
+                setStart_date(start_date_for)
+
+                var end_date_for=moment(semester.end_date).toDate();
+                setEnd_date(end_date_for)
+              
                
             }
             
         }
-    },[scholarship._id])
+    },[semester._id])
 
-    const handleSelectSemester=(e)=>{
-        
-        var splitSemester = e.split(',');
-        var stringId = splitSemester[0]
-        setSemester(parseInt(stringId, 10));
-
-        setSemesterName(splitSemester[1]);  
-      }
-      const handleSelectStudent=(e)=>{
-        
-        var splitStudent = e.split(',');
-        var stringId = splitStudent[0]
-        setName(parseInt(stringId, 10));
-
-        setStudentName(splitStudent[1]);  
-      }
-
+    
     
 
     const submitHandler =(e) =>{
        
         e.preventDefault()
-        dispatch(updateScholarship({
-            _id:scholarshipId,
+        dispatch(updateSemester({
+            _id:semesterId,
             name,
-            semester,
-            price
+            year,
+            start_date,
+            end_date,
         }))
         
         window.location.href = redirect
@@ -94,7 +83,7 @@ function ScholarshipEditScreen({ match, history}) {
     }
     return (
         <FormContainer>
-            <h1>修改獎學金</h1>
+            <h1>修改學期</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
@@ -102,54 +91,52 @@ function ScholarshipEditScreen({ match, history}) {
             <Form onSubmit={submitHandler}>
 
             
-
             <Form.Group controlId='name'>
-                <Form.Label>申請人名字</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {studentName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectStudent}
-                    >
-
-            {students.map((student,index) =>{
-            
-            return <Dropdown.Item eventKey={[student.id,student.name]} key={index}>{student.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            </Form.Group>
-           
-            <Form.Group controlId='semester'>
-                <Form.Label>申請學期</Form.Label>
-                <DropdownButton
-                aligndown="true"
-                title= {semesterName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectSemester}
-                    >
-
-            {semesters.map((semester,index) =>{
-            
-            return <Dropdown.Item eventKey={[semester._id,semester.name]} key={index}>{semester.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            
-            </Form.Group>
-            <Form.Group controlId='price'>
-                    <Form.Label>申請金額</Form.Label>
-                    <Form.Control
+                <Form.Label>學期</Form.Label>
+                <Form.Control
                         required
-                        type='price'
-                        placeholder='輸入金額'
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
+                        type='name'
+                        placeholder='輸入學期名稱：XXX 年度上/下學期'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     >
                         
                     </Form.Control>
             </Form.Group>
-           
+            
+
+            
+            <Form.Group controlId='year'>
+                    <Form.Label>年份</Form.Label>
+                    <Form.Control
+                        required
+                        type='year'
+                        placeholder='輸入西元年份(YYYY)'
+                        value={year}
+                        onChange={(e) => setYear(e.target.value)}
+                    >
+                        
+                    </Form.Control>
+            </Form.Group>
+            <Form.Group controlId='start_date'>
+                    <Form.Label>學期開始日期</Form.Label>
+                    
+                        <DatePicker 
+                        selected={start_date} 
+                        onChange={(date) => setStart_date(date)} 
+                        dateFormat = "yyyy-MM-dd"
+                        />
+                    
+            </Form.Group>
+            <Form.Group controlId='end_date'>
+                    <Form.Label>學期結束日期</Form.Label>
+                    <DatePicker 
+                    selected={end_date} 
+                    onChange={(date) => setEnd_date(date)} 
+                    dateFormat = "yyyy-MM-dd"
+                    />
+            </Form.Group>
+
                 <Button type='submit' variant='primary'>
                     存檔
                 </Button>
@@ -157,7 +144,7 @@ function ScholarshipEditScreen({ match, history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/scholarship'>
+                     <Link to='/semester'>
                      取消
                         </Link>
                 </Col>
@@ -165,4 +152,4 @@ function ScholarshipEditScreen({ match, history}) {
         </FormContainer>
     )
 }
-export default ScholarshipEditScreen
+export default SemesterEditScreen
