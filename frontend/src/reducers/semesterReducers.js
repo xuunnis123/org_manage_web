@@ -49,7 +49,7 @@ export const semesterDetailsReducer = ( state = { semester:{} }, action) =>{
             return { loading : true, ...state }
         
         case SEMESTER_DETAIL_SUCCESS:
-            console.log(action.payload)
+           
             return { loading : false, semester: action.payload }
 
         case SEMESTER_DETAIL_FAIL:

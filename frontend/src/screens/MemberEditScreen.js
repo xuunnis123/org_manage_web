@@ -42,7 +42,7 @@ function MemberEditScreen({ match, history}) {
     const { errorList, loadingList, members } = memberList
     
     useEffect(()=>{
-        console.log(memberId)
+        
        
         dispatch({type:MEMBER_DETAIL_REQUEST})
         dispatch(memberDetail(memberId))

@@ -52,7 +52,7 @@ export const semesterDetail = (id) => async(dispatch) =>{
         dispatch({
             type: SEMESTER_DETAIL_REQUEST
         })
-        console.log(id)
+        
         const {data} = await axios.get(`/api/semester/${id}`) 
         
         dispatch({
@@ -161,7 +161,7 @@ export const updateSemester = (semester) => async(dispatch,getState) =>{
 
 export const removeFromSemester = (id) => async(dispatch, getState) => {
     try{
-        console.log("into delete")
+        
     dispatch({
         type: SEMESTER_DELETE_REQUEST,
     })
