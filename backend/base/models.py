@@ -89,6 +89,9 @@ class OutcomeContributeItem(models.Model):
 class Case(models.Model):
     case_no = models.CharField(max_length=200, null=True, blank=True)
     student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True, related_name="student_case")
+    visit_photo = models.ImageField(null=True, blank=True,default='/placeholder.png')
+    applied_form_photo = models.ImageField(null=True, blank=True,default='/placeholder.png')  
+    visit_form_photo = models.ImageField(null=True, blank=True,default='/placeholder.png')                      
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now = True)
     _id = models.AutoField(primary_key=True, editable=False)
