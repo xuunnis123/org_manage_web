@@ -10,3 +10,4 @@ backend/.DS_Store
 *.pyc
 *.pyc
 *.pyc
+backend/base/auth.ini

@@ -12,6 +12,8 @@ from base.serializers import CaseSerializer
 
 from rest_framework import status
 
+
+
 @api_view(['GET'])
 def getCasesList(request):
     cases = Case.objects.all()
