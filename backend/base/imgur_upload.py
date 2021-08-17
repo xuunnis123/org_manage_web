@@ -1,7 +1,8 @@
 from auth import authenticate
 from datetime import datetime
 import configparser
-album = None
+import config as cfg
+album = cfg.IMGUR_ALBUM
 image_path='p.jpg'
 from imgurpython import  ImgurClient
 
@@ -38,3 +39,5 @@ if __name__ == '__main__':
     print("client=",client)
     upload_image(client)
     print("Image was posted")
+
+

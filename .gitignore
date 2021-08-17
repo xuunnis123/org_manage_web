@@ -12,3 +12,6 @@ backend/.DS_Store
 *.pyc
 backend/base/auth.ini
 backend/base/p.jpg
+backend/base/config.py
+backend/static/images/p1.jpg
+backend/static/images/p2.jpg
