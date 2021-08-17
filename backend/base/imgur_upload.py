@@ -21,7 +21,7 @@ def upload_image(client):
     return image
 
 if __name__ == '__main__':
-    #client = authenticate()
+    
     config = configparser.ConfigParser()
     config.read('auth.ini')
     client_id = config['credentials']['client_id']
@@ -29,14 +29,9 @@ if __name__ == '__main__':
     refresh_token = config['credentials']['refresh_token']
     access_token = config['credentials']['access_token']
 
-    print(client_id)
-    print(client_secret)
-    #client = ImgurClient(client_id,client_secret)
-
     client = ImgurClient(client_id,client_secret, refresh_token)
     client.set_user_auth(access_token, refresh_token)       
 
-    print("client=",client)
     upload_image(client)
     print("Image was posted")
 
