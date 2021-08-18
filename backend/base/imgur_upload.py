@@ -1,4 +1,4 @@
-from auth import authenticate
+from . auth import authenticate
 from datetime import datetime
 import configparser
 import config as cfg
@@ -6,6 +6,17 @@ album = cfg.IMGUR_ALBUM
 image_path='p.jpg'
 from imgurpython import  ImgurClient
 
+def setconfig():
+    config = configparser.ConfigParser()
+    config.read('auth.ini')
+    client_id = config['credentials']['client_id']
+    client_secret = config['credentials']['client_secret']
+    refresh_token = config['credentials']['refresh_token']
+    access_token = config['credentials']['access_token']
+
+    client = ImgurClient(client_id,client_secret, refresh_token)
+    client.set_user_auth(access_token, refresh_token)   
+    return client    
 def upload_image(client):
     config={
         'album':album,

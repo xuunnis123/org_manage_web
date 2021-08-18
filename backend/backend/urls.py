@@ -30,6 +30,8 @@ urlpatterns = [
     path('api/setting/',include('base.urls.setting_urls')),
     path('api/semester/',include('base.urls.semester_urls')),
     path('api/scholarship/',include('base.urls.scholarship_urls')),
+
+    path('api/imgur/',include('base.urls.imgur_urls')),
     
 ]
 

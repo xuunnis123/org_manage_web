@@ -5,20 +5,20 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Case
+from base.models import Case,Student
 
 
 from base.serializers import CaseSerializer
 
 from rest_framework import status
 
-
+#from ..imgur_upload import setconfig,upload_image 
 
 @api_view(['GET'])
 def getCasesList(request):
     cases = Case.objects.all()
     serializer = CaseSerializer(cases, many=True)
-    print("test===",serializer.data[0].get('student').get('school'))
+    
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -36,39 +36,25 @@ def addCase(request):
     data = request.data
     
     if data and len(data) == 0:
-        return Response({'detail': 'No Member Items'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'No Case Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
+        client = ''
+        visit_photo_url=''
+        applied_form_photo_url=''
+        visit_form_photo_url=''
 
-        # (1) Create member
-        
-        #is_endTrans = data['is_end'] == True
-        print("data==",data)
-        
-        is_staffTrans = data['is_staff'] == 'True'
-        
-        is_adminTrans = data['is_admin'] == 'True'
-        
-        if data['family']!='':
+        if data['student_name']!='':
 
-            familyMem = Member.objects.get(_id=data['family'])
-        else:familyMem = None
+            student = Student.objects.get(id=data['student_name'])
+        else:student = None
 
-        if data['intro_by']!='':
-
-            intro_byMem = Member.objects.get(_id=data['intro_by'])
-        else:
-            intro_byMem = None
         member = Case.objects.create(
-            name = data['name'],
-            job = data['job'],
-            phone = data['phone'],
-            address = data['address'],
-            title = data['title'],
-            is_staff = is_staffTrans,
-            is_admin =  is_adminTrans,
-            family = familyMem,
-            intro_by = intro_byMem,
-            memo = data['memo'],
+            case_no = data['case_no'],
+            student_name = student,
+            visit_photo = visit_photo_url,
+            applied_form_photo = applied_form_photo_url,
+            visit_form_photo = visit_form_photo_url,
+           
 
         )
 
