@@ -24,7 +24,7 @@ from imgurpython import  ImgurClient
 @api_view(['POST'])
 def upload_image(request):
     data = request.data
-    print('request=',request)
+    print('request=',request.files)
     album = env.IMGUR_ALBUM
     print(data['image'])
     print("--")
@@ -53,6 +53,7 @@ def upload_image(request):
 
         print("Uploading image")
         image = client.upload_from_path(image_path,config=config,anon=False)
+        
         print(image['link'])
         print("Done")
         return image
