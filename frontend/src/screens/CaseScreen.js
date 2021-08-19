@@ -10,18 +10,22 @@ function CaseScreen({ match, location, history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
 
+    const updateImageReducer = useSelector(state => state.updateImage)
+    console.log(updateImageReducer)
+    const { error,loading, uploadImageItem } = updateImageReducer
+
+    
+   
+    useEffect(() =>{
+        
+
+    },[dispatch])
     const handleInputChange =(event) =>{
 
         event.preventDefault();
         console.log(event)
         console.log(event.target.files[0])
-        /*
-        setImage({
-          // [event.target.name]: event.target.files[0]
-          image: event.target.files[0]
-          // image: event.target.files[0]
-        });
-        */
+      
         setImage(
             event.target.files[0]
            );
@@ -57,7 +61,7 @@ function CaseScreen({ match, location, history}) {
                     <input type='submit'/>
                     </form>  
             </Col>
-                    
+                  {uploadImageItem}  
         </Row>
     )
 }
