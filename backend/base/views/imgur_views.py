@@ -16,20 +16,26 @@ from datetime import datetime
 import configparser
 import base.config as env
 import os
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
 from imgurpython import  ImgurClient
 
 
 
 @api_view(['POST'])
 def upload_image(request):
+    
     data = request.data
-    print('request=',request.files)
+    
+    print(data)
     album = env.IMGUR_ALBUM
     print(data['image'])
+    image=data['image']
     print("--")
-    print(data)
-    image_path=data['image']
+    print(type(image))
+    
+    image_path=image
 
     config = configparser.ConfigParser()
     path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
@@ -52,7 +58,8 @@ def upload_image(request):
         }
 
         print("Uploading image")
-        image = client.upload_from_path(image_path,config=config,anon=False)
+        
+        image = client.upload_from_path(str(image_path),config=config,anon=False)
         
         print(image['link'])
         print("Done")

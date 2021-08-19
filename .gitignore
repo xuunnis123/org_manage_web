@@ -16,3 +16,4 @@ backend/base/config.py
 backend/static/images/p1.jpg
 backend/static/images/p2.jpg
 backend/base/views/auth.ini
+frontend/src/config.js
