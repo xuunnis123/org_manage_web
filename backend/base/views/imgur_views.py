@@ -35,7 +35,12 @@ def upload_image(request):
     print("--")
     print(type(image))
     
-    image_path=image
+    image_path="file.jpg"
+
+    file = data['image']
+    filename = default_storage.save(file.name, ContentFile(file.read()))
+    print("filename=",filename)
+    print("url=",settings.MEDIA_ROOT)
 
     config = configparser.ConfigParser()
     path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
@@ -59,10 +64,11 @@ def upload_image(request):
 
         print("Uploading image")
         
-        image = client.upload_from_path(str(image_path),config=config,anon=False)
+        image = client.upload_from_path(settings.MEDIA_ROOT+'/'+filename,config=config,anon=False)
         
         print(image['link'])
         print("Done")
-        return image
+        default_storage.delete(filename)
+        return Response(image['link'])
 
     else:return "Error"
