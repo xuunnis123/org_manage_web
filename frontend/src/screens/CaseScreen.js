@@ -40,32 +40,76 @@ function CaseScreen() {
         
     }
 
+    const clearVisitUpload = ()=>{
+        console.log("clear")
+        localStorage.setItem('visit_photo',JSON.stringify(uploadImageItem))
+        setImage(null)
+        
+    }
+
+
       
     return (
         <Row>
             <Col md={8}>
                 <h1>個案頁</h1>
 
-                
+                <h2>案號</h2>
                 <h2>姓名</h2>
+                <h2>學校</h2>
+                <Card>資助內容</Card>
+                <h3>資助總計</h3>
+                <Card>獎學金</Card>
+                <h3>獎學金總計</h3>
 
-                <h2>訪談紀錄</h2>
+                <h2>總計</h2>
+                
+                <h2>訪談照片</h2>
 
                     <form onSubmit={uploadImgurImage}>
                     <input type="file" name="image" onChange={handleInputChange}/>
                     <input type='submit'/>
                     </form> 
-                    <h4>預覽圖</h4>
+                    <h4>預覽縮圖</h4>
                     <Col xs={400} md={400}>
                     
                     <Image src={uploadImageItem} thumbnail />
                     
                     </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link>
+                    <Button onClick={clearVisitUpload}>確認</Button>
+                    <Card href={uploadImageItem}>{uploadImageItem}</Card>
                     
+                <h2>訪視表</h2>
+
+                    <form onSubmit={uploadImgurImage}>
+                    <input type="file" name="image" onChange={handleInputChange}/>
+                    <input type='submit'/>
+                    </form> 
+                    <h4>預覽縮圖</h4>
+                    <Col xs={400} md={400}>
+
+                    <Image src={uploadImageItem} thumbnail />
+
+                    </Col>
+                    <Link href={uploadImageItem}>{uploadImageItem}</Link> 
+
+                <h2>訪視表</h2>
+
+                    <form onSubmit={uploadImgurImage}>
+                    <input type="file" name="image" onChange={handleInputChange}/>
+                    <input type='submit'/>
+                    </form> 
+                    <h4>預覽縮圖</h4>
+                    <Col xs={400} md={400}>
+
+                    <Image src={uploadImageItem} thumbnail />
+
+                    </Col>
+                    <Link href={uploadImageItem}>{uploadImageItem}</Link>   
             </Col>
                  
         </Row>
+        
     )
 }
 export default CaseScreen
