@@ -93,7 +93,7 @@ const reducer = combineReducers({
     semesterAdd:semesterAddReducers,
     semesterUpdate:semesterUpdateReducers,
 
-    uploadImage:uploadImageReducer,
+    uploadImageAdd:uploadImageReducer,
 })
 
 

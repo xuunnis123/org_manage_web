@@ -28,24 +28,19 @@ def upload_image(request):
     
     data = request.data
     
-    print(data)
-    album = env.IMGUR_ALBUM
-    print(data['image'])
-    image=data['image']
-    print("--")
-    print(type(image))
     
-    image_path="file.jpg"
+    album = env.IMGUR_ALBUM
+    
+    image=data['image']
+    
 
     file = data['image']
     filename = default_storage.save(file.name, ContentFile(file.read()))
-    print("filename=",filename)
-    print("url=",settings.MEDIA_ROOT)
-
+    
     config = configparser.ConfigParser()
     path = '/'.join((os.path.abspath(__file__).replace('\\', '/')).split('/')[:-1])
     config.read(os.path.join(path, 'auth.ini'))
-    #config.read('auth.ini')
+    
     
     client_id = config['credentials']['client_id']
     client_secret = config['credentials']['client_secret']
@@ -71,4 +66,4 @@ def upload_image(request):
         default_storage.delete(filename)
         return Response(image['link'])
 
-    else:return "Error"
+    else:return "Upload image Error"

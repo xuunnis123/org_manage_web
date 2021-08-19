@@ -7,7 +7,7 @@ import {
 export const uploadImageReducer = (  state = { } , action) =>{
     switch(action.type){
         case UPLOAD_IMAGE_REQUEST:
-            return { loading : true }
+            return { loading : true, ...state }
         
         case UPLOAD_IMAGE_SUCCESS:
             return { loading : false, uploadImageItem: action.payload }
