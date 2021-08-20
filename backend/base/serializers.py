@@ -295,3 +295,17 @@ class ScholarshipWithOutcomeRelationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ScholarshipWithOutcomeRelation
         fields = '__all__'
+
+class StudentsPhotoLinkSerializer(serializers.ModelSerializer):
+    student_name = serializers.SerializerMethodField(read_only = True)
+
+    class Meta:
+        model = StudentsPhotoLink
+        fields = '__all__'
+
+    def get_student_name(self, obj):
+        studentname = obj.name
+        
+        serializer = StudentSerializer(studentname, many=False)
+        
+        return serializer.data['name']
