@@ -5,8 +5,8 @@ import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,Dropd
 import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
-
-function CaseFinanceCreateScreen({history}) {
+import CheckoutSteps from '../components/CheckoutSteps'
+function CaseCreateScholarshipScreen({history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
     const [studentName, setStudentName] = useState('請選擇個案學生')
@@ -71,6 +71,7 @@ function CaseFinanceCreateScreen({history}) {
       
     return (
         <Row>
+            <CheckoutSteps step1 step2 step3 step4/>
             <Col md={8}>
                 <h1>新增個案</h1>
                 <Form onSubmit={submitHandler}></Form>
@@ -143,4 +144,4 @@ function CaseFinanceCreateScreen({history}) {
         
     )
 }
-export default CaseFinanceCreateScreen
+export default CaseCreateScholarshipScreen

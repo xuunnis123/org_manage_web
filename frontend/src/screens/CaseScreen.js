@@ -11,10 +11,6 @@ function CaseScreen() {
     const [image, setImage] = useState(null)
 
     
-    
-    const uploadImageAdd = useSelector(state => state.uploadImageAdd)
-    const { error, loading, uploadImageItem } = uploadImageAdd
-
     useEffect(() =>{
         
 

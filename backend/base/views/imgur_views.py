@@ -30,19 +30,21 @@ def upload_image(request):
     
     data = request.data
     
-    
-
+    print("-------")
+    print(data)
+    '''
     if data['student_name']!='':
 
             student_name = Student.objects.get(id=data['student_name'])
             
     else:return "No Studnet"
-
+    '''
     album = env.IMGUR_ALBUM
     
-    image=data['image']
-    type=data['type']
-    memo =data['memo']
+    #image=data['image']
+    student_name = Student.objects.get(id=10)
+    type="訪視照片"
+    memo =""
     file = data['image']
     filename = default_storage.save(file.name, ContentFile(file.read()))
     

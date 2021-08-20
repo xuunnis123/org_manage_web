@@ -6,8 +6,11 @@ import HomeScreen from './screens/HomeScreen'
 
 
 import CaseScreen from './screens/CaseScreen'
-import CaseCreateScreen from './screens/CaseCreateScreen'
-
+import CaseCreateStudentScreen from './screens/CaseCreateStudentScreen'
+import CaseCreatePhotoScreen from './screens/CaseCreatePhotoScreen'
+import CaseCreateFinanceScreen from './screens/CaseCreateFinanceScreen'
+import CaseCreateScholarshipScreen from './screens/CaseCreateScholarshipScreen'
+import CaseCreateConfirmScreen from './screens/CaseCreateConfirmScreen'
 
 import SchoolScreen from './screens/SchoolScreen'
 import SchoolCreateScreen from './screens/SchoolCreateScreen'
@@ -57,8 +60,12 @@ function App() {
         <Container>
           <Route path='/' component={HomeScreen} exact />
 
-          <Route path='/case' component={CaseScreen} />
-          <Route path='/case/create' component={CaseCreateScreen} />
+          <Route path='/case' component={CaseScreen} exact/>
+          <Route path='/case/createstudent' component={CaseCreateStudentScreen} />
+          <Route path='/case/createphoto' component={CaseCreatePhotoScreen} />
+          <Route path='/case/createfinance' component={CaseCreateFinanceScreen} />
+          <Route path='/case/createscholarship' component={CaseCreateScholarshipScreen} />
+          <Route path='/case/createconfirm' component={CaseCreateConfirmScreen} />
 
           <Route path='/school' component={SchoolScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />

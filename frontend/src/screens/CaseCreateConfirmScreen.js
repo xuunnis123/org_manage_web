@@ -6,8 +6,7 @@ import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
-
-function CasePhotoCreateScreen({history}) {
+function CaseCreateConfirmScreen({history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
     const [studentName, setStudentName] = useState('請選擇個案學生')
@@ -72,9 +71,9 @@ function CasePhotoCreateScreen({history}) {
       
     return (
         <Row>
+            <CheckoutSteps step1 step2 step3 step4 step5/>
             <Col md={8}>
-            <CheckoutSteps step1 />
-                <h1>新增個案</h1>
+                
                 <Form onSubmit={submitHandler}></Form>
                 <h2>案號</h2>
 
@@ -145,4 +144,4 @@ function CasePhotoCreateScreen({history}) {
         
     )
 }
-export default CasePhotoCreateScreen
+export default CaseCreateConfirmScreen

@@ -8,7 +8,7 @@ function CheckoutSteps({ step1, step2, step3, step4,step5 }) {
         <Nav className='justify-content-center mb-4'>
             <Nav.Item>
                 {step1 ? (
-                    <LinkContainer to='/student/create'>
+                    <LinkContainer to='/case/createstudent'>
                         <Nav.Link>學生資訊</Nav.Link>
                     </LinkContainer>
                 ) : (
@@ -18,7 +18,7 @@ function CheckoutSteps({ step1, step2, step3, step4,step5 }) {
 
             <Nav.Item>
                 {step2 ? (
-                    <LinkContainer to='/shipping'>
+                    <LinkContainer to='/case/createphoto'>
                         <Nav.Link>訪視照片/申請表</Nav.Link>
                     </LinkContainer>
                 ) : (
@@ -28,7 +28,7 @@ function CheckoutSteps({ step1, step2, step3, step4,step5 }) {
 
             <Nav.Item>
                 {step3 ? (
-                    <LinkContainer to='/finance/outcome/create'>
+                    <LinkContainer to='/case/createfinance'>
                         <Nav.Link>資助項目</Nav.Link>
                     </LinkContainer>
                 ) : (
@@ -38,7 +38,7 @@ function CheckoutSteps({ step1, step2, step3, step4,step5 }) {
             
             <Nav.Item>
                 {step4 ? (
-                    <LinkContainer to='/scholarship/create'>
+                    <LinkContainer to='/case/createscholarship'>
                         <Nav.Link>獎學金</Nav.Link>
                     </LinkContainer>
                 ) : (
@@ -48,7 +48,7 @@ function CheckoutSteps({ step1, step2, step3, step4,step5 }) {
 
             <Nav.Item>
                 {step5 ? (
-                    <LinkContainer to='/case/create'>
+                    <LinkContainer to='/case/createconfirm'>
                         <Nav.Link>確認</Nav.Link>
                     </LinkContainer>
                 ) : (
