@@ -183,19 +183,22 @@ class CaseData(models.Model):
 class Data(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200, null=True, blank=True)
-    
-    url = models.CharField(max_length=200, null=True, blank=True)
+    link = models.CharField(max_length=512, null=True, blank=True)
+    type = models.CharField(max_length=512, null=True, blank=True)
+    memo = models.CharField(max_length=512, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now = True)
 
     def __str__(self):
         return self.name
 class OrgData(models.Model):
     _id = models.AutoField(primary_key=True, editable=False)
     name = models.CharField(max_length=200, null=True, blank=True)
-    url = models.CharField(max_length=200, null=True, blank=True)
+    link = models.CharField(max_length=200, null=True, blank=True)
+    type = models.CharField(max_length=512, null=True, blank=True)
     memo= models.CharField(max_length=512, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    modified_at = models.DateTimeField(auto_now = True)
     def __str__(self):
         return self.name
 
@@ -215,3 +218,13 @@ class ScholarshipWithOutcomeRelation(models.Model):
     scholarship_id = models.IntegerField( max_length=200, null = True, blank=True)
     outcome_id = models.IntegerField( max_length=200, null = True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+class StudentsPhotoLink(models.Model):
+    _id = models.AutoField(primary_key=True, editable=False)
+    student_name = models.ForeignKey(Student, on_delete=models.SET_NULL, null=True)
+    photo_name = models.CharField(max_length=512, null=True, blank=True)
+    link = models.CharField(max_length=512, null=True, blank=True)
+    type = models.CharField(max_length=512, null=True, blank=True)
+    memo = models.CharField(max_length=512, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now = True)
