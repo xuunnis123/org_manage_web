@@ -21,6 +21,8 @@ from django.core.files.base import ContentFile
 from django.conf import settings
 from imgurpython import  ImgurClient
 
+from base.models import StudentsPhotoLink, Student
+from base.serializers import StudentsPhotoLinkSerializer,StudentSerializer
 
 
 @api_view(['POST'])
@@ -29,11 +31,18 @@ def upload_image(request):
     data = request.data
     
     
+
+    if data['student_name']!='':
+
+            student_name = Student.objects.get(id=data['student_name'])
+            
+    else:return "No Studnet"
+
     album = env.IMGUR_ALBUM
     
     image=data['image']
-    
-
+    type=data['type']
+    memo =data['memo']
     file = data['image']
     filename = default_storage.save(file.name, ContentFile(file.read()))
     
@@ -61,6 +70,14 @@ def upload_image(request):
         
         image = client.upload_from_path(settings.MEDIA_ROOT+'/'+filename,config=config,anon=False)
         
+        StudentsPhotoLink.objects.create(
+            student_name = student_name,
+            photo_name = filename,
+            link = image['link'],
+            type = type,
+            memo = memo,
+
+        )
         print(image['link'])
         print("Done")
         default_storage.delete(filename)

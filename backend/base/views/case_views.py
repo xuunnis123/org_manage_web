@@ -11,7 +11,7 @@ from base.models import Case,Student
 from base.serializers import CaseSerializer
 
 from rest_framework import status
-
+from datetime import datetime
 #from ..imgur_upload import setconfig,upload_image 
 
 @api_view(['GET'])
@@ -38,26 +38,34 @@ def addCase(request):
     if data and len(data) == 0:
         return Response({'detail': 'No Case Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        client = ''
-        visit_photo_url=''
-        applied_form_photo_url=''
-        visit_form_photo_url=''
+        visit_photo_urls = data['visit_photo_url']
+        visit_photo_list=[]
+        for visit_photo in visit_photo_urls:
+            visit_photo_list.append(visit_photo)
+
+        applied_form_photo_url=data['applied_form_photo_url']
+        visit_form_photo_url=data['visit_form_photo_url']
 
         if data['student_name']!='':
 
             student = Student.objects.get(id=data['student_name'])
         else:student = None
 
-        member = Case.objects.create(
-            case_no = data['case_no'],
+        handle_datetime = datetime.today().strftime('%Y-%m-%d')
+        year = int(handle_datetime.split('-')[0])-1911
+        day = handle_datetime.split('-')[1]+handle_datetime.split('-')[2]
+        case_no = str(year)+str(day)+'案'+str(student.id)+str(student.school)+str(student.name)
+        
+        case = Case.objects.create(
+            case_no = case_no,
             student_name = student,
-            visit_photo = visit_photo_url,
+            visit_photo = str(visit_photo_list),
             applied_form_photo = applied_form_photo_url,
             visit_form_photo = visit_form_photo_url,
            
 
         )
 
-        serializer = CaseSerializer(member, many=False)
+        serializer = CaseSerializer(case, many=False)
         print("serializer:",serializer)
         return Response(serializer.data)

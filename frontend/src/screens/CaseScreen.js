@@ -20,32 +20,7 @@ function CaseScreen() {
 
     },[dispatch])
 
-    const handleInputChange =(event) =>{
-
-        event.preventDefault();
-      
-        setImage(
-            event.target.files[0]
-           );
-       
-    }
-    const uploadImgurImage = (event) => {
-        event.preventDefault();
-        var data = new FormData(); 
-        
-        data.append("image", image); // add your file to form data
-        
-        dispatch(uploadImage(data))
-        
-        
-    }
-
-    const clearVisitUpload = ()=>{
-        console.log("clear")
-        localStorage.setItem('visit_photo',JSON.stringify(uploadImageItem))
-        setImage(null)
-        
-    }
+    
 
 
       
@@ -66,46 +41,14 @@ function CaseScreen() {
                 
                 <h2>訪談照片</h2>
 
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
                     
-                    <Image src={uploadImageItem} thumbnail />
-                    
-                    </Col>
-                    <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card href={uploadImageItem}>{uploadImageItem}</Card>
                     
                 <h2>訪視表</h2>
 
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
+                   
+                <h2>申請表</h2>
 
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link> 
-
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link>   
+                   
             </Col>
                  
         </Row>

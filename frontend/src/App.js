@@ -6,6 +6,8 @@ import HomeScreen from './screens/HomeScreen'
 
 
 import CaseScreen from './screens/CaseScreen'
+import CaseCreateScreen from './screens/CaseCreateScreen'
+
 
 import SchoolScreen from './screens/SchoolScreen'
 import SchoolCreateScreen from './screens/SchoolCreateScreen'
@@ -56,6 +58,7 @@ function App() {
           <Route path='/' component={HomeScreen} exact />
 
           <Route path='/case' component={CaseScreen} />
+          <Route path='/case/create' component={CaseCreateScreen} />
 
           <Route path='/school' component={SchoolScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />
