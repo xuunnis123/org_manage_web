@@ -97,6 +97,7 @@ export const addStudent = (school, name, phone, address, tags, is_end, memo, fil
          dispatch({
              type:STUDENT_ADD_SUCCESS,
              payload:data
+             
          })
 
          

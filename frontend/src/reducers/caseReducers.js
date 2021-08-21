@@ -11,6 +11,10 @@ import {
  UPLOAD_APPLIEDFORM_SUCCESS,
  UPLOAD_APPLIEDFORM_FAIL,
 
+ CASE_NO_GENERATE_REQUEST,
+ CASE_NO_GENERATE_SUCCESS,
+ CASE_NO_GENERATE_FAIL,
+
 } from '../constants/caseConstants'
 
 export const uploadVisitPhotosReducer = (  state = { visitPhotos:[] } , action) =>{
@@ -64,6 +68,25 @@ export const uploadAppliedFormReducer = (  state = { } , action) =>{
             return { appliedloading : false, appliederror: action.payload }
 
         
+
+        default:
+            return state    
+    }
+
+}
+
+
+export const genCaseNoReducer = (  state = { } , action) =>{
+    switch(action.type){
+        case CASE_NO_GENERATE_REQUEST:
+            return { genLoading : true, ...state }
+        
+        case CASE_NO_GENERATE_SUCCESS:
+            return { genLoading : false, caseNo: action.payload }
+
+        case CASE_NO_GENERATE_FAIL:
+            return { genLoading : false, generror: action.payload }
+
 
         default:
             return state    

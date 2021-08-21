@@ -3,12 +3,16 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton } from 'react-bootstrap'
 import Message from '../components/Message'
-import { uploadImage,uploadVisitForm,uploadAppliedForm } from '../actions/caseActions'
+import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
 
 import CheckoutSteps from '../components/CheckoutSteps'
 function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
+    
+    
+    const [studentId, setStudentId] = useState()
+    const [caseNo, setCaseNo] = useState()
     const [image, setImage] = useState(null)
 
     const [visitFormImage,setVisitFormImage]=useState(null)
@@ -25,11 +29,17 @@ function CaseFinanceCreateScreen({history}) {
     const uploadAppliedFormAdd = useSelector(state => state.uploadAppliedFormAdd)
     const { appliederror, appliedloading, appliedForm } = uploadAppliedFormAdd
   
-
+    const studentAdd = useSelector(state => state.studentAdd)
+    const {erroradd, loadingadd, student} = studentAdd
     useEffect(() =>{
         
+        //setStudentId(studentAdd.student.id)
+        
+        localStorage.getItem('student')
+        dispatch(generateCaseNo(studentAdd.student.id)).then((result) =>console.log(result) )
+        
 
-    },[dispatch,history])
+    },[dispatch,history,studentAdd])
 
     const handleInputVisitChange =(event) =>{
 
@@ -115,7 +125,7 @@ function CaseFinanceCreateScreen({history}) {
             <CheckoutSteps step1 step2/>
             <Col md={8}>
                 <h1>
-                產生案號
+                產生案號:
                 </h1>
                 
                 

@@ -11,6 +11,11 @@ import {
     UPLOAD_APPLIEDFORM_REQUEST,
     UPLOAD_APPLIEDFORM_SUCCESS,
     UPLOAD_APPLIEDFORM_FAIL,
+
+
+    CASE_NO_GENERATE_REQUEST,
+    CASE_NO_GENERATE_SUCCESS,
+    CASE_NO_GENERATE_FAIL,
    } from '../constants/caseConstants'
 export const uploadImage = (file) => async (dispatch, getState) => {
     console.log("Action")
@@ -147,3 +152,51 @@ export const uploadAppliedForm = (file) => async (dispatch, getState) => {
         })
     }
 }
+
+
+export const generateCaseNo = (student) => async (dispatch, getState) => {
+    
+    try {
+       
+
+        dispatch({
+            type: CASE_NO_GENERATE_REQUEST
+        })
+
+        
+        const {
+            userLogin: { userInfo },
+        } = getState()
+
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.access}`
+            }
+        }
+
+        const { data } = await axios.post(
+            `/api/case/gencaseno/`,
+            student,
+            config
+        )
+
+        dispatch({
+            type:CASE_NO_GENERATE_SUCCESS,
+            payload:data
+            
+        })
+
+       
+
+    } catch (error) {
+        dispatch({
+            type: CASE_NO_GENERATE_FAIL,
+            payload: error.response && error.response.data.detail
+                ? error.response.data.detail
+                : error.message,
+        })
+    }
+}
+
+

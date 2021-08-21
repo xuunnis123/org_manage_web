@@ -18,7 +18,7 @@ import { incomeContributeContextListReducers,outcomeContributeContextListReducer
 
 import {scholarshipListReducers,scholarshipDetailsReducer,scholarshipAddReducers,scholarshipUpdateReducers} from './reducers/scholarshipReducers'
 import {semesterListReducers,semesterDetailsReducer,semesterAddReducers,semesterUpdateReducers} from './reducers/semesterReducers'
-import {uploadVisitPhotosReducer,uploadVisitFormReducer,uploadAppliedFormReducer} from './reducers/caseReducers'
+import {uploadVisitPhotosReducer,uploadVisitFormReducer,uploadAppliedFormReducer,genCaseNoReducer} from './reducers/caseReducers'
 const reducer = combineReducers({
     productList: productListReducers,
     productDetails: productDetailsReducer,
@@ -96,6 +96,8 @@ const reducer = combineReducers({
     uploadVisitPhotosAdd:uploadVisitPhotosReducer,
     uploadVisitFormAdd:uploadVisitFormReducer,
     uploadAppliedFormAdd:uploadAppliedFormReducer,
+
+    genCaseNo:genCaseNoReducer,
 })
 
 

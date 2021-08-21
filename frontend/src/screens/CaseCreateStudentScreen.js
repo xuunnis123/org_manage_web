@@ -8,7 +8,7 @@ import { listStudent,addStudent } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import FormContainer from '../components/FormContainer'
 import { listSchool } from '../actions/schoolActions'
-
+import { createStore } from 'redux'
 import Loader from '../components/Loader'
 
 function CaseCreateStudentScreen({history}) {
@@ -30,6 +30,7 @@ function CaseCreateStudentScreen({history}) {
     const { schoolListerror, schoolListloading, schools } = schoolList
 
     useEffect(() =>{
+        localStorage.removeItem('student')
         dispatch(listSchool())
         if(student){
             history.push(redirect)
@@ -48,7 +49,7 @@ function CaseCreateStudentScreen({history}) {
     
     
 
-    const submitHandler =(e) =>{
+    const submitHandler =  (e) =>{
         e.preventDefault()
         
         dispatch(addStudent(school, name, phone, address, tags, is_end, memo, file))

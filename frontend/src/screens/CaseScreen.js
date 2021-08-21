@@ -6,7 +6,7 @@ import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 
 
-function CaseScreen() {
+function CaseScreen({history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
 
@@ -16,12 +16,20 @@ function CaseScreen() {
 
     },[dispatch])
 
-    
+    const addToCaseHandler =() =>{
+        
+        history.push('/case/createstudent')
+    }
 
 
       
     return (
         <Row>
+            <Col><Button 
+        variant="outline-primary"
+        onClick = {addToCaseHandler}
+        className='btn-block' 
+        type='button'>新增個案</Button></Col>
             <Col md={8}>
                 <h1>個案頁</h1>
 

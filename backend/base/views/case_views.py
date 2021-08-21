@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Case,Student
+from base.models import Case,Student,School
 
 
 from base.serializers import CaseSerializer
@@ -28,6 +28,32 @@ def getCase(request,pk):
     serializer = CaseSerializer(case, many=False)
     return Response(serializer.data)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def genCaseNo(request):
+    
+    data = request.data
+    
+    if data and len(data) == 0:
+        return Response({'detail': 'No Student Items'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+
+        if data['student_name']!='':
+
+            student = Student.objects.get(id=data['student_name'])
+        else:student = None
+
+        handle_datetime = datetime.today().strftime('%Y-%m-%d')
+        year = int(handle_datetime.split('-')[0])-1911
+        day = handle_datetime.split('-')[1]+handle_datetime.split('-')[2]
+
+        school = School.objects.get(_id=student.school)
+        memo=school.memo
+        case_no = str(year)+str(day)+'案'+str(student.id)+str(memo)+str(student.name)
+        
+        
+       
+        return Response(case_no)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
