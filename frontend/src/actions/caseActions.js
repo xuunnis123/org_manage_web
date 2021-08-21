@@ -174,13 +174,14 @@ export const generateCaseNo = (student) => async (dispatch, getState) => {
                 Authorization: `Bearer ${userInfo.access}`
             }
         }
-
+        console.log(student)
         const { data } = await axios.post(
             `/api/case/gencaseno/`,
             student,
             config
         )
-
+        console.log(data)
+        localStorage.setItem("case_no",data)
         dispatch({
             type:CASE_NO_GENERATE_SUCCESS,
             payload:data

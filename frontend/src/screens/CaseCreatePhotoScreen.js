@@ -31,15 +31,17 @@ function CaseFinanceCreateScreen({history}) {
   
     const studentAdd = useSelector(state => state.studentAdd)
     const {erroradd, loadingadd, student} = studentAdd
+
+    
+   
     useEffect(() =>{
         
         //setStudentId(studentAdd.student.id)
-        
-        localStorage.getItem('student')
-        dispatch(generateCaseNo(studentAdd.student.id)).then((result) =>console.log(result) )
-        
+       
+        console.log(studentAdd.student['id'])
+        dispatch(generateCaseNo(studentAdd.student['id']))
 
-    },[dispatch,history,studentAdd])
+    },[student])
 
     const handleInputVisitChange =(event) =>{
 

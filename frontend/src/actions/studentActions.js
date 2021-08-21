@@ -93,7 +93,7 @@ export const addStudent = (school, name, phone, address, tags, is_end, memo, fil
              {'school': school, 'name': name ,'phone':phone,'address':address,'tags':tags,'is_end':is_end,'memo':memo, 'file': file},
              config
              ) 
-         
+         localStorage.setItem("student",data.id)
          dispatch({
              type:STUDENT_ADD_SUCCESS,
              payload:data

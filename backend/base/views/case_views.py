@@ -31,29 +31,26 @@ def getCase(request,pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def genCaseNo(request):
-    
+    print("--------------")
+    print(request)
     data = request.data
+    print("data=",data)
     
-    if data and len(data) == 0:
-        return Response({'detail': 'No Student Items'}, status=status.HTTP_400_BAD_REQUEST)
-    else:
 
-        if data['student_name']!='':
+        
+    student = Student.objects.get(id=int(data))
+      
+    handle_datetime = datetime.today().strftime('%Y-%m-%d')
+    year = int(handle_datetime.split('-')[0])-1911
+    day = handle_datetime.split('-')[1]+handle_datetime.split('-')[2]
 
-            student = Student.objects.get(id=data['student_name'])
-        else:student = None
-
-        handle_datetime = datetime.today().strftime('%Y-%m-%d')
-        year = int(handle_datetime.split('-')[0])-1911
-        day = handle_datetime.split('-')[1]+handle_datetime.split('-')[2]
-
-        school = School.objects.get(_id=student.school)
-        memo=school.memo
-        case_no = str(year)+str(day)+'案'+str(student.id)+str(memo)+str(student.name)
+    school = School.objects.get(_id=student.school._id)
+    memo=school.memo
+    case_no = str(year)+str(day)+'案'+str(student.id)+str(memo)+str(student.name)
         
         
        
-        return Response(case_no)
+    return Response(case_no)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
