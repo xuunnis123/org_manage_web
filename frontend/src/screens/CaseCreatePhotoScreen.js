@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
 import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
@@ -17,7 +17,7 @@ function CaseFinanceCreateScreen({history}) {
 
     const [visitFormImage,setVisitFormImage]=useState(null)
     const [appliedFormImage,setAppliedFormImage]=useState(null)
-
+    const [visitImageList,setVisitImageList]=useState(null)
     const uploadVisitPhotosAdd = useSelector(state => state.uploadVisitPhotosAdd)
     const { error, loading, visitPhotos } = uploadVisitPhotosAdd
 
@@ -42,7 +42,7 @@ function CaseFinanceCreateScreen({history}) {
         console.log(studentAdd.student.id)
         dispatch(generateCaseNo(studentAdd.student['id']))
         console.log(genCaseNo.caseNo)
-        
+        localStorage.removeItem('visit_photo')
     },[])
 
 
@@ -62,7 +62,8 @@ function CaseFinanceCreateScreen({history}) {
         var data = new FormData(); 
         
         data.append("image", image); // add your file to form data
-        
+        data.append("type","訪視照片");
+        data.append("name_id",studentAdd.student.id)
         dispatch(uploadImage(data))
         
         
@@ -82,7 +83,8 @@ function CaseFinanceCreateScreen({history}) {
         var data = new FormData(); 
         console.log(visitFormImage)
         data.append("image", visitFormImage); // add your file to form data
-        
+        data.append("type","訪視表");
+        data.append("name_id",studentAdd.student.id)
         dispatch(uploadVisitForm(data))
         
         
@@ -103,7 +105,8 @@ function CaseFinanceCreateScreen({history}) {
         var data = new FormData(); 
         console.log(appliedFormImage)
         data.append("image", appliedFormImage); // add your file to form data
-        
+        data.append("type","申請表");
+        data.append("name_id",studentAdd.student.id)
         dispatch(uploadAppliedForm(data))
         
         
@@ -112,6 +115,7 @@ function CaseFinanceCreateScreen({history}) {
     const clearVisitUpload = ()=>{
         console.log("clear")
         localStorage.setItem('visit_photo',JSON.stringify(visitPhotos))
+        setVisitImageList(visitPhotos)
         setImage(null)
         
     }
@@ -126,7 +130,8 @@ function CaseFinanceCreateScreen({history}) {
         history.push('/case/createfinance')
         
     }
-      
+    
+    
     return (
         <Row>
             <CheckoutSteps step1 step2/>
@@ -134,11 +139,6 @@ function CaseFinanceCreateScreen({history}) {
                 <h3>
                 產生案號:{caseNo}
                 </h3>
-                
-                
-
-                
-                
                 
                 <h2>訪談照片</h2>
 
@@ -189,7 +189,7 @@ function CaseFinanceCreateScreen({history}) {
                 </Button>
                 
             </Col>
-                 
+            <ProgressBar animated now={40} label={`{40}%`}/>
         </Row>
         
     )

@@ -42,8 +42,9 @@ def upload_image(request):
     album = env.IMGUR_ALBUM
     
     #image=data['image']
-    student_name = Student.objects.get(id=10)
-    type="訪視照片"
+    #TODO
+    student_name = Student.objects.get(id=data['name_id'])
+    type=data['type']
     memo =""
     file = data['image']
     filename = default_storage.save(file.name, ContentFile(file.read()))

@@ -1,7 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
@@ -139,7 +139,7 @@ function CaseCreateConfirmScreen({history}) {
                     </Col>
                     <Link href={uploadImageItem}>{uploadImageItem}</Link>   
             </Col>
-                 
+            <ProgressBar animated now={100} label={`{100}%`}/>
         </Row>
         
     )

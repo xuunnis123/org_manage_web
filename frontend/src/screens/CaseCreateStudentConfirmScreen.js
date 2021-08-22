@@ -1,7 +1,7 @@
 import React, {useState,useEffect,useRef, useLayoutEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton } from 'react-bootstrap'
+import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 import { listStudent,addStudent } from '../actions/studentActions'
@@ -48,7 +48,7 @@ function CaseCreateStudentConfirmScreen({history}) {
         type='button'>
             前往設定細節
         </Button>
-      
+        <ProgressBar animated now={30} label={`{30}%`}/>
     </Row>
 )
 }
