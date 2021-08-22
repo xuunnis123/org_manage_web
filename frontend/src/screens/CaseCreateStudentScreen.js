@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef, useLayoutEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton } from 'react-bootstrap'
@@ -28,7 +28,14 @@ function CaseCreateStudentScreen({history}) {
     const {error, loading, student} = studentAdd
     const schoolList = useSelector(state => state.schoolList)
     const { schoolListerror, schoolListloading, schools } = schoolList
-
+    /*
+    const { response, getStudentAdd } = useResponse();
+    const responseRef = useRef(response);
+    useLayoutEffect(() => {
+        responseRef.current = response;
+        console.log(responseRef)
+    }, [response]);
+*/
     useEffect(() =>{
         localStorage.removeItem('student')
         dispatch(listSchool())
@@ -54,7 +61,7 @@ function CaseCreateStudentScreen({history}) {
         
         dispatch(addStudent(school, name, phone, address, tags, is_end, memo, file))
         
-        history.push('/case/createphoto')
+        history.push('/case/confirmedstudent')
         
     }
       

@@ -12,7 +12,7 @@ function CaseFinanceCreateScreen({history}) {
     
     
     const [studentId, setStudentId] = useState()
-    const [caseNo, setCaseNo] = useState()
+    const [caseNumber, setCaseNumber] = useState()
     const [image, setImage] = useState(null)
 
     const [visitFormImage,setVisitFormImage]=useState(null)
@@ -32,16 +32,21 @@ function CaseFinanceCreateScreen({history}) {
     const studentAdd = useSelector(state => state.studentAdd)
     const {erroradd, loadingadd, student} = studentAdd
 
+    const genCaseNo = useSelector(state => state.genCaseNo)
+    const { genError, genLoading, caseNo } = genCaseNo
     
-   
+
     useEffect(() =>{
         
-        //setStudentId(studentAdd.student.id)
-       
-        console.log(studentAdd.student['id'])
+        setStudentId(studentAdd.student.id)
+        console.log(studentAdd.student.id)
         dispatch(generateCaseNo(studentAdd.student['id']))
+        console.log(genCaseNo.caseNo)
+        
+    },[])
 
-    },[student])
+
+ 
 
     const handleInputVisitChange =(event) =>{
 
@@ -126,9 +131,9 @@ function CaseFinanceCreateScreen({history}) {
         <Row>
             <CheckoutSteps step1 step2/>
             <Col md={8}>
-                <h1>
-                產生案號:
-                </h1>
+                <h3>
+                產生案號:{caseNo}
+                </h3>
                 
                 
 

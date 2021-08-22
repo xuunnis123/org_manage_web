@@ -11,6 +11,7 @@ import CaseCreatePhotoScreen from './screens/CaseCreatePhotoScreen'
 import CaseCreateFinanceScreen from './screens/CaseCreateFinanceScreen'
 import CaseCreateScholarshipScreen from './screens/CaseCreateScholarshipScreen'
 import CaseCreateConfirmScreen from './screens/CaseCreateConfirmScreen'
+import CaseCreateStudentConfirmScreen from './screens/CaseCreateStudentConfirmScreen'
 
 import SchoolScreen from './screens/SchoolScreen'
 import SchoolCreateScreen from './screens/SchoolCreateScreen'
@@ -62,6 +63,7 @@ function App() {
 
           <Route path='/case' component={CaseScreen} exact/>
           <Route path='/case/createstudent' component={CaseCreateStudentScreen} />
+          <Route path='/case/confirmedstudent' component={CaseCreateStudentConfirmScreen} />
           <Route path='/case/createphoto' component={CaseCreatePhotoScreen} />
           <Route path='/case/createfinance' component={CaseCreateFinanceScreen} />
           <Route path='/case/createscholarship' component={CaseCreateScholarshipScreen} />
