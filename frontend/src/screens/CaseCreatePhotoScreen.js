@@ -35,18 +35,38 @@ function CaseFinanceCreateScreen({history}) {
     const genCaseNo = useSelector(state => state.genCaseNo)
     const { genError, genLoading, caseNo } = genCaseNo
     
+    const getCaseFilesList = useSelector(state => state.getCaseFilesList)
+    const { filerror, fileloading, files } = getCaseFilesList
+    
 
     useEffect(() =>{
         
-        setStudentId(studentAdd.student.id)
-        console.log(studentAdd.student.id)
-        dispatch(generateCaseNo(studentAdd.student['id']))
-        console.log(genCaseNo.caseNo)
-        localStorage.removeItem('visit_photo')
+        //setStudentId(studentAdd.student.id)
+        //console.log(studentAdd.student.id)
+        //dispatch(generateCaseNo(studentAdd.student['id']))
+        //console.log(genCaseNo.caseNo)
+        //localStorage.removeItem('visit_photo')
     },[])
 
+    const addContainer=()=>{
 
- 
+        const container = document.querySelector("#linksave");
+        const lastupload = document.querySelector("#visitPhotos");
+        const visitPhotos = document.querySelector("#visitPhotos");
+        const newElement = document.createElement("div");
+        const newTextElement = document.createTextNode("123")
+        console.log(visitPhotos.value)
+        container.appendChild(newElement);        // 加入新節點
+        container.appendChild(newTextElement); 
+    }
+    const removeContainer=()=>{
+        const container = document.querySelector("#linksave");
+
+        const newElement = document.createElement("div");
+        const newTextElement = document.createTextNode("123")
+
+        container.removeChild()    // 加入文字節點
+    }
 
     const handleInputVisitChange =(event) =>{
 
@@ -139,7 +159,12 @@ function CaseFinanceCreateScreen({history}) {
                 <h3>
                 產生案號:{caseNo}
                 </h3>
-                
+                <Button onClick={addContainer}>新增</Button>
+                <Button onClick={removeContainer}>刪除</Button>
+                <div id="linksave">
+
+
+                </div>
                 <h2>訪談照片</h2>
 
                     <form onSubmit={uploadImgurVisitPhotos}>
@@ -153,7 +178,7 @@ function CaseFinanceCreateScreen({history}) {
                     
                     </Col>
                     <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card href={visitPhotos}>{visitPhotos}</Card>
+                    <Card id="visitPhotos" value={visitPhotos} href={visitPhotos}>{visitPhotos}</Card>
                     
                 <h2>訪視表</h2>
 

@@ -15,6 +15,10 @@ import {
  CASE_NO_GENERATE_SUCCESS,
  CASE_NO_GENERATE_FAIL,
 
+ CASE_FILES_LIST_REQUEST,
+ CASE_FILES_LIST_SUCCESS,
+ CASE_FILES_LIST_FAIL,
+
 } from '../constants/caseConstants'
 
 export const uploadVisitPhotosReducer = (  state = { visitPhotos:[] } , action) =>{
@@ -86,6 +90,26 @@ export const genCaseNoReducer = (  state = { } , action) =>{
 
         case CASE_NO_GENERATE_FAIL:
             return { genLoading : false, generror: action.payload }
+
+
+        default:
+            return state    
+    }
+
+}
+
+
+export const getCaseFilesListReducer = (  state = { files:[] } , action) =>{
+    switch(action.type){
+        case CASE_FILES_LIST_REQUEST:
+            return { fileloading : true, files:[] }
+        
+        case CASE_FILES_LIST_SUCCESS:
+            return { fileloading : false, files: action.payload }
+
+        case CASE_FILES_LIST_FAIL:
+            return { fileloading : false, fileerror: action.payload }
+
 
 
         default:
