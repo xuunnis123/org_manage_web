@@ -25,6 +25,10 @@ import {
     CASE_FILES_DELETE_SUCCESS,
     CASE_FILES_DELETE_FAIL,
 
+    CASE_ADD_REQUEST,
+    CASE_ADD_SUCCESS,
+    CASE_ADD_FAIL,
+
    } from '../constants/caseConstants'
 export const uploadImage = (file) => async (dispatch, getState) => {
     console.log("Action")
@@ -239,6 +243,46 @@ export const listStudentPhotos = (id) => async(dispatch,getState) =>{
     }catch(error){
         dispatch({ 
             type: CASE_FILES_LIST_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
+
+export const addCase = ( student_id,case_no) => async(dispatch,getState) =>{
+    try{
+        dispatch({
+                type: CASE_ADD_REQUEST
+            })
+            const {
+                userLogin: { userInfo },
+            } = getState()
+    
+            const config = {
+                headers: {
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${userInfo.access}`
+                }
+            }
+            console.log(case_no)
+        const {data} = await axios.post(
+             '/api/case/create/',
+             {'student_id': student_id, 'case_no': case_no },
+             config
+             ) 
+         
+         dispatch({
+             type:CASE_ADD_SUCCESS,
+             payload:data
+         })
+
+         
+
+    }catch(error){
+        dispatch({ 
+            type: CASE_ADD_FAIL,
             payload: error.response && error.response.data.detail
             ? error.response.data.detail
             : error.message,

@@ -23,6 +23,11 @@ import {
  CASE_FILES_DELETE_SUCCESS,
  CASE_FILES_DELETE_FAIL,
 
+ CASE_ADD_REQUEST,
+ CASE_ADD_SUCCESS,
+ CASE_ADD_FAIL,
+
+
 } from '../constants/caseConstants'
 
 export const uploadVisitPhotosReducer = (  state = { visitPhotos:[] } , action) =>{
@@ -115,6 +120,26 @@ export const getCaseFilesListReducer = (  state = { files:[] } , action) =>{
             return { fileloading : false, fileerror: action.payload }
 
 
+
+        default:
+            return state    
+    }
+
+}
+
+
+export const caseAddReducers = ( state = {  }, action) =>{
+    switch(action.type){
+        case CASE_ADD_REQUEST:
+            return { caseloading : true }
+        
+        case CASE_ADD_SUCCESS:
+            return { caseloading : false, caseData: action.payload }
+
+        case CASE_ADD_FAIL:
+            return { caseloading : false, caseerror: action.payload }
+
+        
 
         default:
             return state    

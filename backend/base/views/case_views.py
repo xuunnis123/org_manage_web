@@ -62,31 +62,25 @@ def addCase(request):
     if data and len(data) == 0:
         return Response({'detail': 'No Case Items'}, status=status.HTTP_400_BAD_REQUEST)
     else:
-        visit_photo_urls = data['visit_photo_url']
-        visit_photo_list=[]
+        '''
+        #visit_photo_urls = data['visit_photo_url']
+        #visit_photo_list=[]
         for visit_photo in visit_photo_urls:
             visit_photo_list.append(visit_photo)
 
         applied_form_photo_url=data['applied_form_photo_url']
         visit_form_photo_url=data['visit_form_photo_url']
+        '''
+        if data['student_id']!='':
 
-        if data['student_name']!='':
-
-            student = Student.objects.get(id=data['student_name'])
+            student = Student.objects.get(id=data['student_id'])
         else:student = None
-
-        handle_datetime = datetime.today().strftime('%Y-%m-%d')
-        year = int(handle_datetime.split('-')[0])-1911
-        day = handle_datetime.split('-')[1]+handle_datetime.split('-')[2]
-        case_no = str(year)+str(day)+'案'+str(student.id)+str(student.school)+str(student.name)
-        
+        print("data['case_no']",data['case_no'])
+        print("data['student_id']",data['student_id'])
+        print("student=",student)
         case = Case.objects.create(
-            case_no = case_no,
+            case_no = data['case_no'],
             student_name = student,
-            visit_photo = str(visit_photo_list),
-            applied_form_photo = applied_form_photo_url,
-            visit_form_photo = visit_form_photo_url,
-           
 
         )
 
@@ -100,8 +94,7 @@ def addCase(request):
 @permission_classes([IsAuthenticated])
 def getPhotoListbyStudent(request,pk):
     student = Student.objects.get(id=pk)
-    print("--------sud==name",student)
-    print("--------sud=",student.id)
+    
     stu_link = StudentsPhotoLink.objects.filter(student_name=student.id)
     linkList=[]
     for _ in stu_link:

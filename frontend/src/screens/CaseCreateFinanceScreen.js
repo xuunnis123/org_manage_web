@@ -3,145 +3,239 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
-import { uploadImage } from '../actions/caseActions'
-import { listStudent } from '../actions/studentActions'
+import FormContainer from '../components/FormContainer'
+import {  addOutcome } from '../actions/financeActions'
+import { listMember } from '../actions/memberActions'
+import { studentDetail } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
+import Loader from '../components/Loader'
+
 function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
-    const [studentName, setStudentName] = useState('請選擇個案學生')
-    const [student, setStudent] = useState('')
+ 
     
-    const uploadImageAdd = useSelector(state => state.uploadImageAdd)
-    const { error, loading, uploadImageItem } = uploadImageAdd
+    const [categoryName, setCategoryName] = useState('請選擇傳票票號')
+    const [titleName, setTitleName] = useState('請選擇支出項目')
+    const [to_whomName, setTo_whomName] = useState('請選擇個案')
+    const [confirmed_personName, setConfirmed_personName] = useState('請選擇經手人')
+    const [category, setCategory] = useState('')
+    const [title, setTitle] = useState('')
+    const [to_whom, setTo_whom] = useState('')
+    const [confirmed_person, setConfirmed_person] = useState('')
+    const [subject, setSubject] = useState('')
+    const [detail, setDetail] = useState('')
+    const [outcome_money, setOutcome_money] = useState('')
+    const [unit, setUnit] = useState('NTD')
+   
+  
+    //const redirect = location.search ? location.search.split('=')[1] :'/school'
+    const redirect = '/case/createscholarship'
 
-    const studentList = useSelector(state => state.studentList)
-    const { errorStudentList, loadingStudentList, students } = studentList
 
-    useEffect(() =>{
-        dispatch(listStudent())
+    const outcomeAdd = useSelector(state => state.outcomeAdd)
+    const {error, loading, outcome} = outcomeAdd
 
-    },[dispatch,history])
 
-    const handleInputChange =(event) =>{
+    const outcomeContributeContextList = useSelector(state => state.outcomeContributeContextList)
+    const { errorincomeContribute, loadingincomeContribute, outcomeContributeContext } = outcomeContributeContextList
 
-        event.preventDefault();
-      
-        setImage(
-            event.target.files[0]
-           );
-       
-    }
-    const uploadImgurImage = (event) => {
-        event.preventDefault();
-        var data = new FormData(); 
+    const outcomeMoneyCategoryList = useSelector(state => state.outcomeMoneyCategoryList)
+    const { erroroutcomeMoneyCategoryList, loadingoutcomeMoneyCategoryList, outcomeMoneyCategory} = outcomeMoneyCategoryList
+    
+    const memberList = useSelector(state => state.memberList)
+    const { errorList, loadingList, members } = memberList
+
+    
+    const studentDetail = useSelector(state => state.studentDetail)
+    const { errorstudent, loadingstudent, student } = studentDetail
+
+    const caseAdd = useSelector(state => state.caseAdd)
+    const { caseerror, caseloading, caseData } = caseAdd
+
+    useEffect(()=>{
+        console.log(caseData)
         
-        data.append("image", image); // add your file to form data
-        
-        dispatch(uploadImage(data))
-        
-        
-    }
+        setTo_whom(caseData['student_name'])
+        dispatch(listMember())
+        dispatch(studentDetail(caseData['student_name']))
+        console.log(caseData)
+    },[outcome,history, redirect])
 
-    const clearVisitUpload = ()=>{
-        console.log("clear")
-        localStorage.setItem('visit_photo',JSON.stringify(uploadImageItem))
-        setImage(null)
+    const handleSelectCategory=(e)=>{
         
-    }
+        var splitCategory = e.split(',');
+        setCategory(splitCategory[0])
 
-    const handleSelectStudent=(e)=>{
-        
-        var splitTitle = e.split(',');
-        setStudent(splitTitle[0])
-
-        setStudentName(splitTitle[1]); 
-        
+        setCategoryName(splitCategory[1]);  
         
       }
 
+      
+
+      const handleSelectTitle=(e)=>{
+        
+        var splitTitle = e.split(',');
+        setTitle(splitTitle[0])
+
+        setTitleName(splitTitle[1]); 
+        
+        
+      }
+      
+      
+
+      const handleSelectConfirm_person=(e)=>{
+        
+        var splitTitle = e.split(',');
+        setConfirmed_person(splitTitle[0])
+
+        setConfirmed_personName(splitTitle[1]); 
+        
+        
+      }
     const submitHandler =(e) =>{
         e.preventDefault()
         
-        dispatch()
+        dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
         
-        history.push()
+        history.push(redirect)
         
     }
-      
     return (
-        <Row>
-            <CheckoutSteps step1 step2 step3/>
-            <Col md={8}>
-                <h1>新增個案</h1>
-                <Form onSubmit={submitHandler}></Form>
-                <h2>案號</h2>
+        <FormContainer>
+            <h1>新增支出</h1>
+            
+            {error && <Message variant='danger'>{error}</Message>}
+            {loading && <Loader />}
+            
+            <Form onSubmit={submitHandler}>
 
-                <Form.Group controlId='student'>
-                    <Form.Label>個案學生姓名</Form.Label>
+            <Form.Group controlId='category'>
+                    <Form.Label>傳票號數</Form.Label>
+                    <DropdownButton
+                aligndown="true"
+                title= {categoryName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectCategory}
+                    >
+
+            {outcomeMoneyCategory.map((category,index) =>{
+            
+            return <Dropdown.Item eventKey={[category._id,category.name]} key={index}>{category.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            </Form.Group>
+
+            <Form.Group controlId='title'>
+                    <Form.Label>內容</Form.Label>
+                    <DropdownButton
+                aligndown="true"
+                title= {titleName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectTitle}
+                    >
+
+            {outcomeContributeContext.map((title,index) =>{
+            
+            return <Dropdown.Item eventKey={[title._id,title.context]} key={index}>{title.context}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            </Form.Group>
+
+            <Form.Group controlId='subject'>
+                    <Form.Label>科目</Form.Label>
+                    <Form.Control
+                        required
+                        type='name'
+                        placeholder='輸入科目'
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId='represent_person_phone'>
+                    <Form.Label>摘要</Form.Label>
+                    <Form.Control
+                        required
+                        type='detail'
+                        placeholder='輸入摘要'
+                        value={detail}
+                        onChange={(e) => setDetail(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
+           {caseData}
+          
+            <Form.Group controlId='to_whom'>
+                    <Form.Label>個案姓名</Form.Label>
+                    <Form.Control
+                        required
+                        type='to_whom'
+                        value={caseData}
+                        disabled
+                    ></Form.Control>
                     
+                    
+            </Form.Group>
+            <Form.Group controlId='outcome_money'>
+                    <Form.Label>支出金額</Form.Label>
+                    <Form.Control
+                        required
+                        type='outcome'
+                        placeholder='填入金額'
+                        value={outcome_money}
+                        onChange={(e) => setOutcome_money(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
+            <Form.Group controlId='unit'>
+                    <Form.Label>單位</Form.Label>
+                    <Form.Control
+                        type='unit'
+                        placeholder='預設 新台幣 NTD'
+                        value={unit}
+                        onChange={(e) => setUnit(e.target.value)}
+                    >
+
+                    </Form.Control>
+            </Form.Group>
+            
+            <Form.Group controlId='confirmed_person'>
+                    <Form.Label>審核人</Form.Label>
                     <DropdownButton
                         aligndown="true"
-                        title= {studentName}
+                        title= {confirmed_personName}
                         id="dropdown-menu-align-down"
-                        onSelect={handleSelectStudent}
+                        onSelect={handleSelectConfirm_person}
                             >
 
-                    {students.map((student,index) =>{
+                    {members.map((member,index) =>{
                     
-                    return <Dropdown.Item eventKey={[student.id,student.name]} key={index}>{student.name}</Dropdown.Item>
+                    return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
                     })}
                             
                     </DropdownButton>
             </Form.Group>
-                
-                
-                <h2>訪談照片</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-                    
-                    <Image src={uploadImageItem} thumbnail />
-                    
-                    </Col>
-                    <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card href={uploadImageItem}>{uploadImageItem}</Card>
-                    
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link> 
-
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link>   
-            </Col>
-            <ProgressBar animated now={50} label={`{50}%`}/>   
-        </Row>
+                <Button type='submit' variant='primary'>
+                    建立
+                </Button>
+            </Form>
         
+            <Row className='py-3'>
+                <Col>
+                     <Link to='/finance'>
+                     取消
+                        </Link>
+                </Col>
+            </Row>
+        </FormContainer>
     )
 }
 export default CaseFinanceCreateScreen

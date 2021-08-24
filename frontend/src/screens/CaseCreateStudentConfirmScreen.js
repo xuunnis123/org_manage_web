@@ -48,7 +48,7 @@ function CaseCreateStudentConfirmScreen({history}) {
         type='button'>
             前往設定細節
         </Button>
-        <ProgressBar animated now={30} label={`{30}%`}/>
+        <ProgressBar animated now={30} label={`30%`}/>
     </Row>
 )
 }

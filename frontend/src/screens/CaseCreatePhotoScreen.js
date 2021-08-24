@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Table,Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
-import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo,listStudentPhotos } from '../actions/caseActions'
+import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo,listStudentPhotos,addCase } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
 import Loader from '../components/Loader'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -38,6 +38,9 @@ function CaseFinanceCreateScreen({history}) {
     const getCaseFilesList = useSelector(state => state.getCaseFilesList)
     const { filerror, fileloading, files } = getCaseFilesList
     
+    const caseAdd = useSelector(state => state.caseAdd)
+    const { caseerror, caseloading, caseData } = caseAdd
+    
 
     useEffect(() =>{
         
@@ -51,7 +54,7 @@ function CaseFinanceCreateScreen({history}) {
 
     useEffect(() =>{
     dispatch(listStudentPhotos(studentAdd.student.id))
-    },[dispatch])
+    },[dispatch,visitPhotos,visitForm,appliedForm])
  
 
     const handleInputVisitChange =(event) =>{
@@ -72,7 +75,7 @@ function CaseFinanceCreateScreen({history}) {
         data.append("name_id",studentAdd.student.id)
         dispatch(uploadImage(data))
         dispatch(listStudentPhotos(studentAdd.student.id))
-        //window.location(this)
+        
     }
 
     const handleInputVisitFormChange =(event) =>{
@@ -118,20 +121,15 @@ function CaseFinanceCreateScreen({history}) {
         
     }
 
-    const clearVisitUpload = ()=>{
-        console.log("clear")
-        localStorage.setItem('visit_photo',JSON.stringify(visitPhotos))
-        setVisitImageList(visitPhotos)
-        setImage(null)
-        
-    }
+    
 
     
 
-    const submitHandler =(e) =>{
-        e.preventDefault()
+    const saveCaseNo =() =>{
         
-        dispatch()
+        console.log(studentId)
+        console.log(caseNo)
+        dispatch(addCase(studentId,caseNo))
         
         history.push('/case/createfinance')
         
@@ -150,6 +148,8 @@ function CaseFinanceCreateScreen({history}) {
 
 
                 </div>
+                <h3>上傳區</h3>
+                <Card className="my-3 p-3 rounded">
                 <h2>訪談照片</h2>
 
                     <form onSubmit={uploadImgurVisitPhotos}>
@@ -173,8 +173,8 @@ function CaseFinanceCreateScreen({history}) {
                     <input type="file" name="appliedform" onChange={handleInputAppliedFormChange}/>
                     <input type='submit'/>
                     </form> 
-                   
-                    <div></div>
+                    </Card>   
+                    <br/>
                     {fileloading ? <Loader/>
             : filerror ? <Message variant='danger'>{filerror}</Message>
                 : 
@@ -214,12 +214,22 @@ function CaseFinanceCreateScreen({history}) {
                     </Table>
                     </Row>
 }
-                    <Button type='submit' variant='primary'>
-                    繼續
+                    <Button type='button' variant='primary' onClick={saveCaseNo}>
+                    儲存，下一步
                 </Button>
+                <Row className='py-3'>
+                <Col>
+                     <Link to='/case'>
+                     取消
+                        </Link>
+                </Col>
+            </Row>
                 
             </Col>
-            <ProgressBar animated now={40} label={`{40}%`}/>
+            
+            <ProgressBar animated now={40} label={`40%`}/>
+            
+            
         </Row>
         
     )
