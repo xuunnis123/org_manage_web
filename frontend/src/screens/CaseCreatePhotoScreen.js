@@ -1,11 +1,11 @@
 import React, {useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
-import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
+import { Table,Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
 import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo,listStudentPhotos } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
-
+import Loader from '../components/Loader'
 import CheckoutSteps from '../components/CheckoutSteps'
 function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
@@ -41,15 +41,17 @@ function CaseFinanceCreateScreen({history}) {
 
     useEffect(() =>{
         
-        //setStudentId(studentAdd.student.id)
-        //console.log(studentAdd.student.id)
-        //dispatch(generateCaseNo(studentAdd.student['id']))
-        //console.log(genCaseNo.caseNo)
-        //localStorage.removeItem('visit_photo')
+        setStudentId(studentAdd.student.id)
+        console.log(studentAdd.student.id)
+        dispatch(generateCaseNo(studentAdd.student['id']))
+        console.log(genCaseNo.caseNo)
+        setCaseNumber(genCaseNo.caseNo)
+        localStorage.removeItem('visit_photo')
     },[])
+
     useEffect(() =>{
-    dispatch(listStudentPhotos())
-    },[files])
+    dispatch(listStudentPhotos(studentAdd.student.id))
+    },[dispatch])
  
 
     const handleInputVisitChange =(event) =>{
@@ -69,8 +71,8 @@ function CaseFinanceCreateScreen({history}) {
         data.append("type","訪視照片");
         data.append("name_id",studentAdd.student.id)
         dispatch(uploadImage(data))
-        
-        
+        dispatch(listStudentPhotos(studentAdd.student.id))
+        //window.location(this)
     }
 
     const handleInputVisitFormChange =(event) =>{
@@ -90,7 +92,7 @@ function CaseFinanceCreateScreen({history}) {
         data.append("type","訪視表");
         data.append("name_id",studentAdd.student.id)
         dispatch(uploadVisitForm(data))
-        
+        dispatch(listStudentPhotos(studentAdd.student.id))
         
     }
 
@@ -112,7 +114,7 @@ function CaseFinanceCreateScreen({history}) {
         data.append("type","申請表");
         data.append("name_id",studentAdd.student.id)
         dispatch(uploadAppliedForm(data))
-        
+        dispatch(listStudentPhotos(studentAdd.student.id))
         
     }
 
@@ -154,14 +156,8 @@ function CaseFinanceCreateScreen({history}) {
                     <input type="file" name="image" onChange={handleInputVisitChange}/>
                     <input type='submit'/>
                     </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
+                  
                     
-                    <Image src={visitPhotos} thumbnail />
-                    
-                    </Col>
-                    <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card id="visitPhotos" value={visitPhotos} href={visitPhotos}>{visitPhotos}</Card>
                     
                 <h2>訪視表</h2>
 
@@ -169,13 +165,7 @@ function CaseFinanceCreateScreen({history}) {
                     <input type="file" name="visitform" onChange={handleInputVisitFormChange}/>
                     <input type='submit'/>
                     </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={visitForm} thumbnail />
-
-                    </Col>
-                    <Link href={visitForm}>{visitForm}</Link> 
+                    
 
                 <h2>申請表</h2>
 
@@ -183,15 +173,26 @@ function CaseFinanceCreateScreen({history}) {
                     <input type="file" name="appliedform" onChange={handleInputAppliedFormChange}/>
                     <input type='submit'/>
                     </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={appliedForm} thumbnail />
-
-                    </Col>
-                    <Link href={appliedForm}>{appliedForm}</Link>  
-
-                    
+                   
+                    <div></div>
+                    {fileloading ? <Loader/>
+            : filerror ? <Message variant='danger'>{filerror}</Message>
+                : 
+                <Row>
+                    <Table striped bordered hover responsive className='table-sm'>
+                    <thead>
+                            <tr>
+                                <th>動作</th>
+                            
+                                <th>種類</th>
+                                <th>連結</th>
+                                <th>預覽圖</th>
+                               
+                               
+                                
+                            </tr>
+                        </thead>
+                    <tbody>
 
                     {files.map(file => (
                                 <tr key={file._id}>
@@ -204,11 +205,15 @@ function CaseFinanceCreateScreen({history}) {
                                     </Button>
                                     </td>
                                     <td>{file.type}</td>
-                                    <td>{file.link}</td>
-                                    
+                                    <td><Link href={file.link}>{file.link}</Link></td>
+                                    <td><Image src={file.link} thumbnail /></td>
                             
                                 </tr>
                             ))}
+                    </tbody>
+                    </Table>
+                    </Row>
+}
                     <Button type='submit' variant='primary'>
                     繼續
                 </Button>

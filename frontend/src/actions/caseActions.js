@@ -210,17 +210,30 @@ export const generateCaseNo = (student) => async (dispatch, getState) => {
 }
 
 
-export const listStudentPhotos = (id) => async(dispatch) =>{
+export const listStudentPhotos = (id) => async(dispatch,getState) =>{
     try {
         dispatch({
             type: CASE_FILES_LIST_REQUEST
         })
+        const {
+            userLogin: { userInfo },
+        } = getState()
 
-        const {data} = await axios.get(`/api/case/getphotoList/${id}`) 
+        const config = {
+            headers: {
+                'Content-type': 'application/json',
+                Authorization: `Bearer ${userInfo.access}`
+            }
+        }
+        const {data} = await axios.get(
+            `/api/case/getphotoList/${id}`,
+            config
+            ) 
         
         dispatch({
             type:CASE_FILES_LIST_SUCCESS,
-            payload:data
+            payload:data,
+            
         })
 
     }catch(error){
