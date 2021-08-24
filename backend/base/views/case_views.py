@@ -1,3 +1,4 @@
+
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
@@ -5,10 +6,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
-from base.models import Case,Student,School
+from base.models import Case,Student,School,StudentsPhotoLink
 
 
-from base.serializers import CaseSerializer
+from base.serializers import CaseSerializer,StudentsPhotoLinkSerializer
 
 from rest_framework import status
 from datetime import datetime
@@ -92,3 +93,29 @@ def addCase(request):
         serializer = CaseSerializer(case, many=False)
         print("serializer:",serializer)
         return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getPhotoListbyStudent(request,pk):
+    student = Student.objects.get(id=pk)
+    print("--------sud==name",student)
+    print("--------sud=",student.id)
+    stu_link = StudentsPhotoLink.objects.filter(student_name=student.id)
+    linkList=[]
+    for _ in stu_link:
+        serializer = StudentsPhotoLinkSerializer(_, many=False)
+        linkList.append(serializer.data)
+        
+    
+    return Response(linkList)
+    
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteStudentPhoto(request, pk,type):
+    studentPhotoForDeletion = StudentsPhotoLink.objects.get(_id=pk,type=type)
+    for student_photo in studentPhotoForDeletion:
+        student_photo.delete()
+    return Response('此照片紀錄已刪除')

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
-import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo } from '../actions/caseActions'
+import { uploadImage,uploadVisitForm,uploadAppliedForm,generateCaseNo,listStudentPhotos } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
 
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -47,26 +47,10 @@ function CaseFinanceCreateScreen({history}) {
         //console.log(genCaseNo.caseNo)
         //localStorage.removeItem('visit_photo')
     },[])
-
-    const addContainer=()=>{
-
-        const container = document.querySelector("#linksave");
-        const lastupload = document.querySelector("#visitPhotos");
-        const visitPhotos = document.querySelector("#visitPhotos");
-        const newElement = document.createElement("div");
-        const newTextElement = document.createTextNode("123")
-        console.log(visitPhotos.value)
-        container.appendChild(newElement);        // 加入新節點
-        container.appendChild(newTextElement); 
-    }
-    const removeContainer=()=>{
-        const container = document.querySelector("#linksave");
-
-        const newElement = document.createElement("div");
-        const newTextElement = document.createTextNode("123")
-
-        container.removeChild()    // 加入文字節點
-    }
+    useEffect(() =>{
+    dispatch(listStudentPhotos())
+    },[files])
+ 
 
     const handleInputVisitChange =(event) =>{
 
@@ -159,8 +143,7 @@ function CaseFinanceCreateScreen({history}) {
                 <h3>
                 產生案號:{caseNo}
                 </h3>
-                <Button onClick={addContainer}>新增</Button>
-                <Button onClick={removeContainer}>刪除</Button>
+                
                 <div id="linksave">
 
 
@@ -208,7 +191,24 @@ function CaseFinanceCreateScreen({history}) {
                     </Col>
                     <Link href={appliedForm}>{appliedForm}</Link>  
 
+                    
 
+                    {files.map(file => (
+                                <tr key={file._id}>
+                                    <td>
+                                    <Button
+                                    type='button'
+                                    variant='danger'
+                        
+                                    onClick={''}><i className='fas fa-trash'> </i>
+                                    </Button>
+                                    </td>
+                                    <td>{file.type}</td>
+                                    <td>{file.link}</td>
+                                    
+                            
+                                </tr>
+                            ))}
                     <Button type='submit' variant='primary'>
                     繼續
                 </Button>

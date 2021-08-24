@@ -19,6 +19,10 @@ import {
  CASE_FILES_LIST_SUCCESS,
  CASE_FILES_LIST_FAIL,
 
+ CASE_FILES_DELETE_REQUEST,
+ CASE_FILES_DELETE_SUCCESS,
+ CASE_FILES_DELETE_FAIL,
+
 } from '../constants/caseConstants'
 
 export const uploadVisitPhotosReducer = (  state = { visitPhotos:[] } , action) =>{

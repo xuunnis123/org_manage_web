@@ -304,7 +304,7 @@ class StudentsPhotoLinkSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_student_name(self, obj):
-        studentname = obj.name
+        studentname = obj.student_name
         
         serializer = StudentSerializer(studentname, many=False)
         

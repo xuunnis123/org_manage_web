@@ -16,6 +16,15 @@ import {
     CASE_NO_GENERATE_REQUEST,
     CASE_NO_GENERATE_SUCCESS,
     CASE_NO_GENERATE_FAIL,
+
+    CASE_FILES_LIST_REQUEST,
+    CASE_FILES_LIST_SUCCESS,
+    CASE_FILES_LIST_FAIL,
+   
+    CASE_FILES_DELETE_REQUEST,
+    CASE_FILES_DELETE_SUCCESS,
+    CASE_FILES_DELETE_FAIL,
+
    } from '../constants/caseConstants'
 export const uploadImage = (file) => async (dispatch, getState) => {
     console.log("Action")
@@ -200,4 +209,28 @@ export const generateCaseNo = (student) => async (dispatch, getState) => {
     }
 }
 
+
+export const listStudentPhotos = (id) => async(dispatch) =>{
+    try {
+        dispatch({
+            type: CASE_FILES_LIST_REQUEST
+        })
+
+        const {data} = await axios.get(`/api/case/getphotoList/${id}`) 
+        
+        dispatch({
+            type:CASE_FILES_LIST_SUCCESS,
+            payload:data
+        })
+
+    }catch(error){
+        dispatch({ 
+            type: CASE_FILES_LIST_FAIL,
+            payload: error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+            
+        })
+    }
+}
 
