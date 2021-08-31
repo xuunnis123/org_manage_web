@@ -54,12 +54,12 @@ function CaseFinanceCreateScreen({history}) {
     const { caseerror, caseloading, caseData } = caseAdd
 
     useEffect(()=>{
-        console.log(caseData)
+        console.log(caseData.data)
         
         setTo_whom(caseData['student_name'])
         dispatch(listMember())
         dispatch(studentDetail(caseData['student_name']))
-        console.log(caseData)
+        
     },[outcome,history, redirect])
 
     const handleSelectCategory=(e)=>{
