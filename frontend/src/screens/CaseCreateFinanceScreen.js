@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
@@ -47,20 +47,34 @@ function CaseFinanceCreateScreen({history}) {
     const { errorList, loadingList, members } = memberList
 
     
-    const studentDetail = useSelector(state => state.studentDetail)
-    const { errorstudent, loadingstudent, student } = studentDetail
+    const studentDetailReducer = useSelector(state => state.studentDetail)
+    const { errorstudent, loadingstudent, student } = studentDetailReducer
 
     const caseAdd = useSelector(state => state.caseAdd)
     const { caseerror, caseloading, caseData } = caseAdd
 
+    const prevCase = useRef("");
+
     useEffect(()=>{
-        console.log(caseData.data)
         
-        setTo_whom(caseData['student_name'])
+        prevCase.current = caseData;
+        console.log(prevCase)
+        
         dispatch(listMember())
-        dispatch(studentDetail(caseData['student_name']))
         
-    },[outcome,history, redirect])
+        
+        
+    },[outcome,history,caseData,caseAdd])
+    
+    useEffect(()=>{
+        
+        
+        setTo_whom(prevCase.student_name)
+        Form.controls['to_whom'].setValue(prevCase.student_name);
+        //dispatch(studentDetail(prevCase.student_name))
+        
+    },[prevCase])
+
 
     const handleSelectCategory=(e)=>{
         
@@ -170,14 +184,14 @@ function CaseFinanceCreateScreen({history}) {
 
                     </Form.Control>
             </Form.Group>
-           {caseData}
+          
           
             <Form.Group controlId='to_whom'>
                     <Form.Label>個案姓名</Form.Label>
                     <Form.Control
-                        required
+                    
                         type='to_whom'
-                        value={caseData}
+                        defaultValue={prevCase.student_name}
                         disabled
                     ></Form.Control>
                     
@@ -230,7 +244,7 @@ function CaseFinanceCreateScreen({history}) {
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/finance'>
+                     <Link to='/case'>
                      取消
                         </Link>
                 </Col>
