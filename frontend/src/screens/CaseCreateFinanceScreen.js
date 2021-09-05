@@ -70,10 +70,10 @@ function CaseFinanceCreateScreen({history}) {
         
         
         setTo_whom(prevCase.student_name)
-        Form.controls['to_whom'].setValue(prevCase.student_name);
+        //Form.controls['to_whom'].setValue(prevCase.student_name);
         //dispatch(studentDetail(prevCase.student_name))
         
-    },[prevCase])
+    },[prevCase,to_whom])
 
 
     const handleSelectCategory=(e)=>{
@@ -118,6 +118,7 @@ function CaseFinanceCreateScreen({history}) {
     }
     return (
         <FormContainer>
+            <h1>案號：{prevCase.current.case_no}</h1>
             <h1>新增支出</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
@@ -190,10 +191,12 @@ function CaseFinanceCreateScreen({history}) {
                     <Form.Label>個案姓名</Form.Label>
                     <Form.Control
                     
-                        type='to_whom'
-                        defaultValue={prevCase.student_name}
-                        disabled
-                    ></Form.Control>
+                        type='text'
+                        value={prevCase.current.student.name}
+                        readOnly
+                        onChange={(e) => setTo_whom(prevCase.current.student.id)}
+                    />
+                         
                     
                     
             </Form.Group>
