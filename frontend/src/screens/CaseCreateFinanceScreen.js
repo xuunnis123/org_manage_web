@@ -73,6 +73,7 @@ function CaseFinanceCreateScreen({history}) {
         setTo_whom(prevCase.student_name)
         //Form.controls['to_whom'].setValue(prevCase.student_name);
         //dispatch(studentDetail(prevCase.student_name))
+        //改用Reducers看看
         
     },[prevCase,to_whom])
 
