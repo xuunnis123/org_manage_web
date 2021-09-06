@@ -54,6 +54,7 @@ function CaseFinanceCreateScreen({history}) {
     const { caseerror, caseloading, caseData } = caseAdd
 
     const prevCase = useRef("");
+    
 
     useEffect(()=>{
         
@@ -192,7 +193,8 @@ function CaseFinanceCreateScreen({history}) {
                     <Form.Control
                     
                         type='text'
-                        value={prevCase.current.student.name}
+                        //value={prevCase.current.student.name}
+                        value={prevCase.current.case_no}
                         readOnly
                         onChange={(e) => setTo_whom(prevCase.current.student.id)}
                     />
