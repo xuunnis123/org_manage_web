@@ -146,3 +146,19 @@ export const caseAddReducers = ( state = {  }, action) =>{
     }
 
 }
+
+
+export const caseOutcomeLoadingReducer =(prevState,action)=>{
+    switch(action.type){
+        case "CASE_INCOME_DETAIL":
+            console.log("caseOutcomeLoadingReducer")
+            console.log(action.payload)
+            console.log(prevState.student_name)
+            
+            
+            return action.payload;
+        default:
+            return prevState;
+    }
+
+}

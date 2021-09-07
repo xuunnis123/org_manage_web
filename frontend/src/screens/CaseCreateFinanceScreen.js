@@ -1,4 +1,4 @@
-import React, {useState,useEffect,useRef} from 'react'
+import React, {useState,useEffect,useRef,useReducer} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
@@ -9,6 +9,7 @@ import { listMember } from '../actions/memberActions'
 import { studentDetail } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Loader from '../components/Loader'
+import {caseOutcomeLoadingReducer} from '../reducers/caseReducers'
 
 function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
@@ -27,7 +28,7 @@ function CaseFinanceCreateScreen({history}) {
     const [detail, setDetail] = useState('')
     const [outcome_money, setOutcome_money] = useState('')
     const [unit, setUnit] = useState('NTD')
-   
+    const [save, setSave] = useState('')
   
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/case/createscholarship'
@@ -55,27 +56,38 @@ function CaseFinanceCreateScreen({history}) {
 
     const prevCase = useRef("");
     
-
+    const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,caseData);
+    
     useEffect(()=>{
         
         prevCase.current = caseData;
         console.log(prevCase)
         
         dispatch(listMember())
-        
-        
+        savestudentDispatch({
+            type:'CASE_INCOME_DETAIL',
+            payload:prevCase
+        });
+        //setTo_whom(prevCase.student_name)
+       
         
     },[outcome,history,caseData,caseAdd])
     
     useEffect(()=>{
         
         
-        setTo_whom(prevCase.student_name)
+        //setTo_whom(prevCase.student_name)
+        //setSave(prevCase.student_name)
         //Form.controls['to_whom'].setValue(prevCase.student_name);
         //dispatch(studentDetail(prevCase.student_name))
+        console.log("savestudent=",savestudent)
         //改用Reducers看看
-        
-    },[prevCase,to_whom])
+        /*
+        dispatch({
+            type:"STUDENT_DETAIL",
+            payload:{}})
+        */
+    },[savestudent])
 
 
     const handleSelectCategory=(e)=>{
@@ -120,7 +132,7 @@ function CaseFinanceCreateScreen({history}) {
     }
     return (
         <FormContainer>
-            <h1>案號：{prevCase.current.case_no}</h1>
+            <h1>案號：</h1>
             <h1>新增支出</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
@@ -195,9 +207,9 @@ function CaseFinanceCreateScreen({history}) {
                     
                         type='text'
                         //value={prevCase.current.student.name}
-                        value={prevCase.current.case_no}
+                        value={savestudent}
                         readOnly
-                        onChange={(e) => setTo_whom(prevCase.current.student.id)}
+                        
                     />
                          
                     
