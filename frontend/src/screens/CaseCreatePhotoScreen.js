@@ -135,11 +135,13 @@ function CaseFinanceCreateScreen({history}) {
         
     }
     
+   
     
     return (
         <Row>
             <CheckoutSteps step1 step2/>
             <Col md={8}>
+            
                 <h3>
                 產生案號:{caseNo}
                 </h3>

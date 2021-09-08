@@ -56,7 +56,7 @@ function CaseFinanceCreateScreen({history}) {
 
     const prevCase = useRef("");
     
-    const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,caseData);
+    const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,0);
     
     useEffect(()=>{
         
@@ -64,11 +64,8 @@ function CaseFinanceCreateScreen({history}) {
         console.log(prevCase)
         
         dispatch(listMember())
-        savestudentDispatch({
-            type:'CASE_INCOME_DETAIL',
-            payload:prevCase
-        });
-        //setTo_whom(prevCase.student_name)
+     
+        setTo_whom(prevCase.student_name)
        
         
     },[outcome,history,caseData,caseAdd])
@@ -78,16 +75,10 @@ function CaseFinanceCreateScreen({history}) {
         
         //setTo_whom(prevCase.student_name)
         //setSave(prevCase.student_name)
-        //Form.controls['to_whom'].setValue(prevCase.student_name);
-        //dispatch(studentDetail(prevCase.student_name))
-        console.log("savestudent=",savestudent)
-        //改用Reducers看看
-        /*
-        dispatch({
-            type:"STUDENT_DETAIL",
-            payload:{}})
-        */
-    },[savestudent])
+       
+        console.log("to_whom=",to_whom)
+       
+    },[to_whom])
 
 
     const handleSelectCategory=(e)=>{
@@ -130,8 +121,15 @@ function CaseFinanceCreateScreen({history}) {
         history.push(redirect)
         
     }
+
+    const showMore =()=>{
+
+        console.log("click to show more");
+    }
+
     return (
         <FormContainer>
+            <Button type='button' variant='primary' onClick={showMore}>新增支出</Button>
             <h1>案號：</h1>
             <h1>新增支出</h1>
             
@@ -207,7 +205,7 @@ function CaseFinanceCreateScreen({history}) {
                     
                         type='text'
                         //value={prevCase.current.student.name}
-                        value={savestudent}
+                        value={to_whom}
                         readOnly
                         
                     />
