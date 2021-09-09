@@ -15,7 +15,7 @@ function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
  
-    
+    let count =0 
     const [categoryName, setCategoryName] = useState('請選擇傳票票號')
     const [titleName, setTitleName] = useState('請選擇支出項目')
     const [to_whomName, setTo_whomName] = useState('請選擇個案')
@@ -54,6 +54,10 @@ function CaseFinanceCreateScreen({history}) {
     const caseAdd = useSelector(state => state.caseAdd)
     const { caseerror, caseloading, caseData } = caseAdd
 
+
+    const genCaseNo = useSelector(state => state.genCaseNo)
+    const { genError, genLoading, caseNo } = genCaseNo
+
     const prevCase = useRef("");
     
     const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,0);
@@ -64,8 +68,8 @@ function CaseFinanceCreateScreen({history}) {
         console.log(prevCase)
         
         dispatch(listMember())
-     
-        setTo_whom(prevCase.student_name)
+        
+       
        
         
     },[outcome,history,caseData,caseAdd])
@@ -124,14 +128,23 @@ function CaseFinanceCreateScreen({history}) {
 
     const showMore =()=>{
 
-        console.log("click to show more");
+        setTo_whom(prevCase.current.student.id);
+
+        setTo_whomName(prevCase.current.student.name);
+        var newDiv = document.getElementById("test");
+        console.log("test")
+        var textNode = document.createTextNode("test");
+        newDiv.appendChild(textNode);
+        count+=1;
+        
     }
 
     return (
         <FormContainer>
             <Button type='button' variant='primary' onClick={showMore}>新增支出</Button>
-            <h1>案號：</h1>
-            <h1>新增支出</h1>
+            <div id="test"></div>
+            <h1>案號：{caseNo}</h1>
+            <h1>新增支出項目</h1>
             
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
@@ -205,7 +218,7 @@ function CaseFinanceCreateScreen({history}) {
                     
                         type='text'
                         //value={prevCase.current.student.name}
-                        value={to_whom}
+                        value={to_whomName}
                         readOnly
                         
                     />
