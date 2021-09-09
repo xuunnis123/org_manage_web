@@ -62,6 +62,12 @@ function CaseFinanceCreateScreen({history}) {
     
     const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,0);
     
+    const [showForm, setShowForm] = useState(false);
+    const showFormFunction =() =>{
+        setShowForm(!showForm);
+    }
+
+
     useEffect(()=>{
         
         prevCase.current = caseData;
@@ -133,143 +139,152 @@ function CaseFinanceCreateScreen({history}) {
         setTo_whomName(prevCase.current.student.name);
         var newDiv = document.getElementById("test");
         console.log("test")
+        var newForm = document.createElement('div');
         var textNode = document.createTextNode("test");
         newDiv.appendChild(textNode);
+        newDiv.appendChild(newForm);
         count+=1;
         
     }
 
     return (
         <FormContainer>
-            <Button type='button' variant='primary' onClick={showMore}>新增支出</Button>
+            <Button type='button' variant='primary' onClick={showFormFunction}>新增支出</Button>
             <div id="test"></div>
             <h1>案號：{caseNo}</h1>
             <h1>新增支出項目</h1>
-            
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
-            
-            <Form onSubmit={submitHandler}>
+            {showForm &&(
+                 <Form onSubmit={submitHandler}>
 
-            <Form.Group controlId='category'>
-                    <Form.Label>傳票號數</Form.Label>
-                    <DropdownButton
-                aligndown="true"
-                title= {categoryName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectCategory}
-                    >
-
-            {outcomeMoneyCategory.map((category,index) =>{
-            
-            return <Dropdown.Item eventKey={[category._id,category.name]} key={index}>{category.name}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            </Form.Group>
-
-            <Form.Group controlId='title'>
-                    <Form.Label>內容</Form.Label>
-                    <DropdownButton
-                aligndown="true"
-                title= {titleName}
-                id="dropdown-menu-align-down"
-                onSelect={handleSelectTitle}
-                    >
-
-            {outcomeContributeContext.map((title,index) =>{
-            
-            return <Dropdown.Item eventKey={[title._id,title.context]} key={index}>{title.context}</Dropdown.Item>
-            })}
-                       
-            </DropdownButton>
-            </Form.Group>
-
-            <Form.Group controlId='subject'>
-                    <Form.Label>科目</Form.Label>
-                    <Form.Control
-                        required
-                        type='name'
-                        placeholder='輸入科目'
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId='represent_person_phone'>
-                    <Form.Label>摘要</Form.Label>
-                    <Form.Control
-                        required
-                        type='detail'
-                        placeholder='輸入摘要'
-                        value={detail}
-                        onChange={(e) => setDetail(e.target.value)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
-          
-          
-            <Form.Group controlId='to_whom'>
-                    <Form.Label>個案姓名</Form.Label>
-                    <Form.Control
-                    
-                        type='text'
-                        //value={prevCase.current.student.name}
-                        value={to_whomName}
-                        readOnly
-                        
-                    />
-                         
-                    
-                    
-            </Form.Group>
-            <Form.Group controlId='outcome_money'>
-                    <Form.Label>支出金額</Form.Label>
-                    <Form.Control
-                        required
-                        type='outcome'
-                        placeholder='填入金額'
-                        value={outcome_money}
-                        onChange={(e) => setOutcome_money(e.target.value)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
-            <Form.Group controlId='unit'>
-                    <Form.Label>單位</Form.Label>
-                    <Form.Control
-                        type='unit'
-                        placeholder='預設 新台幣 NTD'
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}
-                    >
-
-                    </Form.Control>
-            </Form.Group>
-            
-            <Form.Group controlId='confirmed_person'>
-                    <Form.Label>審核人</Form.Label>
-                    <DropdownButton
-                        aligndown="true"
-                        title= {confirmed_personName}
-                        id="dropdown-menu-align-down"
-                        onSelect={handleSelectConfirm_person}
-                            >
-
-                    {members.map((member,index) =>{
-                    
-                    return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
-                    })}
+                 <Form.Group controlId='category'>
+                         <Form.Label>傳票號數</Form.Label>
+                         <DropdownButton
+                     aligndown="true"
+                     title= {categoryName}
+                     id="dropdown-menu-align-down"
+                     onSelect={handleSelectCategory}
+                         >
+     
+                 {outcomeMoneyCategory.map((category,index) =>{
+                 
+                 return <Dropdown.Item eventKey={[category._id,category.name]} key={index}>{category.name}</Dropdown.Item>
+                 })}
                             
-                    </DropdownButton>
-            </Form.Group>
-                <Button type='submit' variant='primary'>
-                    建立
-                </Button>
-            </Form>
+                 </DropdownButton>
+                 </Form.Group>
+     
+                 <Form.Group controlId='title'>
+                         <Form.Label>內容</Form.Label>
+                         <DropdownButton
+                     aligndown="true"
+                     title= {titleName}
+                     id="dropdown-menu-align-down"
+                     onSelect={handleSelectTitle}
+                         >
+     
+                 {outcomeContributeContext.map((title,index) =>{
+                 
+                 return <Dropdown.Item eventKey={[title._id,title.context]} key={index}>{title.context}</Dropdown.Item>
+                 })}
+                            
+                 </DropdownButton>
+                 </Form.Group>
+     
+                 <Form.Group controlId='subject'>
+                         <Form.Label>科目</Form.Label>
+                         <Form.Control
+                             required
+                             type='name'
+                             placeholder='輸入科目'
+                             value={subject}
+                             onChange={(e) => setSubject(e.target.value)}
+                         >
+     
+                         </Form.Control>
+                 </Form.Group>
+     
+                 <Form.Group controlId='represent_person_phone'>
+                         <Form.Label>摘要</Form.Label>
+                         <Form.Control
+                             required
+                             type='detail'
+                             placeholder='輸入摘要'
+                             value={detail}
+                             onChange={(e) => setDetail(e.target.value)}
+                         >
+     
+                         </Form.Control>
+                 </Form.Group>
+               
+               
+                 <Form.Group controlId='to_whom'>
+                         <Form.Label>個案姓名</Form.Label>
+                         <Form.Control
+                         
+                             type='text'
+                             //value={prevCase.current.student.name}
+                             value={to_whomName}
+                             readOnly
+                             
+                         />
+                              
+                         
+                         
+                 </Form.Group>
+                 <Form.Group controlId='outcome_money'>
+                         <Form.Label>支出金額</Form.Label>
+                         <Form.Control
+                             required
+                             type='outcome'
+                             placeholder='填入金額'
+                             value={outcome_money}
+                             onChange={(e) => setOutcome_money(e.target.value)}
+                         >
+     
+                         </Form.Control>
+                 </Form.Group>
+                 <Form.Group controlId='unit'>
+                         <Form.Label>單位</Form.Label>
+                         <Form.Control
+                             type='unit'
+                             placeholder='預設 新台幣 NTD'
+                             value={unit}
+                             onChange={(e) => setUnit(e.target.value)}
+                         >
+     
+                         </Form.Control>
+                 </Form.Group>
+                 
+                 <Form.Group controlId='confirmed_person'>
+                         <Form.Label>審核人</Form.Label>
+                         <DropdownButton
+                             aligndown="true"
+                             title= {confirmed_personName}
+                             id="dropdown-menu-align-down"
+                             onSelect={handleSelectConfirm_person}
+                                 >
+     
+                         {members.map((member,index) =>{
+                         
+                         return <Dropdown.Item eventKey={[member._id,member.name]} key={index}>{member.name}</Dropdown.Item>
+                         })}
+                                 
+                         </DropdownButton>
+                 </Form.Group>
+                     <Button type='submit' variant='primary'>
+                         建立
+                     </Button>
+                 </Form>
+
+            )}
+
+           
+            
+            
+            
+           
         
             <Row className='py-3'>
                 <Col>
