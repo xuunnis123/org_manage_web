@@ -11,9 +11,7 @@ function CaseCreateConfirmScreen({history}) {
     const [image, setImage] = useState(null)
     const [studentName, setStudentName] = useState('請選擇個案學生')
     const [student, setStudent] = useState('')
-    
-    const uploadImageAdd = useSelector(state => state.uploadImageAdd)
-    const { error, loading, uploadImageItem } = uploadImageAdd
+
 
     const studentList = useSelector(state => state.studentList)
     const { errorStudentList, loadingStudentList, students } = studentList
@@ -23,122 +21,11 @@ function CaseCreateConfirmScreen({history}) {
 
     },[dispatch,history])
 
-    const handleInputChange =(event) =>{
-
-        event.preventDefault();
-      
-        setImage(
-            event.target.files[0]
-           );
-       
-    }
-    const uploadImgurImage = (event) => {
-        event.preventDefault();
-        var data = new FormData(); 
-        
-        data.append("image", image); // add your file to form data
-        
-        dispatch(uploadImage(data))
-        
-        
-    }
-
-    const clearVisitUpload = ()=>{
-        console.log("clear")
-        localStorage.setItem('visit_photo',JSON.stringify(uploadImageItem))
-        setImage(null)
-        
-    }
-
-    const handleSelectStudent=(e)=>{
-        
-        var splitTitle = e.split(',');
-        setStudent(splitTitle[0])
-
-        setStudentName(splitTitle[1]); 
-        
-        
-      }
-
-    const submitHandler =(e) =>{
-        e.preventDefault()
-        
-        dispatch()
-        
-        history.push()
-        
-    }
-      
+   
     return (
         <Row>
             <CheckoutSteps step1 step2 step3 step4 step5/>
-            <Col md={8}>
-                
-                <Form onSubmit={submitHandler}></Form>
-                <h2>案號</h2>
-
-                <Form.Group controlId='student'>
-                    <Form.Label>個案學生姓名</Form.Label>
-                    
-                    <DropdownButton
-                        aligndown="true"
-                        title= {studentName}
-                        id="dropdown-menu-align-down"
-                        onSelect={handleSelectStudent}
-                            >
-
-                    {students.map((student,index) =>{
-                    
-                    return <Dropdown.Item eventKey={[student.id,student.name]} key={index}>{student.name}</Dropdown.Item>
-                    })}
-                            
-                    </DropdownButton>
-            </Form.Group>
-                
-                
-                <h2>訪談照片</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-                    
-                    <Image src={uploadImageItem} thumbnail />
-                    
-                    </Col>
-                    <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card href={uploadImageItem}>{uploadImageItem}</Card>
-                    
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link> 
-
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link>   
-            </Col>
+           FINAL
             <ProgressBar animated now={100} label={`{100}%`}/>
         </Row>
         

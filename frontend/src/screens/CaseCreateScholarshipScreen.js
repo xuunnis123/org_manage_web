@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect,useRef} from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
@@ -6,139 +6,163 @@ import Message from '../components/Message'
 import { uploadImage } from '../actions/caseActions'
 import { listStudent } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
+import FormContainer from '../components/FormContainer'
+import Loader from '../components/Loader'
+import { listScholarship, addScholarship } from '../actions/scholarshipActions'
+import { listSemester } from '../actions/semesterActions'
+
+
 function CaseCreateScholarshipScreen({history}) {
-    const dispatch = useDispatch()
-    const [image, setImage] = useState(null)
-    const [studentName, setStudentName] = useState('請選擇個案學生')
-    const [student, setStudent] = useState('')
+    const [semesterName,setSemesterName] = useState('請選擇學期')
+    const [studentName, setStudentName] = useState('請選擇申請學生')
+    const [name, setName] = useState('')
+    const [semester, setSemester] = useState('')
+    const [price, setPrice] = useState('')
+   
+
     
-    const uploadImageAdd = useSelector(state => state.uploadImageAdd)
-    const { error, loading, uploadImageItem } = uploadImageAdd
+    const dispatch = useDispatch()
+  
+    //const redirect = location.search ? location.search.split('=')[1] :'/school'
+    const redirect = '/case/createconfirm'
+    const scholarshipAdd = useSelector(state => state.scholarshipAdd)
+    const {error, loading, scholarship} = scholarshipAdd
+    
+    const scholarshipList = useSelector(state => state.scholarshipList)
+    const { errorList, loadingList, scholarships } = scholarshipList
 
     const studentList = useSelector(state => state.studentList)
     const { errorStudentList, loadingStudentList, students } = studentList
 
-    useEffect(() =>{
+    const semesterList = useSelector(state => state.semesterList)
+    const { errorsemesterList, loadingsemesterList, semesters } = semesterList
+
+    const caseAdd = useSelector(state => state.caseAdd)
+    const { caseerror, caseloading, caseData } = caseAdd
+
+    const prevCase = useRef("");
+
+    const [showForm, setShowForm] = useState(false);
+    const showFormFunction =() =>{
+        setShowForm(!showForm);
+    }
+
+    useEffect(()=>{
+        prevCase.current = caseData;
+        dispatch(listSemester())
         dispatch(listStudent())
+        
+        
+        if(scholarship){
+            history.push(redirect)
+        }
+    },[history, scholarship, redirect])
 
-    },[dispatch,history])
-
-    const handleInputChange =(event) =>{
-
-        event.preventDefault();
-      
-        setImage(
-            event.target.files[0]
-           );
+    useEffect(()=>{
+        
+        
+        //setTo_whom(prevCase.student_name)
+        //setSave(prevCase.student_name)
        
-    }
-    const uploadImgurImage = (event) => {
-        event.preventDefault();
-        var data = new FormData(); 
+        console.log("to_whom=",name)
+       
+    },[name])
+   
+    const handleSelectSemester=(e)=>{
         
-        data.append("image", image); // add your file to form data
+        var splitSemester = e.split(',');
         
-        dispatch(uploadImage(data))
-        
-        
-    }
+        setSemester(splitSemester[0]);
 
-    const clearVisitUpload = ()=>{
-        console.log("clear")
-        localStorage.setItem('visit_photo',JSON.stringify(uploadImageItem))
-        setImage(null)
-        
-    }
-
-    const handleSelectStudent=(e)=>{
-        
-        var splitTitle = e.split(',');
-        setStudent(splitTitle[0])
-
-        setStudentName(splitTitle[1]); 
-        
-        
+        setSemesterName(splitSemester[1]);  
       }
+      const handleSelectStudent=(e)=>{
+        
+        var splitStudent = e.split(',');
+        
+        setName(splitStudent[0]);
 
+        setStudentName(splitStudent[1]);  
+      }
+     
     const submitHandler =(e) =>{
         e.preventDefault()
         
-        dispatch()
+        dispatch(addScholarship( name,semester, price))
         
-        history.push()
+        history.push(redirect)
         
     }
       
     return (
         <Row>
             <CheckoutSteps step1 step2 step3 step4/>
-            <Col md={8}>
-                <h1>新增個案</h1>
-                <Form onSubmit={submitHandler}></Form>
-                <h2>案號</h2>
+            <FormContainer>
+            <h1>新增獎學金</h1>
+            <Button type='button' variant='primary' onClick={showFormFunction}>新增支出</Button>
+            {error && <Message variant='danger'>{error}</Message>}
+            {loading && <Loader />}
+            {showForm &&(
+            <Form onSubmit={submitHandler}>
 
-                <Form.Group controlId='student'>
-                    <Form.Label>個案學生姓名</Form.Label>
-                    
-                    <DropdownButton
-                        aligndown="true"
-                        title= {studentName}
-                        id="dropdown-menu-align-down"
-                        onSelect={handleSelectStudent}
-                            >
-
-                    {students.map((student,index) =>{
-                    
-                    return <Dropdown.Item eventKey={[student.id,student.name]} key={index}>{student.name}</Dropdown.Item>
-                    })}
-                            
-                    </DropdownButton>
+         
+            <Form.Group controlId='name'>
+                <Form.Label>申請人名字</Form.Label>
+                <Form.Control
+                         
+                             type='text'
+                             //value={prevCase.current.student.name}
+                             value={name}
+                             readOnly
+                             
+                         />
             </Form.Group>
-                
-                
-                <h2>訪談照片</h2>
+            
 
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-                    
-                    <Image src={uploadImageItem} thumbnail />
-                    
-                    </Col>
-                    <Button onClick={clearVisitUpload}>確認</Button>
-                    <Card href={uploadImageItem}>{uploadImageItem}</Card>
-                    
-                <h2>訪視表</h2>
+            <Form.Group controlId='semester'>
+                <Form.Label>申請學期</Form.Label>
+                <DropdownButton
+                aligndown="true"
+                title= {semesterName}
+                id="dropdown-menu-align-down"
+                onSelect={handleSelectSemester}
+                    >
 
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
+            {semesters.map((semester,index) =>{
+            
+            return <Dropdown.Item eventKey={[semester._id,semester.name]} key={index}>{semester.name}</Dropdown.Item>
+            })}
+                       
+            </DropdownButton>
+            
+            </Form.Group>
+            <Form.Group controlId='price'>
+                    <Form.Label>申請金額</Form.Label>
+                    <Form.Control
+                        required
+                        type='price'
+                        placeholder='輸入金額'
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    >
+                        
+                    </Form.Control>
+            </Form.Group>
+           
+                <Button type='submit' variant='primary'>
+                    建立
+                </Button>
+            </Form>
+            )}
 
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link> 
-
-                <h2>訪視表</h2>
-
-                    <form onSubmit={uploadImgurImage}>
-                    <input type="file" name="image" onChange={handleInputChange}/>
-                    <input type='submit'/>
-                    </form> 
-                    <h4>預覽縮圖</h4>
-                    <Col xs={400} md={400}>
-
-                    <Image src={uploadImageItem} thumbnail />
-
-                    </Col>
-                    <Link href={uploadImageItem}>{uploadImageItem}</Link>   
-            </Col>
+            <Row className='py-3'>
+                <Col>
+                     <Link to='/case/createconfirm'>
+                     略過
+                        </Link>
+                </Col>
+            </Row>
+        </FormContainer>
             <ProgressBar animated now={80} label={`{80}%`}/>
         </Row>
         

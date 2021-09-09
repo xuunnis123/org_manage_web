@@ -10,6 +10,7 @@ import { studentDetail } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Loader from '../components/Loader'
 import {caseOutcomeLoadingReducer} from '../reducers/caseReducers'
+import { listOutcomeContributeContext, listOutcomeMoneyCategory } from '../actions/settingActions'
 
 function CaseFinanceCreateScreen({history}) {
     const dispatch = useDispatch()
@@ -39,7 +40,7 @@ function CaseFinanceCreateScreen({history}) {
 
 
     const outcomeContributeContextList = useSelector(state => state.outcomeContributeContextList)
-    const { errorincomeContribute, loadingincomeContribute, outcomeContributeContext } = outcomeContributeContextList
+    const { erroroutcomeContribute, loadingoutcomeContribute, outcomeContributeContext } = outcomeContributeContextList
 
     const outcomeMoneyCategoryList = useSelector(state => state.outcomeMoneyCategoryList)
     const { erroroutcomeMoneyCategoryList, loadingoutcomeMoneyCategoryList, outcomeMoneyCategory} = outcomeMoneyCategoryList
@@ -72,7 +73,8 @@ function CaseFinanceCreateScreen({history}) {
         
         prevCase.current = caseData;
         console.log(prevCase)
-        
+        dispatch(listOutcomeContributeContext());
+        dispatch(listOutcomeMoneyCategory());
         dispatch(listMember())
         
        
@@ -128,7 +130,7 @@ function CaseFinanceCreateScreen({history}) {
         
         dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
         
-        history.push(redirect)
+        history.push('/case/createscholarship')
         
     }
 
@@ -148,13 +150,15 @@ function CaseFinanceCreateScreen({history}) {
     }
 
     return (
+        
         <FormContainer>
-            <Button type='button' variant='primary' onClick={showFormFunction}>新增支出</Button>
+            <CheckoutSteps step1 step2 step3/>
             <div id="test"></div>
             <h1>案號：{caseNo}</h1>
             <h1>新增支出項目</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
+            <Button type='button' variant='primary' onClick={showFormFunction}>新增支出</Button>
             {showForm &&(
                  <Form onSubmit={submitHandler}>
 
@@ -282,14 +286,14 @@ function CaseFinanceCreateScreen({history}) {
 
            
             
-            
+            <ProgressBar animated now={60} label={`60%`}/>
             
            
         
             <Row className='py-3'>
                 <Col>
-                     <Link to='/case'>
-                     取消
+                     <Link to='/case/createscholarship'>
+                     略過
                         </Link>
                 </Col>
             </Row>
