@@ -40,6 +40,9 @@ function CaseCreateScholarshipScreen({history}) {
     const caseAdd = useSelector(state => state.caseAdd)
     const { caseerror, caseloading, caseData } = caseAdd
 
+    const studentAdd = useSelector(state => state.studentAdd)
+    const {erroradd, loadingadd, student} = studentAdd
+
     const prevCase = useRef("");
 
     const [showForm, setShowForm] = useState(false);
@@ -90,9 +93,18 @@ function CaseCreateScholarshipScreen({history}) {
         
         dispatch(addScholarship( name,semester, price))
         
-        history.push(redirect)
+        history.push(`/case/createconfirm/${student.id}/`)
         
     }
+
+    const skipToNext =() =>{
+        
+    
+        history.push(`/case/createconfirm/${student.id}/`)
+        
+    }
+
+    
       
     return (
         <Row>
@@ -157,9 +169,11 @@ function CaseCreateScholarshipScreen({history}) {
 
             <Row className='py-3'>
                 <Col>
-                     <Link to='/case/createconfirm'>
+                <Button onClick = {skipToNext}
+                className='btn-block' 
+                type='button'>
                      略過
-                        </Link>
+                </Button>
                 </Col>
             </Row>
         </FormContainer>

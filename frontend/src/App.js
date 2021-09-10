@@ -67,7 +67,7 @@ function App() {
           <Route path='/case/createphoto' component={CaseCreatePhotoScreen} />
           <Route path='/case/createfinance' component={CaseCreateFinanceScreen} />
           <Route path='/case/createscholarship' component={CaseCreateScholarshipScreen} />
-          <Route path='/case/createconfirm' component={CaseCreateConfirmScreen} />
+          <Route path='/case/createconfirm/:id' component={CaseCreateConfirmScreen} />
 
           <Route path='/school' component={SchoolScreen} exact/>
           <Route path='/school/create' component={SchoolCreateScreen} />
