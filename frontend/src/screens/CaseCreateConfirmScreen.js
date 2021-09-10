@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
-import { uploadImage } from '../actions/caseActions'
-import { listStudent } from '../actions/studentActions'
+import {  } from '../actions/caseActions'
+import { studentDetail } from '../actions/studentActions'
+import {outcomeDetail} from '../actions/financeActions'
+import {scholarshipDetail} from '../actions/scholorshipActions'
 import CheckoutSteps from '../components/CheckoutSteps'
-function CaseCreateConfirmScreen({history}) {
+
+function CaseCreateConfirmScreen({history,match}) {
+
+    
+    const studentId = match.params.id
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
     const [studentName, setStudentName] = useState('請選擇個案學生')
@@ -16,8 +22,12 @@ function CaseCreateConfirmScreen({history}) {
     const studentList = useSelector(state => state.studentList)
     const { errorStudentList, loadingStudentList, students } = studentList
 
+    const studentDetailReucer = useSelector(state=>state.studentDetail)
+    const {errorStudent, loadingStudent, this_student} = studentDetailReucer
+
     useEffect(() =>{
-        dispatch(listStudent())
+        dispatch(studentDetail(studentId))
+        dispatch()
 
     },[dispatch,history])
 
