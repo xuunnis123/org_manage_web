@@ -63,17 +63,17 @@ function CaseCreateConfirmScreen({history,match}) {
 
             {loadingOutcomeDetail ? <Loader />
                 : errorOutcomeDetail ? <Message variant='danger'>{errorOutcomeDetail}</Message>
-                    :{outcome} == null? <h1>無支出</h1>
+                    :{outcome} === null? <h1>無支出</h1>
                         :<div>
 
-                          Test {outcome} Test
+                          Test {outcome.outcome_money} Test
                         
                         </div>
             }
 
             {loadingScholarshipDetail ? <Loader />
                 : errorScholarshipDetail ? <Message variant='danger'>{errorScholarshipDetail}</Message>
-                    :{scholarship} == null ? <h1>無獎學金</h1>
+                    :{scholarship} === null ? <h1>無獎學金</h1>
                     :<div>
                     <h2>獎學金：TEST</h2>
                     </div>

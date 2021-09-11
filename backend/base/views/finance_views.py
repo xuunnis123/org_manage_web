@@ -202,8 +202,10 @@ def getOutcomeList(request):
 
 @api_view(['GET'])
 def getOutcome(request,pk):
-    
-    outcome = OutCome.objects.get(_id=pk)
+    try:
+        outcome = OutCome.objects.get(_id=pk)
+    except OutCome.DoesNotExist:
+        outcome = None
     serializer = OutcomeSerializer(outcome, many=False)
     return Response(serializer.data)
 

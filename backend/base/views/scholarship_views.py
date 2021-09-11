@@ -20,7 +20,10 @@ def getScholarshipList(request):
 
 @api_view(['GET'])
 def getScholarship(request,pk):
-    scholarship = Scholarship.objects.get(_id=pk)
+    try:
+        scholarship = Scholarship.objects.get(_id=pk)
+    except Scholarship.DoesNotExist:
+        scholarship=None
     serializer = ScholarshipSerializer(scholarship, many=False)
     return Response(serializer.data)
 
