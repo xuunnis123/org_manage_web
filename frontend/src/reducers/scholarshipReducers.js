@@ -53,11 +53,11 @@ export const scholarshipDetailsReducer = ( state = { scholarship:{} }, action) =
             return { loading : false, scholarship: action.payload }
 
         case SCHOLARSHIP_DETAIL_FAIL:
-            return { loading : false, error: action.payload }
+            return { loading : false, errorScholarshipDetail: action.payload }
 
         case SCHOLARSHIP_UPDATE_RESET:
             return {
-                loading : false, error: action.payload 
+                loading : false, errorScholarshipDetail: action.payload 
             }
 
         default:

@@ -9,6 +9,7 @@ import {outcomeDetail} from '../actions/financeActions'
 import { scholarshipDetail } from '../actions/scholarshipActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Loader from '../components/Loader'
+import {  STUDENT_DETAIL_REQUEST } from '../constants/studentConstants'
 function CaseCreateConfirmScreen({history,match}) {
 
     
@@ -17,12 +18,12 @@ function CaseCreateConfirmScreen({history,match}) {
     const dispatch = useDispatch()
     const [image, setImage] = useState(null)
     const [studentName, setStudentName] = useState('請選擇個案學生')
-    const [student, setStudent] = useState('')
+    
 
 
 
     const studentDetailReucer = useSelector(state=>state.studentDetail)
-    const {errorStudent, loadingStudent, this_student} = studentDetailReucer
+    const {errorStudent, loadingStudent, student} = studentDetailReucer
 
 
     const outcomeDetailReducer = useSelector(state=>state.outcomeDetail)
@@ -36,11 +37,12 @@ function CaseCreateConfirmScreen({history,match}) {
 
     useEffect(() =>{
         console.log(studentId)
+        dispatch({type:STUDENT_DETAIL_REQUEST})
         dispatch(studentDetail(studentId))
         dispatch(outcomeDetail(studentId))
         dispatch(scholarshipDetail(studentId))
 
-    },[dispatch,history,studentId])
+    },[dispatch,history])
 
    
     return (
@@ -55,7 +57,7 @@ function CaseCreateConfirmScreen({history,match}) {
                 : errorStudent ? <Message variant='danger'>{errorStudent}</Message>
                     :
                     <div>
-                        <h2>姓名：{this_student.name}</h2>
+                        <h2>姓名：{student.name}</h2>
                     </div>
             }
 
@@ -63,8 +65,9 @@ function CaseCreateConfirmScreen({history,match}) {
                 : errorOutcomeDetail ? <Message variant='danger'>{errorOutcomeDetail}</Message>
                     :{outcome} == null? <h1>無支出</h1>
                         :<div>
-                        <h2>支出項目：{outcome.name}</h2>
-                            <h2>支出項目：{outcome.price}</h2>
+
+                          Test {outcome} Test
+                        
                         </div>
             }
 
@@ -72,7 +75,7 @@ function CaseCreateConfirmScreen({history,match}) {
                 : errorScholarshipDetail ? <Message variant='danger'>{errorScholarshipDetail}</Message>
                     :{scholarship} == null ? <h1>無獎學金</h1>
                     :<div>
-                    <h2>獎學金：{scholarship.name}</h2>
+                    <h2>獎學金：TEST</h2>
                     </div>
             }
                         

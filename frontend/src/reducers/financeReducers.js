@@ -182,11 +182,11 @@ export const outcomeDetailsReducer = ( state = { outcome:{} }, action) =>{
             return { loading : false, outcome: action.payload }
 
         case OUTCOME_DETAIL_FAIL:
-            return { loading : false, error: action.payload }
+            return { loading : false, errorOutcomeDetail: action.payload }
 
         case OUTCOME_UPDATE_RESET:
             return {
-                loading : false, error: action.payload 
+                loading : false, errorOutcomeDetail: action.payload 
             }
 
         default:
