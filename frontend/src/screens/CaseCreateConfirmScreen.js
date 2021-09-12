@@ -10,6 +10,7 @@ import { scholarshipDetail } from '../actions/scholarshipActions'
 import CheckoutSteps from '../components/CheckoutSteps'
 import Loader from '../components/Loader'
 import {  STUDENT_DETAIL_REQUEST } from '../constants/studentConstants'
+import { schoolUpdateReducers } from '../reducers/schoolReducers'
 function CaseCreateConfirmScreen({history,match}) {
 
     
@@ -63,19 +64,21 @@ function CaseCreateConfirmScreen({history,match}) {
 
             {loadingOutcomeDetail ? <Loader />
                 : errorOutcomeDetail ? <Message variant='danger'>{errorOutcomeDetail}</Message>
-                    :{outcome} === null? <h1>無支出</h1>
+                    :{outcome} || []? <h1>無支出</h1>
                         :<div>
 
-                          Test {outcome.outcome_money} Test
+                          支出項目： {outcome.name} 
+                          支出金額： {outcome.outcome_money} 
                         
                         </div>
             }
 
             {loadingScholarshipDetail ? <Loader />
                 : errorScholarshipDetail ? <Message variant='danger'>{errorScholarshipDetail}</Message>
-                    :{scholarship} === null ? <h1>無獎學金</h1>
+                    :{scholarship} || [] ? <h1>無獎學金</h1>
                     :<div>
-                    <h2>獎學金：TEST</h2>
+                    <h2>獎學金金額：{scholarship.price}</h2>
+                    
                     </div>
             }
                         
