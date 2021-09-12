@@ -55,6 +55,10 @@ import {
     OUTCOME_SUM_SUCCESS,
     OUTCOME_SUM_FAIL,
 
+    OUTCOME_ADD_ITEM,
+    OUTCOME_REMOVE_ITEM,
+
+
 } from '../constants/financeConstants'
 export const listFinance = () => async(dispatch) =>{
     try {
@@ -460,5 +464,27 @@ export const removeFromOutcome = (id) => async(dispatch, getState) => {
         })
     }
     
+}
+
+export const addToOutcomeList = (id, qty) => async (dispatch, getState) => {
+   dispatch({
+        type: OUTCOME_ADD_ITEM,
+        payload: {
+           
+            qty
+        }
+    })
+    localStorage.setItem('outcomeList', JSON.stringify(getState().outcomeFinanceList.cartItems))
+}
+
+
+
+export const removeFromOutcomeList = (id) => (dispatch, getState) => {
+    dispatch({
+        type: OUTCOME_REMOVE_ITEM,
+        payload: id,
+    })
+
+    localStorage.setItem('outcomeList', JSON.stringify(getState().outcomeFinanceList.cartItems))
 }
 

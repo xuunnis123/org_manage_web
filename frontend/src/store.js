@@ -12,7 +12,7 @@ import { studentListReducers,studentAddReducers,studentDetailsReducer,studentUpd
 
 import { memberListReducers,memberAddReducers,memberDetailsReducer,memberUpdateReducers } from './reducers/memberReducers'
 
-import { financeListReducers,incomeListReducers,outcomeListReducers,incomeDetailsReducer,outcomeDetailsReducer,incomeAddReducers,outcomeAddReducers,incomeUpdateReducers,outcomeUpdateReducers ,incomeSumReducers, outcomeSumReducers} from './reducers/financeReducers'
+import { financeListReducers,incomeListReducers,outcomeListReducers,incomeDetailsReducer,outcomeDetailsReducer,incomeAddReducers,outcomeAddReducers,incomeUpdateReducers,outcomeUpdateReducers ,incomeSumReducers, outcomeSumReducers,outcomeFinanceListReducer} from './reducers/financeReducers'
 
 import { incomeContributeContextListReducers,outcomeContributeContextListReducers,incomeMoneyCategoryListReducers,outcomeMoneyCategoryListReducers,incomeContributeContextAddReducers,incomeMoneyCategoryAddReducers,outcomeContributeContextAddReducers,outcomeMoneyCategoryAddReducers,incomeContributeContextUpdateReducers,incomeMoneyCategoryUpdateReducers,outcomeContributeContextUpdateReducers,outcomeMoneyCategoryUpdateReducers,outcomeContributeContextDetailsReducer,incomeContributeContextDetailsReducer,outcomeMoneyCategoryDetailsReducer,incomeMoneyCategoryDetailsReducer} from './reducers/settingReducers'
 
@@ -100,6 +100,8 @@ const reducer = combineReducers({
     genCaseNo:genCaseNoReducer,
     getCaseFilesList:getCaseFilesListReducer,
     caseAdd:caseAddReducers,
+
+    outcomeFinanceList:outcomeFinanceListReducer,
 })
 
 

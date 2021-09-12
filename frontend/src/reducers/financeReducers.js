@@ -54,6 +54,11 @@ import {
      OUTCOME_SUM_SUCCESS,
      OUTCOME_SUM_FAIL,
 
+     OUTCOME_ADD_ITEM,
+     OUTCOME_REMOVE_ITEM,
+
+
+
  } from '../constants/financeConstants'
 
 
@@ -270,3 +275,34 @@ export const outcomeUpdateReducers = ( state = { outcome:{} }, action) =>{
     }
 
 }
+
+export const outcomeFinanceListReducer = (state = { outcomeItems: []}, action) => {
+    switch (action.type) {
+        case OUTCOME_ADD_ITEM:
+            const item = action.payload
+            const existItem = state.outcomeItems.find(x => x.name === item.name)
+
+            if (existItem) {
+                return {
+                    ...state,
+                    outcomeItems: state.outcomeItems.map(x =>
+                        x.name === existItem.name ? item : x)
+                }
+
+            } else {
+                return {
+                    ...state,
+                    cartItems: [...state.outcomeItems, item]
+                }
+            }
+
+        case OUTCOME_REMOVE_ITEM:
+            return {
+                ...state,
+                outcomeItems: state.outcomeItems.filter(x => x.name !== action.payload)
+            }
+
+        default:
+            return state
+        }
+    }

@@ -49,12 +49,13 @@ function CaseFinanceCreateScreen({history}) {
     const { errorList, loadingList, members } = memberList
 
     
-    const studentDetailReducer = useSelector(state => state.studentDetail)
-    const { errorstudent, loadingstudent, student } = studentDetailReducer
+ 
 
     const caseAdd = useSelector(state => state.caseAdd)
     const { caseerror, caseloading, caseData } = caseAdd
 
+    const studentAdd = useSelector(state => state.studentAdd)
+    const {erroradd, loadingadd, student} = studentAdd
 
     const genCaseNo = useSelector(state => state.genCaseNo)
     const { genError, genLoading, caseNo } = genCaseNo
@@ -73,14 +74,14 @@ function CaseFinanceCreateScreen({history}) {
         
         prevCase.current = caseData;
         console.log(prevCase)
+        console.log(student.id)
+        setTo_whom(student.id)
         dispatch(listOutcomeContributeContext());
         dispatch(listOutcomeMoneyCategory());
         dispatch(listMember())
         
-       
-       
         
-    },[outcome,history,caseData,caseAdd])
+    },[outcome,caseData])
     
     useEffect(()=>{
         
@@ -127,27 +128,13 @@ function CaseFinanceCreateScreen({history}) {
       }
     const submitHandler =(e) =>{
         e.preventDefault()
-        
-        dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
-        
-        history.push('/case/createscholarship')
-        
+        //TODO
+        //dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
+        //history.push('/case/createscholarship')
+        console.log(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit)
     }
 
-    const showMore =()=>{
-
-        setTo_whom(prevCase.current.student.id);
-
-        setTo_whomName(prevCase.current.student.name);
-        var newDiv = document.getElementById("test");
-        console.log("test")
-        var newForm = document.createElement('div');
-        var textNode = document.createTextNode("test");
-        newDiv.appendChild(textNode);
-        newDiv.appendChild(newForm);
-        count+=1;
-        
-    }
+    
     const skipToNext =() =>{
         
     
@@ -155,6 +142,8 @@ function CaseFinanceCreateScreen({history}) {
         
     }
 
+  
+   
 
     return (
         
@@ -162,13 +151,15 @@ function CaseFinanceCreateScreen({history}) {
             <CheckoutSteps step1 step2 step3/>
             <div id="test"></div>
             <h1>案號：{caseNo}</h1>
-            <h1>新增支出項目</h1>
+            <h1>資助項目</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
-            <Button type='button' variant='primary' onClick={showFormFunction}>新增支出</Button>
+            <Button type='button' variant='primary' onClick={showFormFunction}>新增資助項目</Button>
+            
             {showForm &&(
+                
                  <Form onSubmit={submitHandler}>
-
+                <br/>
                  <Form.Group controlId='category'>
                          <Form.Label>傳票號數</Form.Label>
                          <DropdownButton
@@ -230,20 +221,7 @@ function CaseFinanceCreateScreen({history}) {
                  </Form.Group>
                
                
-                 <Form.Group controlId='to_whom'>
-                         <Form.Label>個案姓名</Form.Label>
-                         <Form.Control
-                         
-                             type='text'
-                             //value={prevCase.current.student.name}
-                             value={to_whomName}
-                             readOnly
-                             
-                         />
-                              
-                         
-                         
-                 </Form.Group>
+             
                  <Form.Group controlId='outcome_money'>
                          <Form.Label>支出金額</Form.Label>
                          <Form.Control
@@ -284,6 +262,7 @@ function CaseFinanceCreateScreen({history}) {
                                  
                          </DropdownButton>
                  </Form.Group>
+                 <br/>
                      <Button type='submit' variant='primary'>
                          建立
                      </Button>
@@ -293,7 +272,7 @@ function CaseFinanceCreateScreen({history}) {
 
            
             
-            <ProgressBar animated now={60} label={`60%`}/>
+           <br/>
             
            
         
@@ -307,6 +286,7 @@ function CaseFinanceCreateScreen({history}) {
                 </Button>
                 </Col>
             </Row>
+            <ProgressBar animated now={60} label={`60%`}/>
         </FormContainer>
     )
 }
