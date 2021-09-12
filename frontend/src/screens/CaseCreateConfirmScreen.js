@@ -49,7 +49,7 @@ function CaseCreateConfirmScreen({history,match}) {
     return (
         <Row>
             <CheckoutSteps step1 step2 step3 step4 step5/>
-           新增個案確認
+           <h2>新增個案確認</h2>
            
             
         
@@ -59,29 +59,36 @@ function CaseCreateConfirmScreen({history,match}) {
                     :
                     <div>
                         <h2>姓名：{student.name}</h2>
+                        <h4>學校：{student.school}</h4>
+                        <h4>電話：{student.phone}</h4>
+                        
+                        <h4>地址：{student.address}</h4>
+                        <h4>區域：{student.tags}</h4>
                     </div>
             }
-
+            <hr/>
+            <h2>資助項目</h2>
             {loadingOutcomeDetail ? <Loader />
                 : errorOutcomeDetail ? <Message variant='danger'>{errorOutcomeDetail}</Message>
-                    :{outcome} || []? <h1>無支出</h1>
+                    :{outcome} || []? <h3 style={{color:"red"}}>無資助項目</h3>
                         :<div>
 
-                          支出項目： {outcome.name} 
-                          支出金額： {outcome.outcome_money} 
+                          <h3>資助項目： {outcome.name} </h3>
+                          <h3>資助金額： {outcome.outcome_money} </h3>
                         
                         </div>
             }
-
+            <hr/>
+            <h2>獎學金</h2>
             {loadingScholarshipDetail ? <Loader />
                 : errorScholarshipDetail ? <Message variant='danger'>{errorScholarshipDetail}</Message>
-                    :{scholarship} || [] ? <h1>無獎學金</h1>
+                    :{scholarship} || [] ? <h3 style={{color:"red"}}>無獎學金</h3>
                     :<div>
-                    <h2>獎學金金額：{scholarship.price}</h2>
+                    <h3>獎學金金額：{scholarship.price}</h3>
                     
                     </div>
             }
-                        
+            <hr/>            
             <Row className='py-3'>
                 <Col>
                      <Link to='/case/'>
