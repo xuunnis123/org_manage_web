@@ -44,7 +44,13 @@ function CaseCreateConfirmScreen({history,match}) {
         dispatch(scholarshipDetail(studentId))
 
     },[dispatch,history])
-
+    
+    const finish =() =>{
+        
+        window.location.href = '/case/'
+        
+        
+    }
    
     return (
         <Row>
@@ -91,10 +97,13 @@ function CaseCreateConfirmScreen({history,match}) {
             <hr/>            
             <Row className='py-3'>
                 <Col>
-                     <Link to='/case/'>
+                <Button onClick = {finish}
+                className='btn-block' 
+                type='button'>
                      確認
-                        </Link>
+                </Button>
                 </Col>
+                
             </Row>
             <ProgressBar animated now={100} label={`{100}%`}/>
         </Row>

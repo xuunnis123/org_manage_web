@@ -148,6 +148,13 @@ function CaseFinanceCreateScreen({history}) {
         count+=1;
         
     }
+    const skipToNext =() =>{
+        
+    
+        history.push(`/case/createscholarship`)
+        
+    }
+
 
     return (
         
@@ -291,10 +298,13 @@ function CaseFinanceCreateScreen({history}) {
            
         
             <Row className='py-3'>
+                
                 <Col>
-                     <Link to='/case/createscholarship'>
+                <Button onClick = {skipToNext}
+                className='btn-block' 
+                type='button'>
                      略過
-                        </Link>
+                </Button>
                 </Col>
             </Row>
         </FormContainer>
