@@ -30,6 +30,8 @@ function CaseFinanceCreateScreen({history}) {
     const [outcome_money, setOutcome_money] = useState('')
     const [unit, setUnit] = useState('NTD')
     const [save, setSave] = useState('')
+
+    const financeItems = []
   
     //const redirect = location.search ? location.search.split('=')[1] :'/school'
     const redirect = '/case/createscholarship'
@@ -64,6 +66,9 @@ function CaseFinanceCreateScreen({history}) {
     
     const [savestudent,savestudentDispatch] = useReducer(caseOutcomeLoadingReducer,0);
     
+  
+  
+
     const [showForm, setShowForm] = useState(false);
     const showFormFunction =() =>{
         setShowForm(!showForm);
@@ -132,6 +137,7 @@ function CaseFinanceCreateScreen({history}) {
         //dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
         //history.push('/case/createscholarship')
         console.log(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit)
+        financeItems.append(category)
     }
 
     
