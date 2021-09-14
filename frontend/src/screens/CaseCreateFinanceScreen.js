@@ -4,7 +4,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card,FormGroup,Dropdown,DropdownButton,ProgressBar } from 'react-bootstrap'
 import Message from '../components/Message'
 import FormContainer from '../components/FormContainer'
-import {  addOutcome } from '../actions/financeActions'
+import {  addOutcome,addToOutcomeList } from '../actions/financeActions'
 import { listMember } from '../actions/memberActions'
 import { studentDetail } from '../actions/studentActions'
 import CheckoutSteps from '../components/CheckoutSteps'
@@ -134,6 +134,8 @@ function CaseFinanceCreateScreen({history}) {
     const submitHandler =(e) =>{
         e.preventDefault()
         //TODO
+
+        dispatch(addToOutcomeList(financeItems))
         //dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
         //history.push('/case/createscholarship')
         console.log(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit)

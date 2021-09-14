@@ -466,12 +466,12 @@ export const removeFromOutcome = (id) => async(dispatch, getState) => {
     
 }
 
-export const addToOutcomeList = (id, qty) => async (dispatch, getState) => {
+export const addToOutcomeList = (item) => async (dispatch, getState) => {
    dispatch({
         type: OUTCOME_ADD_ITEM,
         payload: {
            
-            qty
+            item
         }
     })
     localStorage.setItem('outcomeList', JSON.stringify(getState().outcomeFinanceList.cartItems))
