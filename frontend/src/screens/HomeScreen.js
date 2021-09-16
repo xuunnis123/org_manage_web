@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import RecentNewsScreen from './RecentNewsScreen'
 
 
 
@@ -19,13 +20,13 @@ function HomeScreen() {
 
     return (
         <div>
-            <h1>最新訊息</h1>
+            
             
             {loading ? <Loader/>
             : error ? <Message variant='danger'>{error}</Message>
                 : 
                 <Row>
-                   Test
+                   <RecentNewsScreen/>
             </Row>
         }
 
