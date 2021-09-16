@@ -135,7 +135,7 @@ function CaseFinanceCreateScreen({history}) {
         e.preventDefault()
         //TODO
 
-        dispatch(addToOutcomeList(financeItems))
+        
         //dispatch(addOutcome(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit))
         //history.push('/case/createscholarship')
         console.log(category,title, to_whom, confirmed_person, subject, detail, outcome_money, unit)
@@ -148,10 +148,9 @@ function CaseFinanceCreateScreen({history}) {
         financeAllSet.append(detail)
         financeAllSet.append(outcome_money)
         financeAllSet.append(unit)
-        
-        
+        console.log(financeAllSet)
         financeItems.append(financeAllSet)
-        
+        dispatch(addToOutcomeList(financeItems))
         //TODO
 
     }
