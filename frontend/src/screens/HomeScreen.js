@@ -27,6 +27,7 @@ function HomeScreen() {
                 : 
                 <Row>
                    <RecentNewsScreen/>
+                   
             </Row>
         }
 
