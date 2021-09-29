@@ -25,7 +25,9 @@ function RecentNewsScreen() {
     return (
         <FormContainer>
             <h1>最新消息</h1>
-         
+            <h2>公告類型</h2>
+
+            <hr/>
         </FormContainer>
     )
 }
