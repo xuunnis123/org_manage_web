@@ -18,3 +18,9 @@ backend/static/images/p2.jpg
 backend/base/views/auth.ini
 frontend/src/config.js
 .DS_Store
+*.pyc
+*.pyc
+backend/credentials.json
+*.pyc
+backend/token.json
+backend/base/views/__pycache__/user_views.cpython-39.pyc
